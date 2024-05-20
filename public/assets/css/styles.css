@@ -1,0 +1,28 @@
+@import "../scss/bootstrap.min.css";
+@import "../scss/override-bootstrap.css";
+.header-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-width: 100%;
+  background-color: #1f493f;
+}
+
+.banner {
+  padding-top: 200px;
+  background-color: gray;
+  background: url("../images/banner-superbowl.webp") no-repeat center center;
+  background-size: cover;
+}
+
+.match-item-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.match-item-link:hover {
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=styles.css.map */
