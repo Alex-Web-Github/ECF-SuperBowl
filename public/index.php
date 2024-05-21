@@ -26,9 +26,5 @@ session_start();
 require_once '../routes/web.php';
 require_once '../app/Router.php';
 
-
-
-
-
 // TODO
 // setcookie('name', 'value', time() + 3600, '/', '', false, true);

@@ -79,6 +79,7 @@ class User extends Entity
 
   /*
         Pourrait être déplacé dans une classe UserValidator
+        c'est juste pour vérifier si les champs sont bien remplis et l'email de type "email"
     */
   public function validate(): array
   {
