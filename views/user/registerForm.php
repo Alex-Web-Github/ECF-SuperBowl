@@ -3,6 +3,11 @@
  * @var \App\Entity\User $user 
  */
 ?>
+<?php foreach ($errors as $error) { ?>
+  <div class="alert alert-danger" role="alert">
+    <?= $error; ?>
+  </div>
+<?php } ?>
 
 <div class="container d-flex mt-4 px-4">
 

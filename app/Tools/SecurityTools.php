@@ -2,8 +2,15 @@
 
 namespace App\Tools;
 
+use App\Entity\User;
+
 class SecurityTools
 {
+  public static function verifyPassword(string $password, User $user): bool
+  {
+    return password_verify($password, $user->getUserPassword());
+  }
+
 
   public static function isLogged(): bool
   {
@@ -12,16 +19,16 @@ class SecurityTools
 
   public static function isUser(): bool
   {
-    return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'user';
+    return isset($_SESSION['user']) && $_SESSION['user']->getUserRole() === 'user';
   }
 
   public static function isAdmin(): bool
   {
-    return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+    return isset($_SESSION['user']) && $_SESSION['user']->getUserRole() === 'admin';
   }
 
   public static function getCurrentUserId(): int|bool
   {
-    return (isset($_SESSION['user']) && isset($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : false;
+    return (isset($_SESSION['user']) && (null !== $_SESSION['user']->getUserId())) ? $_SESSION['user']->getUserId() : false;
   }
 }

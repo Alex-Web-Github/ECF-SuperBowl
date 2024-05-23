@@ -21,7 +21,7 @@ class UserController extends Controller
         $user->hydrate($_POST);
 
         // Puis on attribue, par défaut, le rôle "user" à l'utilisateur
-        $user->setRole('user');
+        $user->setUserRole('user');
 
         // Méthode validate() : permet de vérifier si les données sont valides
         $errors = $user->validate();

@@ -19,3 +19,7 @@ $routes->add('logout', new Route(constant('URL_SUBFOLDER') . '/logout', array('c
 
 // Page Register
 $routes->add('register', new Route(constant('URL_SUBFOLDER') . '/register', array('controller' => 'UserController', 'method' => 'registerFormAction'), array()));
+
+// Page Dashboard User //TODO
+
+// Page Dashboard Admin //TODO
