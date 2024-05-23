@@ -3,12 +3,17 @@
  * @var \App\Entity\User $user 
  */
 ?>
+<?php
+//Affichage des erreurs
+$errors = [];
+if ($errors) {
+  foreach ($errors as $error) { ?>
+    <div class="alert alert-danger" role="alert">
+      <?= $error; ?>
+    </div>
+<?php }
+} ?>
 
-<?php foreach ($errors as $error) { ?>
-  <div class="alert alert-danger" role="alert">
-    <?= $error; ?>
-  </div>
-<?php } ?>
 
 <div class="container d-flex mt-4 px-4">
 

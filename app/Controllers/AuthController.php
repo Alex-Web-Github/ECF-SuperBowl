@@ -29,29 +29,18 @@ class AuthController extends Controller
           session_regenerate_id(true);
 
           // On stocke en Session tous les attributs de l'objet User
+          // Attention : $_SESSION['user'] devient un objet User
           $_SESSION['user'] = $user;
 
-          // $_SESSION['user'] = [
-          //   'id' => $user->getUserId(),
-          //   'first_name' => $user->getUserFirstName(),
-          //   'last_name' => $user->getUserLastName(),
-          //   'email' => $user->getUserEmail(),
-          //   'role' => $user->getUserRole()
-          // ];
-
-          // die(var_dump($_SESSION['user']));
-
-          if (SecurityTools::isUser()) {
-            // Si l'utilisateur est un utilisateur, on le redirige vers son profil
-            // header('Location: ' . $routes->get('userDashboard')->getPath());
-            $errors[] = 'Vous êtes connecté en tant qu\'utilisateur';
-          } else if (SecurityTools::isAdmin()) {
-            // Si l'utilisateur est un admin, on le redirige vers le dashboard
-            // header('Location: ' . $routes->get('adminDashboard')->getPath());
-            $errors[] = 'Vous êtes connecté en tant qu\'admin';
+          // Redirige l'utilisateur en fonction de son rôle
+          if ($user->getUserRole() === 'admin') {
+            header('Location: ' . $routes->get('adminDashboard')->getPath());
+          } else {
+            header('Location: ' . $routes->get('userDashboard')->getPath());
           }
         } else {
           // message d'erreur si le mot de passe est incorrect
+          die('Email ou mot de passe incorrect');
           $errors[] = 'Email ou nom d\'utilisateur incorrect';
         }
       }

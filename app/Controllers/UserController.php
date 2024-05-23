@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Symfony\Component\Routing\RouteCollection;
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Tools\SecurityTools;
 
 class UserController extends Controller
 {
@@ -42,6 +43,25 @@ class UserController extends Controller
       $this->render('user/registerForm', [
         // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
         'errors' => $errors
+      ]);
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
+
+  public function dashboardAction(RouteCollection $routes)
+  {
+    try {
+      // Si l'utilisateur n'est pas connecté ou connecté en Admin, on le redirige vers la page de login
+      if (SecurityTools::isLogged() === false || SecurityTools::isAdmin()) {
+        header('Location: ' . $routes->get('login')->getPath());
+      }
+
+      // charger la page dashboard.php
+      $this->render('user/dashboard', [
+        'user' => $_SESSION['user']
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
