@@ -14,6 +14,9 @@ use App\Tools\SecurityTools;
   <title>Money Bowl</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="faviconMyCrypto.png" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
@@ -80,7 +83,7 @@ use App\Tools\SecurityTools;
 
   </header>
 
-  <main class="p-md-3 flex-shrink-0">
+  <main class="p-md-3 flex-shrink-0 mb-5">
     <!-- Banner -->
     <div class="banner text-center pb-3">
       <h1 class="display-3 fw-bold text-white">Bienvenue sur Money Bowl</h1>

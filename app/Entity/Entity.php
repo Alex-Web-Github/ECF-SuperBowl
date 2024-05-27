@@ -27,7 +27,7 @@ class Entity
         if (method_exists($this, $methodName)) {
 
           // {$methodName}($value) est un appel dynamique de méthode, équivalent de $this->setFirstName($value);
-          $this->{$methodName}(strip_tags($value));
+          $this->{$methodName}($value);
         }
       }
     }

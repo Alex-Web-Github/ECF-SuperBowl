@@ -79,6 +79,7 @@
     </div>
 
     <div class="tab-pane " id="upcoming-tab-pane" role="tabpanel">
+      <h3 class="display-5 fw-bolder text-white text-center mb-4">Matches à venir</h3>
       <table class="table table-hover table-striped">
         <thead>
           <tr>

@@ -2,8 +2,8 @@
 <!-- Footer-->
 
 <footer class="text-white-50 mt-auto py-3">
-  <div class="container-md px-2">
-    <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+  <div class="container px-2">
+    <div class="row mx-0 align-items-center justify-content-between flex-column flex-sm-row">
       <div class="col-auto">
         <div class="small m-0 text-white">Money Bowl | <?= date('Y'); ?></div>
       </div>
@@ -17,8 +17,8 @@
 </footer>
 
 
-<script src="./js/bootstrap.bundle.min.js"></script>
-<script src="./js/custom.js"></script>
+<script type="javascript" src="/js/bootstrap.bundle.min.js"></script>
+<script type="javascript" src="/js/custom.js"></script>
 </body>
 
 </html>

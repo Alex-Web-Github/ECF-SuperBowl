@@ -35,8 +35,8 @@ if ($errors) {
           <div class="invalid-feedback"><?= $errors['password'] ?></div>
         <?php } ?>
       </div>
-      <div class="col text-center mt-4">
-        <button type="submit" name="loginUser" class="btn btn-primary mt-4">Je me connecte</button>
+      <div class="col-12 col-md-8 text-center mt-4">
+        <button type="submit" name="loginUser" class="btn btn-secondary mt-4">Je me connecte</button>
       </div>
     </form>
   </div>

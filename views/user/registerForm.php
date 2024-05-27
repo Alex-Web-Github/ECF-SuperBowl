@@ -44,7 +44,7 @@
       </div>
 
       <div class="col-12 text-center">
-        <button type="submit" name="saveUser" class="btn btn-primary mt-4">Je commence à jouer</button>
+        <button type="submit" name="saveUser" class="btn btn-secondary mt-4">Je commence à jouer</button>
       </div>
     </form>
   </div>

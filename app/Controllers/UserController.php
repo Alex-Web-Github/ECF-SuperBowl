@@ -41,7 +41,6 @@ class UserController extends Controller
 
       // charger la page registerForm.php
       $this->render('user/registerForm', [
-        // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
         'errors' => $errors
       ]);
     } catch (\Exception $e) {

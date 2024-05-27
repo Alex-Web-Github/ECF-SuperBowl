@@ -122,8 +122,7 @@ class User extends Entity
   }
 
   /*
-        Pourrait être déplacé dans une classe UserValidator
-        c'est juste pour vérifier si les champs sont bien remplis et l'email de type "email"
+      Pour vérifier si les champs sont bien remplis et l'email de type "email"
     */
   public function validate(): array
   {
@@ -138,6 +137,9 @@ class User extends Entity
       $errors['email'] = 'Le champ email ne doit pas être vide';
     } else if (!filter_var($this->getUserEmail(), FILTER_VALIDATE_EMAIL)) {
       $errors['email'] = 'L\'email n\'est pas valide';
+    }
+    if (empty($this->getUserPassword())) {
+      $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
     }
     return $errors;
   }

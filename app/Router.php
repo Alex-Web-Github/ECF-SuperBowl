@@ -40,12 +40,8 @@ class Router
 
       // On appelle la méthode de la classe correspondante
       call_user_func_array(array($classInstance, $matcher['method']), $params);
-    } catch (MethodNotAllowedException $e) {
-      echo 'Route method is not allowed.';
-    } catch (ResourceNotFoundException $e) {
-      echo 'Route does not exists.';
-    } catch (NoConfigurationException $e) {
-      echo 'Configuration does not exists.';
+    } catch (\Exception $e) {
+      require_once APP_ROOT . '/public/404.php';
     }
   }
 }

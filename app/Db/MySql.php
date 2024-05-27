@@ -31,7 +31,6 @@ class Mysql
 
   public static function getInstance(): self
   //// Design Pattern Singleton //////////////
-
   // Permet de n'avoir qu'une seule instance de la classe Mysql dans la mémoire de PHP et de la réutiliser à chaque fois que l'on en a besoin
   {
     if (is_null(self::$_instance)) {
