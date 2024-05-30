@@ -22,7 +22,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab" tabindex="0">
       <!-- Tableau de tous les matchs -->
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped table-rounded">
         <thead>
           <tr>
             <th scope="col">Équipe 1</th>
@@ -37,14 +37,14 @@
         </thead>
         <tbody class="table-group-divider">
           <tr>
-            <td>toto</td>
-            <td>titi</td>
-            <td>01/01/2000</td>
-            <td>20:30</td>
-            <td>22:00
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><span class="badge text-bg-warning">terminé</span></td>
-            <td>3-2</td>
-            <td><a href="#">
+            <td>SCORE</td>
+            <td><a href="#lien vers les détails du match">
                 <button type="button" class="btn btn-primary btn-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"></path>
@@ -59,7 +59,7 @@
     </div>
 
     <div class="tab-pane " id="live-tab-pane" role="tabpanel">
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped table-rounded">
         <thead>
           <tr>
             <th scope="col">Équipe 1</th>
@@ -79,8 +79,7 @@
     </div>
 
     <div class="tab-pane " id="upcoming-tab-pane" role="tabpanel">
-      <h3 class="display-5 fw-bolder text-white text-center mb-4">Matches à venir</h3>
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped table-rounded">
         <thead>
           <tr>
             <th scope="col">Équipe 1</th>
@@ -99,7 +98,7 @@
     </div>
 
     <div class="tab-pane " id="past-tab-pane" role="tabpanel">
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped table-rounded">
         <thead>
           <tr>
             <th scope="col">Équipe 1</th>

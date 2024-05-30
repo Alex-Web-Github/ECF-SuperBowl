@@ -11915,14 +11915,6 @@ textarea.form-control-lg {
 	--bs-nav-pills-link-active-color: #fff;
 	--bs-nav-pills-link-active-bg: var(--primary);
 } */
-.active > .page-link,
-.page-link.active {
-  z-index: 3;
-  color: var(--bs-pagination-active-color);
-  background-color: var(--primary);
-  border-color: var(--primary);
-}
-
 h1, .h1 {
   color: var(--primary);
 }
@@ -11965,6 +11957,21 @@ h3,
 }
 .match-item-link:hover {
   text-decoration: none;
+}
+
+.table-rounded {
+  border-radius: 5px;
+  overflow: hidden;
+}
+.table-rounded tbody tr th,
+.table-rounded tbody tr td,
+.table-rounded thead tr th,
+.table-rounded thead tr td {
+  padding: 10px 15px;
+}
+.table-rounded tbody tr:last-child,
+.table-rounded thead tr:last-child {
+  border-bottom: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

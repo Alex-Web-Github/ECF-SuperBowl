@@ -13,10 +13,7 @@ use App\Tools\SecurityTools;
   <meta name="description" content="Enfin une application de gestion intuitive pour suivre vos cryptos et gérer facilement vos gains" />
   <title>Money Bowl</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="faviconMyCrypto.png" />
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+  <link rel="icon" type="image/x-icon" href="favicon.png" />
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 

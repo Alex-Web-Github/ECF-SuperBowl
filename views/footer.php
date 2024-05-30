@@ -8,17 +8,18 @@
         <div class="small m-0 text-white">Money Bowl | <?= date('Y'); ?></div>
       </div>
       <div class="col-auto">
-        <a class="link-light small" href="#">Mentions légales</a>
+        <a class="link-light small" href="/">Mentions légales</a>
         <span class="text-white mx-1">&middot;</span>
-        <a class="link-light small" href="#">Contact</a>
+        <a class="link-light small" href="/">Contact</a>
       </div>
     </div>
   </div>
 </footer>
 
 
-<script type="javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script type="javascript" src="/js/custom.js"></script>
+<!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
+<script type="module" src="/js/bootstrap.bundle.min.js"></script>
+<script src="./js/custom.js"></script>
 </body>
 
 </html>

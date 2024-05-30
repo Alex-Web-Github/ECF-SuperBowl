@@ -25,3 +25,18 @@
     text-decoration: none;
   }
 }
+
+.table-rounded {
+  border-radius: 5px;
+  overflow: hidden;
+  tbody,
+  thead {
+    tr th,
+    tr td {
+      padding: 10px 15px;
+    }
+    & tr:last-child {
+      border-bottom: none;
+    }
+  }
+}
