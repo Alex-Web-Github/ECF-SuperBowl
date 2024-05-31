@@ -16,10 +16,9 @@
   </div>
 </footer>
 
-
 <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
 <script type="module" src="/js/bootstrap.bundle.min.js"></script>
-<script src="./js/custom.js"></script>
+<script type="module" src="/js/custom.js"></script>
 </body>
 
 </html>

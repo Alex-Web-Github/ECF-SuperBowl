@@ -39,7 +39,7 @@ class Router
       $params = array_merge(array_slice($matcher, 2, -1), array('routes' => $routes));
 
       // On appelle la méthode de la classe correspondante
-      call_user_func_array(array($classInstance, $matcher['method']), $params);
+      call_user_func_array(array($classInstance, $matcher['method']), array_values($params));
     } catch (\Exception $e) {
       require_once APP_ROOT . '/public/404.php';
     }

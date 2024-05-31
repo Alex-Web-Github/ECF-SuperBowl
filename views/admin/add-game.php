@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * Vue Formulaire de création de match dans l'espace administrateur
+ */
+?>
+
 <form class="row justify-content-center g-3 text-left mt-4 mx-0" action="/admin/dashboard" method="post">
 
   <!-- Date du match -->
@@ -27,15 +34,15 @@
 
   <!-- Équipe 1 -->
   <div class="col-md-6 mb-2">
-    <label for="team1" class="form-label text-white">Équipe 1</label>
-    <select class="form-select <?= (isset($errors['team1']) ? 'is-invalid' : '') ?>" id="team1" name="team1">
+    <label for="team1_id" class="form-label text-white">Équipe 1</label>
+    <select class="form-select <?= (isset($errors['team1_id']) ? 'is-invalid' : '') ?>" id="team1_id" name="team1_id">
       <option selected>Choisir une équipe</option>
       <?php foreach ($teams as $team) { ?>
         <option value="<?= $team->getTeamId() ?>"><?= $team->getTeamName() ?></option>
       <?php } ?>
     </select>
-    <?php if (isset($errors['team1'])) { ?>
-      <div class="invalid-feedback"><?= $errors['team1'] ?></div>
+    <?php if (isset($errors['team1_id'])) { ?>
+      <div class="invalid-feedback"><?= $errors['team1_id'] ?></div>
     <?php } ?>
   </div>
   <!-- Cote Équipe 1 -->
@@ -49,15 +56,15 @@
 
   <!-- Équipe 2 -->
   <div class="col-md-6 mb-2">
-    <label for="team2" class="form-label text-white">Équipe 2</label>
-    <select class="form-select <?= (isset($errors['team2']) ? 'is-invalid' : '') ?>" id="team2" name="team2">
+    <label for="team2_id" class="form-label text-white">Équipe 2</label>
+    <select class="form-select <?= (isset($errors['team2_id']) ? 'is-invalid' : '') ?>" id="team2_id" name="team2_id">
       <option selected>Choisir une équipe</option>
       <?php foreach ($teams as $team) { ?>
         <option value="<?= $team->getTeamId() ?>"><?= $team->getTeamName() ?></option>
       <?php } ?>
     </select>
-    <?php if (isset($errors['team2'])) { ?>
-      <div class="invalid-feedback"><?= $errors['team2'] ?></div>
+    <?php if (isset($errors['team2_id'])) { ?>
+      <div class="invalid-feedback"><?= $errors['team2_id'] ?></div>
     <?php } ?>
   </div>
   <!-- Cote Équipe 2 -->

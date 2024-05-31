@@ -1,7 +1,15 @@
+<?php
+
+/** 
+ * Vue du Dashboard de l'espace administrateur
+ * Utilise le Template Partial views/admin/add-game.php et views/admin/add-team.php
+ */
+?>
+
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <div class="container my-4 px-2">
-  <h2 class="display-5 fw-bolder text-white text-center mb-4">Espace Administrateur</h2>
+  <h2 class="display-6 fw-bolder text-white text-center mb-4">Espace Administrateur</h2>
 
   <!-- Navigation des matchs -->
   <ul class="nav nav-pills mb-4" id="myTab" role="tablist">
@@ -17,7 +25,7 @@
   <div class="tab-content">
     <!-- Bloc Matches -->
     <div class="tab-pane active" id="match" role="tabpanel" aria-labelledby="match-tab" tabindex="0">
-      <h3 class="display-5 fw-bolder text-white text-center mb-4">Créer un match</h3>
+      <h3 class="display-6 fw-bolder text-white text-center mb-4">Créer un match</h3>
 
       <?php require_once APP_ROOT . '/views/admin/add-game.php'; ?>
 
@@ -25,7 +33,7 @@
 
     <!-- bloc Équipes/Joueurs -->
     <div class="tab-pane" id="team" role="tabpanel" aria-labelledby="team-tab" tabindex="0">
-      <h3 class="display-5 fw-bolder text-white text-center mb-4">Créer une équipe</h3>
+      <h3 class="display-6 fw-bolder text-white text-center mb-4">Créer une équipe</h3>
 
       <?php require_once APP_ROOT . '/views/admin/add-team.php'; ?>
 

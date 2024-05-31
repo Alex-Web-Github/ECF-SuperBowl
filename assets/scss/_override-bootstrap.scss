@@ -14,6 +14,15 @@
   --bs-pagination-active-border-color: var(--primary);
 }
 
+h1 {
+  color: var(--primary);
+}
+
+h2,
+h3 {
+  color: var(--secondary);
+}
+
 .nav-underline {
   --bs-emphasis-color: #fff;
 }
@@ -75,15 +84,6 @@
 // 	background-color: var(--primary);
 // 	border-color: var(--primary);
 // }
-
-h1 {
-  color: var(--primary);
-}
-
-h2,
-h3 {
-  color: var(--secondary);
-}
 
 /* .card-img-top {
 	width: 100%;

@@ -2,85 +2,56 @@
 
 namespace App\Controllers;
 
-use App\Repository\GameRepository;
 use App\Entity\Game;
+use App\Repository\GameRepository;
+use App\Repository\TeamRepository;
+use App\Repository\PlayerRepository;
+
 
 class GameController extends Controller
 {
-  // public function list(): void
-  // {
-  //   $gameRepository = new GameRepository();
-  //   $games = $gameRepository->findAll();
-  //   $this->render('game/list', ['games' => $games]);
-  // }
+  // Afficher les données d'un match selon son Id
+  public function singleGameAction(int $gameId): void
+  {
+    try {
+      $errors = [];
 
-  // public function show(int $id): void
-  // {
-  //   $gameRepository = new GameRepository();
-  //   $game = $gameRepository->findOneById($id);
-  //   $this->render('game/show', ['game' => $game]);
-  // }
+      // Récupérer un Objet Game, correspondant à l'Id désiré
+      $game = new Game();
+      $gameRepository = new GameRepository();
+      $game = $gameRepository->findOneById($gameId);
 
-  // public function add(): void
-  // {
-  //   $this->render('game/add');
-  // }
+      // Récupérer les données de chaque équipe par leur Id
+      // Le retour est un Objet Team
+      $teamRepository = new TeamRepository();
+      $team1 = $teamRepository->findOneById($game->getTeam1Id());
+      $team2 = $teamRepository->findOneById($game->getTeam2Id());
+      // Récupérer un tableau contenant les id de chaque joueur de chaque équipe
+      $team1PlayersIdList = explode(",", $team1->getTeamPlayers());
+      $team2PlayersIdList = explode(",", $team2->getTeamPlayers());
+      // Récupérer un tableau contenant les objets Player de chaque joueur de chaque équipe
+      $playerRepository = new PlayerRepository();
+      foreach ($team1PlayersIdList as $playerId) {
+        $team1Players[] = $playerRepository->findOneById($playerId);
+      }
+      foreach ($team2PlayersIdList as $playerId) {
+        $team2Players[] = $playerRepository->findOneById($playerId);
+      }
 
-  // public function create(): void
-  // {
-  //   try {
-  //     $errors = [];
-  //     $game = new Game();
+      // Afficher la View game-data.php
+      $this->render('game/game-data', [
+        'game' => $game,
+        'team1Players' => $team1Players,
+        'team2Players' => $team2Players,
+        'errors' => $errors
+      ]);
+    } catch (\Exception $e) {
+      $errors[] = $e->getMessage();
 
-  //     if (isset($_POST['createGame'])) {
-  //       $game->hydrate($_POST);
-  //       die();
-  //       $gameRepository = new GameRepository();
-  //       die(var_dump($game));
-
-  //       $errors = $game->validate();
-
-  //       if (empty($errors)) {
-  //         $gameRepository->persist($game);
-  //       }
-  //       // $this->render('game/add', ['errors' => $errors]);
-  //     }
-  //   } catch (\Exception $e) {
-  //     $this->render('errors/default', [
-  //       'error' => $e->getMessage()
-  //     ]);
-  //   }
-  // }
-
-  // public function edit(int $id): void
-  // {
-  //   $gameRepository = new GameRepository();
-  //   $game = $gameRepository->findOneById($id);
-  //   $this->render('game/edit', ['game' => $game]);
-  // }
-
-  // public function update(int $id): void
-  // {
-  //   $gameRepository = new GameRepository();
-  //   $game = $gameRepository->findOneById($id);
-  //   $game->setGameDate($_POST['game_date']);
-  //   $game->setTeam1($_POST['team1']);
-  //   $game->setTeam2($_POST['team2']);
-  //   $game->setGameStartTime($_POST['game_start_time']);
-  //   $game->setGameEndTime($_POST['game_end_time']);
-  //   $game->setTeam1Odds($_POST['team1_odds']);
-  //   $game->setTeam2Odds($_POST['team2_odds']);
-
-  //   $gameRepository->persist($game);
-
-  //   header('Location: /game/list');
-  // }
-
-  // public function delete(int $id): void
-  // {
-  //   $gameRepository = new GameRepository();
-  //   $gameRepository->delete($id);
-
-  //   header('Location: /game/list');
-  // }
+      // Afficher la View error.php
+      $this->render('error', [
+        'errors' => $errors
+      ]);
+    }
+  }
 }

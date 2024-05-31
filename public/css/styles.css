@@ -11860,6 +11860,16 @@ textarea.form-control-lg {
   --bs-pagination-active-border-color: var(--primary);
 }
 
+h1, .h1 {
+  color: var(--primary);
+}
+
+h2, .h2,
+h3,
+.h3 {
+  color: var(--secondary);
+}
+
 .nav-underline {
   --bs-emphasis-color: #fff;
 }
@@ -11915,16 +11925,6 @@ textarea.form-control-lg {
 	--bs-nav-pills-link-active-color: #fff;
 	--bs-nav-pills-link-active-bg: var(--primary);
 } */
-h1, .h1 {
-  color: var(--primary);
-}
-
-h2, .h2,
-h3,
-.h3 {
-  color: var(--secondary);
-}
-
 /* .card-img-top {
 	width: 100%;
 	height: 15vw;
@@ -11960,8 +11960,12 @@ h3,
 }
 
 .table-rounded {
-  border-radius: 5px;
+  border-radius: 0.5rem;
   overflow: hidden;
+}
+.table-rounded tbody,
+.table-rounded thead {
+  border: none;
 }
 .table-rounded tbody tr th,
 .table-rounded tbody tr td,
@@ -11971,6 +11975,10 @@ h3,
 }
 .table-rounded tbody tr:last-child,
 .table-rounded thead tr:last-child {
+  border-bottom: none;
+}
+.table-rounded tbody tr:last-child td,
+.table-rounded thead tr:last-child td {
   border-bottom: none;
 }
 

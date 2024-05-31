@@ -27,16 +27,20 @@
 }
 
 .table-rounded {
-  border-radius: 5px;
+  border-radius: 0.5rem;
   overflow: hidden;
   tbody,
   thead {
+    border: none;
     tr th,
     tr td {
       padding: 10px 15px;
     }
     & tr:last-child {
       border-bottom: none;
+      & td {
+        border-bottom: none;
+      }
     }
   }
 }

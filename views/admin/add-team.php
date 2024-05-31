@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * Vue Formulaire d'ajout d'une équipe dans l'espace administrateur
+ */
+?>
+
 <form class="row g-3 text-left mt-4 mx-0" action="/admin/dashboard" method="post">
 
   <!-- Nom de l'équipe -->

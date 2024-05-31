@@ -8,14 +8,19 @@ class Game extends Entity
 {
   protected ?int $game_id = null;
   protected ?string $game_date = '';
-  protected ?int $team1 = null;
-  protected ?int $team2 = null;
+  protected ?int $team1_id = null;
+  protected ?int $team2_id = null;
   protected ?string $game_start = '';
   protected ?string $game_end = '';
   protected ?float $team1_odds = null;
   protected ?float $team2_odds = null;
+  protected ?string $team1_name = '';
+  protected ?string $team2_name = '';
+  protected ?string $game_status = '';
+  protected ?string $game_score = '';
+  protected ?string $game_weather = '';
 
-
+  // Validation du formulaire de création de match
   public function validate(): array
   {
     $errors = [];
@@ -24,12 +29,12 @@ class Game extends Entity
       $errors['game_date'] = 'La date ne doit pas être vide';
     }
 
-    if (empty($this->team1)) {
-      $errors['team1'] = 'L\'équipe 1 ne doit pas être vide';
+    if (empty($this->team1_id)) {
+      $errors['team1_id'] = 'L\'équipe 1 ne doit pas être vide';
     }
 
-    if (empty($this->team2) || $this->team1 === $this->team2) {
-      $errors['team2'] = 'L\'équipe 2 ne doit pas être vide et différente de l\'équipe 1';
+    if (empty($this->team2_id) || $this->team1_id === $this->team2_id) {
+      $errors['team2_id'] = 'L\'équipe 2 ne doit pas être vide et différente de l\'équipe 1';
     }
 
     if (empty($this->game_start)) {
@@ -70,7 +75,6 @@ class Game extends Entity
     return $errors;
   }
 
-
   /**
    * Get the value of game_id
    */
@@ -110,17 +114,17 @@ class Game extends Entity
   /**
    * Get the value of team1
    */
-  public function getTeam1(): ?string
+  public function getTeam1Id(): ?int
   {
-    return $this->team1;
+    return $this->team1_id;
   }
 
   /**
    * Set the value of team1
    */
-  public function setTeam1(?string $team1): self
+  public function setTeam1Id(?int $team1_id): self
   {
-    $this->team1 = intval($team1);
+    $this->team1_id = $team1_id;
 
     return $this;
   }
@@ -128,17 +132,17 @@ class Game extends Entity
   /**
    * Get the value of team2
    */
-  public function getTeam2(): ?string
+  public function getTeam2Id(): ?int
   {
-    return $this->team2;
+    return $this->team2_id;
   }
 
   /**
    * Set the value of team2
    */
-  public function setTeam2(?string $team2): self
+  public function setTeam2Id(?int $team2_id): self
   {
-    $this->team2 = intval($team2);
+    $this->team2_id = $team2_id;
 
     return $this;
   }
@@ -192,7 +196,7 @@ class Game extends Entity
    */
   public function setTeam1Odds(?float $team1_odds): self
   {
-    $this->team1_odds = floatval($team1_odds);
+    $this->team1_odds = $team1_odds;
 
     return $this;
   }
@@ -210,7 +214,97 @@ class Game extends Entity
    */
   public function setTeam2Odds(?float $team2_odds): self
   {
-    $this->team2_odds = floatval($team2_odds);
+    $this->team2_odds = $team2_odds;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of team1_name
+   */
+  public function getTeam1Name(): ?string
+  {
+    return $this->team1_name;
+  }
+
+  /**
+   * Set the value of team1_name
+   */
+  public function setTeam1Name(?string $team1_name): self
+  {
+    $this->team1_name = $team1_name;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of team2_name
+   */
+  public function getTeam2Name(): ?string
+  {
+    return $this->team2_name;
+  }
+
+  /**
+   * Set the value of team2_name
+   */
+  public function setTeam2Name(?string $team2_name): self
+  {
+    $this->team2_name = $team2_name;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of game_status
+   */
+  public function getGameStatus(): ?string
+  {
+    return $this->game_status;
+  }
+
+  /**
+   * Set the value of game_status
+   */
+  public function setGameStatus(?string $game_status): self
+  {
+    $this->game_status = $game_status;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of game_score
+   */
+  public function getGameScore(): ?string
+  {
+    return $this->game_score;
+  }
+
+  /**
+   * Set the value of game_score
+   */
+  public function setGameScore(?string $game_score): self
+  {
+    $this->game_score = $game_score;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of game_weather
+   */
+  public function getGameWeather(): ?string
+  {
+    return $this->game_weather;
+  }
+
+  /**
+   * Set the value of game_weather
+   */
+  public function setGameWeather(?string $game_weather): self
+  {
+    $this->game_weather = $game_weather;
 
     return $this;
   }

@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * Vue par défaut pour les erreurs
+ */
+?>
+
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <?php if ($error) { ?>

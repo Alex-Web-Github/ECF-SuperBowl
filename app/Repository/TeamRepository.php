@@ -42,4 +42,17 @@ class TeamRepository extends Repository
     }
     return $teamsList;
   }
+
+  public function findOneById(int $teamId): Team|bool
+  {
+    $query = $this->pdo->prepare("SELECT * FROM teams WHERE team_id = :team_id");
+    $query->bindValue(':team_id', $teamId, $this->pdo::PARAM_INT);
+    $query->execute();
+    $team = $query->fetch($this->pdo::FETCH_ASSOC);
+    if ($team) {
+      return Team::createAndHydrate($team);
+    } else {
+      return false;
+    }
+  }
 }

@@ -38,6 +38,7 @@ use App\Tools\SecurityTools;
             </li>
             <?php if (SecurityTools::islogged() === false) { ?>
               <li class="nav-item">
+                <!-- TODO: ajout de la class active sur le lien -->
                 <a class="nav-link <?= NavigationTools::addActiveClass('user', 'register') ?>" href="<?= constant('URL_SUBFOLDER') . '/register' ?>">Créer un compte</a>
               </li>
             <?php } ?>

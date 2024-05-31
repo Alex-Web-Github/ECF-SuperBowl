@@ -1,8 +1,11 @@
-<?php require_once APP_ROOT . '/views/header.php';
-/** 
- * @var \App\Entity\User $user 
+<?php
+
+/**
+ * Vue de la page de connexion 'LOGIN'
  */
 ?>
+<?php require_once APP_ROOT . '/views/header.php'; ?>
+
 <?php
 //Affichage des erreurs
 $errors = [];

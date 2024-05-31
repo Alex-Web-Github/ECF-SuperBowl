@@ -24,3 +24,7 @@ $routes->add('userDashboard', new Route(constant('URL_SUBFOLDER') . '/dashboard'
 
 // Page Dashboard Admin
 $routes->add('adminDashboard', new Route(constant('URL_SUBFOLDER') . '/admin/dashboard', array('controller' => 'AdminController', 'method' => 'dashboardAction'), array()));
+
+// Page Data Game selon l'Id
+$routes->add('game', new Route(constant('URL_SUBFOLDER') . '/game/{id}', array('controller' => 'GameController', 'method' => 'singleGameAction'), array('id' => '\d+')));
+// ici '\d+' signifie que l'on attend un nombre entier. Cela permet de sécuriser la route et d'éviter les injections SQL.
