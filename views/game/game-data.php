@@ -72,7 +72,7 @@ use App\Tools\SecurityTools;
               if ($game->getGameStatus() !== 'Terminé') : ?>
 
                 <?php if (SecurityTools::isLogged()) : ?>
-                  <a href="<?= constant('URL_SUBFOLDER') . '/miser' ?>" title="miser sur ce match">
+                  <a href="<?= constant('URL_SUBFOLDER') . '/bet/' . $game->getGameId() ?>" title="miser sur ce match">
                     <button class="btn btn-danger btn-sm " type="button">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
@@ -118,6 +118,7 @@ use App\Tools\SecurityTools;
 
     require APP_ROOT . '/views/team/team-data-partial.php';
     ?>
+
     <div class="px-md-2 px-lg-4"></div>
 
     <!-- Infos Équipe 2 -->

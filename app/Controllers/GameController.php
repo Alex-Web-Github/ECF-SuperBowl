@@ -26,9 +26,11 @@ class GameController extends Controller
       $teamRepository = new TeamRepository();
       $team1 = $teamRepository->findOneById($game->getTeam1Id());
       $team2 = $teamRepository->findOneById($game->getTeam2Id());
+
       // Récupérer un tableau contenant les id de chaque joueur de chaque équipe
       $team1PlayersIdList = explode(",", $team1->getTeamPlayers());
       $team2PlayersIdList = explode(",", $team2->getTeamPlayers());
+
       // Récupérer un tableau contenant les objets Player de chaque joueur de chaque équipe
       $playerRepository = new PlayerRepository();
       foreach ($team1PlayersIdList as $playerId) {

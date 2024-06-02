@@ -57,11 +57,10 @@ class AdminController extends Controller
 
         $game->hydrate($_POST);
 
-        $gameRepository = new GameRepository();
-
         $errors = $game->validate();
 
         if (empty($errors)) {
+          $gameRepository = new GameRepository();
           $gameRepository->persist($game);
           header('Location: ' . $routes->get('adminDashboard')->getPath());
         }

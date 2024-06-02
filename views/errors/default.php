@@ -3,13 +3,17 @@
 /**
  * Vue par défaut pour les erreurs
  */
+
+use Symfony\Component\Routing\RouteCollection;
 ?>
 
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <?php if ($error) { ?>
   <div class="alert alert-danger">
-    <?= $error; ?>
+    <p><?= $error; ?>
+      <a class="ps-2" href=" <?= constant('URL_SUBFOLDER') . '/' . $redirection ?>" title="Retour vers la page <?= $redirection ?>"> Retour vers la page <?= $redirection ?> -></a>
+    </p>
   </div>
 <?php } ?>
 
