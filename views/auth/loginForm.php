@@ -6,18 +6,6 @@
 ?>
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
-<?php
-//Affichage des erreurs
-$errors = [];
-if ($errors) {
-  foreach ($errors as $error) { ?>
-    <div class="alert alert-danger" role="alert">
-      <?= $error; ?>
-    </div>
-<?php }
-} ?>
-
-
 <div class="container d-flex mt-4 px-4">
 
   <div class="mt-5 row m-auto">
@@ -26,16 +14,16 @@ if ($errors) {
     <form class="d-flex flex-column align-items-center text-left mt-4" method="post">
       <div class="col mb-2">
         <label for="email" class="form-label text-white">E-mail</label>
-        <input type="email" class="form-control <?= (isset($errors['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
-        <?php if (isset($errors['email'])) { ?>
-          <div class="invalid-feedback"><?= $errors['email'] ?></div>
+        <input type="email" class="form-control <?= (isset($error['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
+        <?php if (isset($error['email'])) { ?>
+          <div class="invalid-feedback"><?= $error['email'] ?></div>
         <?php } ?>
       </div>
       <div class="col">
         <label for="password" class="form-label text-white">Mot de passe</label>
-        <input type="text" class="form-control <?= (isset($errors['password']) ? 'is-invalid' : '') ?>" id="password" name="password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
-        <?php if (isset($errors['password'])) { ?>
-          <div class="invalid-feedback"><?= $errors['password'] ?></div>
+        <input type="text" class="form-control <?= (isset($error['password']) ? 'is-invalid' : '') ?>" id="password" name="password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
+        <?php if (isset($error['password'])) { ?>
+          <div class="invalid-feedback"><?= $error['password'] ?></div>
         <?php } ?>
       </div>
       <div class="col-12 col-md-8 text-center mt-4">

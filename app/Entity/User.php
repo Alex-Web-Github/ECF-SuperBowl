@@ -12,6 +12,26 @@ class User extends Entity
   protected ?string $user_password = '';
   protected ?string $user_role = '';
 
+  public function validate(): array
+  {
+    $errors = [];
+    if (isset($_POST['saveUser']) && empty($this->getUserFirstName())) {
+      $errors['first_name'] = 'Le champ prénom ne doit pas être vide';
+    }
+    if (isset($_POST['saveUser']) && empty($this->getUserLastName())) {
+      $errors['last_name'] = 'Le champ nom ne doit pas être vide';
+    }
+    if (empty($this->getUserEmail())) {
+      $errors['email'] = 'Le champ email ne doit pas être vide';
+    } else if (!filter_var($this->getUserEmail(), FILTER_VALIDATE_EMAIL)) {
+      $errors['email'] = 'L\'email n\'est pas valide';
+    }
+    if (empty($this->getUserPassword())) {
+      $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
+    }
+    return $errors;
+  }
+
 
   /**
    * Get the value of user_id
@@ -119,28 +139,5 @@ class User extends Entity
     $this->user_role = $user_role;
 
     return $this;
-  }
-
-  /*
-      Pour vérifier si les champs sont bien remplis et l'email de type "email"
-    */
-  public function validate(): array
-  {
-    $errors = [];
-    if (empty($this->getUserFirstName())) {
-      $errors['first_name'] = 'Le champ prénom ne doit pas être vide';
-    }
-    if (empty($this->getUserLastName())) {
-      $errors['last_name'] = 'Le champ nom ne doit pas être vide';
-    }
-    if (empty($this->getUserEmail())) {
-      $errors['email'] = 'Le champ email ne doit pas être vide';
-    } else if (!filter_var($this->getUserEmail(), FILTER_VALIDATE_EMAIL)) {
-      $errors['email'] = 'L\'email n\'est pas valide';
-    }
-    if (empty($this->getUserPassword())) {
-      $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
-    }
-    return $errors;
   }
 }
