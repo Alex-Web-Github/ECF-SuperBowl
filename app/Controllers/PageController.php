@@ -27,6 +27,7 @@ class PageController extends Controller
       $gameRepositiory->updateStatus($nowTime, $nowDate);
 
       // 2. Récupérer tous les Games sous la forme d'un tableau d'objets Game
+      // nb: je ne fais qu'une seule requête SQL puis je trierai après les Games en fonction de leur Status
       $gamesList[] = $gameRepositiory->findAll();
 
       // 3. Récupérer la liste des Games suivant le Status

@@ -34,7 +34,7 @@ use App\Tools\SecurityTools;
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', 'home') ?>" href=" <?= constant('URL_SUBFOLDER') . '/' ?>">Tous les matchs</a>
             </li>
-            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', '') ?>" href="<?= constant('URL_SUBFOLDER') . '/' ?>">Parier</a>
+            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', '') ?>" href="<?= constant('URL_SUBFOLDER') . '/bet/multiple' ?>">Parier</a>
             </li>
             <?php if (SecurityTools::islogged() === false) { ?>
               <li class="nav-item">

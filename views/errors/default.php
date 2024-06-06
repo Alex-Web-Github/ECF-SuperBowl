@@ -9,14 +9,14 @@
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <?php if ($error) { ?>
-  <div class="container alert alert-danger mt-4 p-4 bg-light rounded-3">
-    <span><?= $error; ?>
-
-      <?php if (isset($redirection)) { ?>
-        <a class="ps-2 text-decoration-none fw-bold" href=" <?= constant('URL_SUBFOLDER') . '/' . $redirection ?>" title="Retour vers la page <?= $redirection ?>"> Retour vers la page <?= $redirection ?> -></a>
+  <div class="d-flex justify-content-center px-2">
+    <div class="d-inline-flex flex-column flex-row-md mt-4 p-4 bg-light rounded-3">
+      <p><?= $error; ?></p>
+      <?php if (isset($redirection_slug) && isset($redirection_text)) { ?>
+        <a class="ps-2 text-decoration-none fw-bold text-secondary" href=" <?= constant('URL_SUBFOLDER') . $redirection_slug ?>" title="<?= $redirection_text ?>"><?= $redirection_text ?> -></a>
       <?php } ?>
 
-    </span>
+    </div>
   </div>
 <?php } ?>
 

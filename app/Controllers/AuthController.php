@@ -68,7 +68,8 @@ class AuthController extends Controller
     } catch (\Exception $e) {
       $this->render('errors/default', [
         'error' => $e->getMessage(),
-        'redirection' => 'login'
+        'redirection_slug' => '/login',
+        'redirection_text' => 'Retour vers la page Connexion'
       ]);
     }
   }

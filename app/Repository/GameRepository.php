@@ -88,4 +88,21 @@ class GameRepository extends Repository
     }
     return false;
   }
+
+  public function findUpComingGames(): array|bool
+  {
+    $query = $this->pdo->prepare("SELECT games.*, teams.team_name AS team1_name, teams2.team_name AS team2_name FROM games JOIN teams ON games.team1_id = teams.team_id JOIN teams AS teams2 ON games.team2_id = teams2.team_id WHERE game_status = 'A venir' ORDER BY game_date DESC, game_start DESC");
+    $query->execute();
+    $upcomingGames = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    $gamesList = [];
+
+    if ($upcomingGames) {
+      foreach ($upcomingGames as $upcomingGame) {
+        $gamesList[] = Game::createAndHydrate($upcomingGame);
+      }
+      return $gamesList;
+    } else {
+      return false;
+    }
+  }
 }

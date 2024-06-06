@@ -31,3 +31,6 @@ $routes->add('game', new Route(constant('URL_SUBFOLDER') . '/game/{id}', array('
 
 // Page pour Miser sur un match donné
 $routes->add('bet', new Route(constant('URL_SUBFOLDER') . '/bet/{id}', array('controller' => 'BetController', 'method' => 'betAction'), array('id' => '\d+')));
+
+// Page pour parier sur une sélection de matchs
+$routes->add('betMultiple', new Route(constant('URL_SUBFOLDER') . '/bet/multiple', array('controller' => 'BetController', 'method' => 'betMultipleAction'), array()));

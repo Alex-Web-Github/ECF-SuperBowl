@@ -105,4 +105,71 @@ class BetController extends Controller
       ]);
     }
   }
+
+  public function betMultipleAction(): void
+  {
+    try {
+      $errors = [];
+      $gamesList = [];
+
+      // On vérifie que l'utilisateur est connecté
+      // if (!SecurityTools::isLogged()) {
+      //   header('Location: ' . constant('URL_SUBFOLDER') . '/login');
+      //   exit();
+      // }
+
+      // On récupère les matchs sur lesquels l'utilisateur peut miser (ie: status='A venir')
+      $gameRepository = new GameRepository();
+      $gamesList = $gameRepository->findUpcomingGames();
+
+      // Si aucun match n'est disponible, on redirige l'utilisateur vers la page d'accueil
+      if (!$gamesList) {
+        throw new \Exception('Aucun match disponible pour le moment.');
+      }
+
+
+      // On vérifie que le formulaire a été soumis
+      // if (isset($_POST['submitBetMultiple'])) {
+      //   // On récupère l'Id de l'utilisateur connecté
+      //   $userId = SecurityTools::getCurrentUserId();
+
+      //   // On récupère les données du formulaire
+      //   $bets = $_POST['bets'];
+
+      //   // On valide les données
+      //   foreach ($bets as $bet) {
+      //     $bet['bet_amount1'] = floatval($bet['bet_amount1']);
+      //     $bet['bet_amount2'] = floatval($bet['bet_amount2']);
+
+      //     $errors = (new Bet($bet))->validate();
+      //     if (!empty($errors)) {
+      //       break;
+      //     }
+      //   }
+
+      //   // S'il n'y a pas d'erreurs
+      //   if (empty($errors)) {
+      //     // On enregistre les mises en base de données
+      //     $betRepository = new BetRepository();
+      //     $betRepository->persistMultiple($bets, $userId);
+
+      //     // On redirige l'utilisateur vers son dashboard
+      //     header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
+      //     exit();
+      //   }
+      // }
+
+      // On affiche la vue
+      $this->render('bet/betMultipleForm', [
+        'games' => $gamesList,
+        'errors' => $errors,
+      ]);
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_slug' => '/',
+        'redirection_text' => 'Retour vers la page Accueil'
+      ]);
+    }
+  }
 }
