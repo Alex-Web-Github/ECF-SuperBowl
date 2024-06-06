@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Template de la vue game/game-data.php
- * Utilise le Template Partial views/team/team-data-partial.php
+ * Template de la vue 'Détails du match' dans /views/game/game-data.php
+ * Les infos de chaque Équipe sont affichées ce Template Partial views/team/team-data-partial.php
  */
 
 use App\Tools\SecurityTools;
@@ -56,6 +56,7 @@ use App\Tools\SecurityTools;
             <td>
               <div class="ps-3"><?= $game->getGameWeather() ?></div>
             </td>
+
             <?php if ($game->getGameStatus() == 'En cours') : ?>
               <td><span id="statusBadge" class="badge text-bg-danger"><?= $game->getGameStatus() ?></span></td>
             <?php elseif ($game->getGameStatus() == 'Terminé') : ?>
@@ -69,11 +70,10 @@ use App\Tools\SecurityTools;
             <?php endif; ?>
             <td>
               <?php
-              if ($game->getGameStatus() !== 'Terminé') : ?>
-
+              if ($game->getGameStatus() === 'A venir') : ?>
                 <?php if (SecurityTools::isLogged()) : ?>
                   <a href="<?= constant('URL_SUBFOLDER') . '/bet/' . $game->getGameId() ?>" title="miser sur ce match">
-                    <button class="btn btn-danger btn-sm " type="button">
+                    <button class="btn btn-primary " type="button">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
                         <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z" />
@@ -84,9 +84,10 @@ use App\Tools\SecurityTools;
                     </button>
                   </a>
                 <?php
+
                 // Le bouton déclenche une Modal pour se connecter
                 else : ?>
-                  <button class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button class="btn btn-primary " type="button" data-bs-toggle="modal" data-bs-target="#betAuthModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
                       <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z" />
@@ -156,11 +157,11 @@ use App\Tools\SecurityTools;
 </div>
 
 <!-- Modal si l'utilisateur !isLogged -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="betAuthModal" tabindex="-1" aria-labelledby="betAuthModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Avertissement :</h1>
+        <h1 class="modal-title fs-5" id="betAuthModalLabel">Avertissement :</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body fs-bold fs-5">

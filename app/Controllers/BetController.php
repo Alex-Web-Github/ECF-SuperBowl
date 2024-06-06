@@ -30,7 +30,7 @@ class BetController extends Controller
       $game = $gameRepository->findOneById($id);
 
       // Redirection si le match n'existe pas ou est terminé
-      if (!$game || $game->getGameStatus() === 'Terminé') {
+      if (!$game || $game->getGameStatus() === 'Terminé' || $game->getGameStatus() === 'En cours') {
         header('Location: ' . constant('URL_SUBFOLDER') . '/');
         exit();
       }
