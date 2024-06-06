@@ -5,7 +5,7 @@
  */
 ?>
 <div class="table-responsive-lg">
-  <table class="table table-hover table-striped table-rounded">
+  <table class="table table-hover table-light table-striped table-rounded">
     <thead>
       <tr>
         <th scope="col">Équipe 1</th>

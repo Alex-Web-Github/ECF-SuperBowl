@@ -12,7 +12,7 @@
   </div>
   <div class="my-3 px-2">Cote : <span class="fw-bold ps-1"><?= $odds ?></span></div>
   <div class="table-responsive">
-    <table class="table table-sm table-hover table-striped table-rounded h-100">
+    <table class="table table-sm table-hover table-light table-striped table-rounded h-100">
       <thead>
         <tr class="table-secondary">
           <th scope="col">Prénom</th>

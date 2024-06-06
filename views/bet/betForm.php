@@ -19,7 +19,7 @@
     <div class="row mt-4 mx-0">
       <!-- Bloc Infos 1 -->
       <div class="col-lg mx-lg-2 p-3 mb-2 bg-light rounded-3">
-        <table class="table table-hover table-striped table-rounded h-100">
+        <table class="table table-hover table-light table-striped table-rounded h-100">
           <thead>
             <tr>
               <th scope="col">Équipe 1</th>
@@ -47,7 +47,7 @@
 
       <!-- Bloc Infos 2 -->
       <div class="col-lg mx-lg-2 p-3 mb-2 bg-light rounded-3">
-        <table class="table table-hover table-striped table-rounded h-100">
+        <table class="table table-hover table-light table-striped table-rounded h-100">
           <thead>
             <tr>
               <th scope="col">Équipe 2</th>

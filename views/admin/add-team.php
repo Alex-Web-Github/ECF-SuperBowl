@@ -42,7 +42,7 @@
   <div class="col-md-6 mb-2" id="playersList">
     <label class="form-label text-white">Liste des 11 joueurs</label>
 
-    <table class="table table-sm table-responsive table-striped table-rounded">
+    <table class="table table-sm table-light table-responsive table-striped table-rounded">
       <thead>
         <tr>
           <th scope="col">Prénom</th>

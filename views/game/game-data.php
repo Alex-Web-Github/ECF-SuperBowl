@@ -17,7 +17,7 @@ use App\Tools\SecurityTools;
   <div class="row mx-0">
     <!-- Bloc Infos 1 -->
     <div class="col-lg-7 table-responsive-lg mb-2 px-0">
-      <table class="table table-hover table-striped table-rounded h-100">
+      <table class="table table-hover table-light table-striped table-rounded h-100">
         <thead>
           <tr>
             <th scope="col">Équipe 1</th>
@@ -41,7 +41,7 @@ use App\Tools\SecurityTools;
     </div>
     <!-- Bloc Infos 2 -->
     <div class="col-lg-4 offset-lg-1 table-responsive-lg mb-2 px-0">
-      <table class="table table-hover table-striped table-rounded h-100">
+      <table class="table table-hover table-light table-striped table-rounded h-100">
         <thead>
           <tr>
             <th scope="col">Météo</th>
@@ -135,7 +135,7 @@ use App\Tools\SecurityTools;
   <!-- Bloc Score & Commentaires  -->
   <!-- <div class="row mx-0">
     <div class="col table-responsive-lg mb-2">
-      <table class="table table-hover table-striped table-rounded h-100">
+      <table class="table table-hover table-light table-striped table-rounded h-100">
         <thead>
           <tr>
             <th scope="col">Score</th>

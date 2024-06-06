@@ -17,7 +17,7 @@ use App\Tools\SecurityTools;
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="d-flex flex-column h-100" style="background-color: #1c3934;">
+<body class="d-flex flex-column h-100">
 
   <header class="header-fixed">
     <div class="container-md px-2">
@@ -81,10 +81,10 @@ use App\Tools\SecurityTools;
 
   </header>
 
-  <main class="p-md-3 flex-shrink-0 mb-5">
+  <main class="flex-shrink-0 mb-5">
     <!-- Banner -->
     <div class="banner text-center pb-3">
-      <h1 class="display-3 fw-bold text-white">Bienvenue sur Money Bowl</h1>
-      <p class="lead text-white">Parier et gagner sur tous les matches du SuperBowl 2024</p>
+      <h1 class="display-5 fw-bold text-white">Money Bowl<span class="ps-md-2 fs-5 fw-light d-block d-md-inline">paris sportifs en ligne</span></h1>
+      <p class="fs-5 fw-normal fst-italic lead text-white pt-0 pt-md-2">Misez tout sur le Football Américain !</p>
     </div>
     <!-- Banner -->
