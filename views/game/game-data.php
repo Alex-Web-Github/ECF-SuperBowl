@@ -9,6 +9,11 @@ use App\Tools\SecurityTools;
 
 ?>
 
+<?php
+// Modal si l'utilisateur !isLogged
+require_once APP_ROOT . '/views/auth/login-modal.php';
+?>
+
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <div class="container-md my-4 px-2">
@@ -59,18 +64,18 @@ use App\Tools\SecurityTools;
 
             <td>
               <span class="badge 
-    <?php
-    switch ($game->getGameStatus()) {
-      case 'En cours':
-        echo 'text-bg-danger';
-        break;
-      case 'Terminé':
-        echo 'text-bg-success';
-        break;
-      default:
-        echo 'text-bg-warning';
-    }
-    ?>">
+              <?php
+              switch ($game->getGameStatus()) {
+                case 'En cours':
+                  echo 'text-bg-danger';
+                  break;
+                case 'Terminé':
+                  echo 'text-bg-success';
+                  break;
+                default:
+                  echo 'text-bg-warning';
+              }
+              ?>">
                 <?= $game->getGameStatus() ?>
               </span>
             </td>
@@ -116,8 +121,6 @@ use App\Tools\SecurityTools;
                 </a>
 
               <?php endif; ?>
-
-
             </td>
           </tr>
 
@@ -171,30 +174,6 @@ use App\Tools\SecurityTools;
     </div>
   </div> -->
 
-</div>
-
-<!-- Modal si l'utilisateur !isLogged -->
-<div class="modal fade" id="betAuthModal" tabindex="-1" aria-labelledby="betAuthModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bg-light">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="betAuthModalLabel">Avertissement :</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body fs-bold fs-5">
-        Pour miser il faut être connecté...
-      </div>
-      <div class="modal-footer">
-        <a href="<?= constant('URL_SUBFOLDER') . '/register' ?>" title="Créer un compte">
-          <button type="button" class="btn btn-secondary">S'inscrire</button>
-        </a>
-
-        <a href="<?= constant('URL_SUBFOLDER') . '/login' ?>" title="Connexion">
-          <button type="button" class="btn btn-primary">Se connecter</button>
-        </a>
-      </div>
-    </div>
-  </div>
 </div>
 
 

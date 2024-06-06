@@ -121,7 +121,16 @@ form {
   border-radius: $border-radius;
   input,
   select {
-    background-color: $light !important;
+    background-color: $secondary !important;
+  }
+  & input.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    background-color: unset !important;
+    border: 0.15rem solid $secondary !important;
+    &:checked {
+      background-color: $secondary !important;
+    }
   }
 }
 

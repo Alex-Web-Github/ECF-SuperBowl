@@ -84,9 +84,7 @@ class BetController extends Controller
         if (empty($errors)) {
           // On enregistre la mise en base de données
           $betRepository = new BetRepository();
-
           $betRepository->persist($bet);
-
 
           // On redirige l'utilisateur vers son dashboard
           header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
@@ -110,15 +108,9 @@ class BetController extends Controller
   {
     try {
       $errors = [];
-      $gamesList = [];
+      $errors['betSelection'] = '';
 
-      // On vérifie que l'utilisateur est connecté
-      // if (!SecurityTools::isLogged()) {
-      //   header('Location: ' . constant('URL_SUBFOLDER') . '/login');
-      //   exit();
-      // }
-
-      // On récupère les matchs sur lesquels l'utilisateur peut miser (ie: status='A venir')
+      // On récupère les matchs sur lesquels l'utilisateur peut miser (ie: avec un status 'A venir')
       $gameRepository = new GameRepository();
       $gamesList = $gameRepository->findUpcomingGames();
 
@@ -127,42 +119,32 @@ class BetController extends Controller
         throw new \Exception('Aucun match disponible pour le moment.');
       }
 
+      // On vérifie que le formulaire a été soumis te n'est pas vide
+      if (isset($_POST['submitBetSelection']) && !empty($_POST['games'])) {
 
-      // On vérifie que le formulaire a été soumis
-      // if (isset($_POST['submitBetMultiple'])) {
-      //   // On récupère l'Id de l'utilisateur connecté
-      //   $userId = SecurityTools::getCurrentUserId();
+        // On récupère l'Id de l'utilisateur connecté
+        $userId = SecurityTools::getCurrentUserId();
 
-      //   // On récupère les données du formulaire
-      //   $bets = $_POST['bets'];
+        // Je récupère les Id des Games sélectionnés
+        $gameSelectionArray = [];
+        foreach ($_POST['games'] as $gameId) {
+          $gameSelectionArray[] = $gameId;
+        }
+        $gameSelectionList = implode(", ", $gameSelectionArray);
+        die(var_dump($gameSelectionList));
 
-      //   // On valide les données
-      //   foreach ($bets as $bet) {
-      //     $bet['bet_amount1'] = floatval($bet['bet_amount1']);
-      //     $bet['bet_amount2'] = floatval($bet['bet_amount2']);
+        //   // On redirige l'utilisateur vers son dashboard
+        //   header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
+        //   exit();
+        // }
+      } elseif (isset($_POST['submitBetSelection']) && empty($_POST['games'])) {
+        $errors['betSelection'] = 'Sélectionnez au moins un match .';
+      }
 
-      //     $errors = (new Bet($bet))->validate();
-      //     if (!empty($errors)) {
-      //       break;
-      //     }
-      //   }
-
-      //   // S'il n'y a pas d'erreurs
-      //   if (empty($errors)) {
-      //     // On enregistre les mises en base de données
-      //     $betRepository = new BetRepository();
-      //     $betRepository->persistMultiple($bets, $userId);
-
-      //     // On redirige l'utilisateur vers son dashboard
-      //     header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
-      //     exit();
-      //   }
-      // }
-
-      // On affiche la vue
+      // On affiche la vue betMultipleForm.php
       $this->render('bet/betMultipleForm', [
-        'games' => $gamesList,
-        'errors' => $errors,
+        'gamesList' => $gamesList ?? [],
+        'error' => $errors ?? [],
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [

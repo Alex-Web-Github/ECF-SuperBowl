@@ -10677,7 +10677,16 @@ form {
 }
 form input,
 form select {
-  background-color: #f8f9fa !important;
+  background-color: #1c3934 !important;
+}
+form input.form-check-input {
+  width: 1.2em;
+  height: 1.2em;
+  background-color: unset !important;
+  border: 0.15rem solid #1c3934 !important;
+}
+form input.form-check-input:checked {
+  background-color: #1c3934 !important;
 }
 
 /**

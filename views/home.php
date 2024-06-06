@@ -28,7 +28,6 @@
   <div class="tab-content">
     <div class="tab-pane active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab" tabindex="0">
       <?php
-      // Affichage de tous les Games
       require APP_ROOT . '/views/game/games-list.php'; ?>
     </div>
 
@@ -54,7 +53,5 @@
     </div>
 
   </div>
-
-  <!-- All matchs -->
 
   <?php require_once APP_ROOT . '/views/footer.php'; ?>

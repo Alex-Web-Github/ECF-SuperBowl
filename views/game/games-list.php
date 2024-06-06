@@ -3,6 +3,8 @@
 /**
  * Vue de la liste des matchs sur la page d'accueil dans /views/home.php 
  */
+
+use App\Tools\SecurityTools;
 ?>
 <div class="table-responsive-lg">
   <table class="table table-hover table-light table-striped table-rounded">
@@ -16,6 +18,7 @@
         <th scope="col">Status</th>
         <th scope="col">Score</th>
         <th scope="col">Détails</th>
+        <th scope="col">Parier</th>
       </tr>
     </thead>
 
@@ -28,18 +31,28 @@
             <td><?= $game->getGameDate() ?></td>
             <td><?= $game->getGameStart() ?></td>
             <td><?= $game->getGameEnd() ?></td>
-            <?php if ($game->getGameStatus() == 'En cours') : ?>
-              <td><span class="badge text-bg-danger"><?= $game->getGameStatus() ?></span></td>
-            <?php elseif ($game->getGameStatus() == 'Terminé') : ?>
-              <td><span class="badge text-bg-success"><?= $game->getGameStatus() ?></span></td>
-            <?php else : ?>
-              <td><span class="badge text-bg-warning"><?= $game->getGameStatus() ?></span></td>
-            <?php endif; ?>
-            <?php if ($game->getGameStatus() === 'Terminé' || $game->getGameStatus() === 'En cours') : ?>
-              <td><?= $game->getGameScore() ?></td>
-            <?php else : ?>
-              <td>-</td>
-            <?php endif; ?>
+            <td>
+              <span class="badge 
+                <?php
+                switch ($game->getGameStatus()) {
+                  case 'En cours':
+                    echo 'text-bg-danger';
+                    break;
+                  case 'Terminé':
+                    echo 'text-bg-success';
+                    break;
+                  case 'A venir':
+                    echo 'text-bg-info';
+                    break;
+                  default:
+                    echo 'text-bg-warning';
+                }
+                ?>">
+                <?= $game->getGameStatus() ?>
+              </span>
+            </td>
+            <td><?= $game->getGameScore() ? $game->getGameScore() : '-' ?></td>
+
             <td>
               <a href="<?= constant('URL_SUBFOLDER') . '/game/' . $game->getGameId(); ?>" title="les détails du match">
                 <button type="button" class="btn btn-outline-primary btn-sm">
@@ -49,6 +62,22 @@
                   infos
                 </button>
               </a>
+            </td>
+            <td>
+              <?php if (SecurityTools::isLogged()) : ?>
+                <div class="form-check">
+                  <label class="form-check-label" for="myCheck"></label>
+                  <input class="form-check-input <?= (!empty($error['betSelection']) ? 'is-invalid' : '') ?>" type="checkbox" id="game<?= $game->getGameId(); ?>" name="games[]" value="<?= $game->getGameId(); ?>">
+                  <?php if (isset($error['betSelection'])) { ?>
+                    <div class="invalid-feedback"><?= $error['betSelection'] ?></div>
+                  <?php } ?>
+                </div>
+
+              <?php else : ?>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" disabled>
+                </div>
+              <?php endif; ?>
             </td>
           </tr>
         <?php endforeach; ?>
