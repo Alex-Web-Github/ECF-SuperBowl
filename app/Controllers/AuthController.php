@@ -18,13 +18,7 @@ class AuthController extends Controller
 
       if (isset($_POST['loginUser'])) {
 
-        // TODO : filtrer les données reçues du formulaire directement dans la méthode Hydrate() ou ici :
-        // Je filtre ci-dessous contre les failles XSS
-        // $email = strip_tags($_POST['email']);
-        // $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
-
-        // $password = strip_tags($_POST['password']);
-        // $password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+        // TODO : filtrer les données reçues du formulaire contre les failles XSS directement dans la méthode Hydrate() ou ici ...
 
         // Je valide les champs envoyés par le formulaire
         if (empty($_POST['email']) || empty($_POST['password'])) {
@@ -63,7 +57,7 @@ class AuthController extends Controller
       // charger la page loginForm.php
       $this->render('auth/loginForm', [
         // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
-        'error' => $errors,
+        'errors' => $errors
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
