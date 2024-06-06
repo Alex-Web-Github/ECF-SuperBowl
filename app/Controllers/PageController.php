@@ -43,9 +43,9 @@ class PageController extends Controller
       // Afficher la View home.php
       $this->render('home', [
         'gamesList' => $gamesList[0],
-        'upcomingGames' => $gamesList['upcoming'],
-        'liveGames' => $gamesList['live'],
-        'pastGames' => $gamesList['past'],
+        'upcomingGames' => $gamesList['upcoming'] ?? [],
+        'liveGames' => $gamesList['live'] ?? [],
+        'pastGames' => $gamesList['past'] ?? [],
         'errors' => $errors
       ]);
     } catch (\Exception $e) {

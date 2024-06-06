@@ -56,20 +56,28 @@ use App\Tools\SecurityTools;
             <td>
               <div class="ps-3"><?= $game->getGameWeather() ?></div>
             </td>
-            <?php if ($game->getGameStatus() == 'En cours') : ?>
-              <td><span id="statusBadge" class="badge text-bg-danger"><?= $game->getGameStatus() ?></span></td>
-            <?php elseif ($game->getGameStatus() == 'Terminé') : ?>
-              <td><span id="statusBadge" class="badge text-bg-success"><?= $game->getGameStatus() ?></span></td>
-            <?php else : ?>
-              <td><span id="statusBadge" class="badge text-bg-warning"><?= $game->getGameStatus() ?></span></td>
-            <?php endif; ?>
-            <?php if ($game->getGameStatus() === 'Terminé' || $game->getGameStatus() === 'En cours') : ?>
-            <?php else : ?>
 
-            <?php endif; ?>
+            <td>
+              <span class="badge 
+    <?php
+    switch ($game->getGameStatus()) {
+      case 'En cours':
+        echo 'text-bg-danger';
+        break;
+      case 'Terminé':
+        echo 'text-bg-success';
+        break;
+      default:
+        echo 'text-bg-warning';
+    }
+    ?>">
+                <?= $game->getGameStatus() ?>
+              </span>
+            </td>
+
             <td>
               <?php
-              if ($game->getGameStatus() !== 'Terminé') : ?>
+              if ($game->getGameStatus() === 'A venir') : ?>
 
                 <?php if (SecurityTools::isLogged()) : ?>
                   <a href="<?= constant('URL_SUBFOLDER') . '/bet/' . $game->getGameId() ?>" title="miser sur ce match">
@@ -84,7 +92,7 @@ use App\Tools\SecurityTools;
                     </button>
                   </a>
                 <?php
-                // Le bouton déclenche une Modal pour se connecter
+                // Si User non connecté : le bouton 'Miser' déclenche la Modal pour se connecter
                 else : ?>
                   <button class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
@@ -98,8 +106,17 @@ use App\Tools\SecurityTools;
                 <?php endif; ?>
 
               <?php else : ?>
-                <div class="ps-3">-</div>
+                <a href="<?= constant('URL_SUBFOLDER') . '/' ?>" title="retour à l'Accueil">
+                  <button class="btn d-flex align-items-center text-decoration-none" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg>
+                    Retour
+                  </button>
+                </a>
               <?php endif; ?>
+
+
             </td>
           </tr>
 

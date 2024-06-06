@@ -12,7 +12,7 @@ use Symfony\Component\Routing\RouteCollection;
 <?php if ($error) { ?>
   <div class="alert alert-danger">
     <p><?= $error; ?>
-      <a class="ps-2" href=" <?= constant('URL_SUBFOLDER') . '/' . $redirection ?>" title="Retour vers la page <?= $redirection ?>"> Retour vers la page <?= $redirection ?> -></a>
+      <a class="" href=" <?= constant('URL_SUBFOLDER') . '/' . $redirection ?>" title="Retour vers la page <?= $redirection ?>"> Retour vers la page <?= $redirection ?> -></a>
     </p>
   </div>
 <?php } ?>
