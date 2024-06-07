@@ -24,12 +24,12 @@ class BetController extends Controller
         exit();
       }
 
-      // On récupère les infos du match ($game) sur lequel l'utilisateur veut miser
+      // On récupère les infos du Game sur lequel l'utilisateur veut miser
       $game = new Game();
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($id);
 
-      // Redirection si le match n'existe pas ou est terminé
+      // Redirection si le match n'existe pas ou est terminé ou en cours
       if (!$game || $game->getGameStatus() === 'Terminé' || $game->getGameStatus() === 'En cours') {
         header('Location: ' . constant('URL_SUBFOLDER') . '/');
         exit();
@@ -43,7 +43,7 @@ class BetController extends Controller
       $existingBet = $betRepository->findOneByGameAndUser($id, $userId);
 
       if ($existingBet) {
-        // On récupère les Data de la mise déjà existante pour les afficher dans la View.
+        // On récupère les Data de la mise déjà existante pour les afficher dans les champs Input du formulaire
         $existingBet->setBetAmount1(floatval($existingBet->getBetAmount1()));
         $existingBet->setBetAmount2(floatval($existingBet->getBetAmount2()));
         // On crée un message d'erreur pour informer l'utilisateur qu'il a déjà misé sur ce match et exporter ces données dans la vue.
@@ -119,7 +119,7 @@ class BetController extends Controller
         throw new \Exception('Aucun match disponible pour le moment.');
       }
 
-      // SUBMIT : On vérifie que le formulaire a été soumis te n'est pas vide
+      // On vérifie que le formulaire a été soumis et n'est pas vide
       if (isset($_POST['submitBetSelection']) && !empty($_POST['games'])) {
 
         // On récupère l'Id de l'utilisateur connecté
@@ -158,10 +158,17 @@ class BetController extends Controller
       $errors = [];
 
       // On vérifie que l'utilisateur est connecté
+      // Pour empêcher l'accès à la page de configuration par l'URL
       if (!SecurityTools::isLogged()) {
         header('Location: ' . constant('URL_SUBFOLDER') . '/login');
         exit();
       }
+
+      // On vérifie que l'utilisateur a sélectionné des matchs
+      if (!isset($_GET['games']) || empty($_GET['games'])) {
+        throw new \Exception('Aucun match sélectionné.');
+      }
+
       // Je récupère les Id des Games sélectionnés (Méthode GET) et je les mets dans un tableau
       $gamesSelectionArray = explode(',', $_GET['games']);
 
@@ -177,30 +184,52 @@ class BetController extends Controller
         }
       }
 
-      // Si aucun match n'est disponible, on redirige l'utilisateur vers la page d'accueil
-      if (!$gamesSelectedData) {
-        throw new \Exception('Aucun match disponible pour le moment.');
-      }
-
       // SUBMIT : On vérifie que le formulaire a été soumis et n'est pas vide
       if (isset($_POST['submitBetMultipleConfig'])) {
-        die(var_dump($_POST));
+        // die(var_dump($_POST));
 
         // On récupère l'Id de l'utilisateur connecté
         $userId = SecurityTools::getCurrentUserId();
-        // Je récupère les Id des Games sélectionnés
-        $gamesSelectionArray = [];
-        foreach ($_POST['games'] as $gameId) {
-          $gamesSelectionArray[] = $gameId;
+
+        foreach ($_POST['game_id'] as $key => $gameId) {
+
+          // Je vérifie que l'utilisateur n'a pas déjà misé sur un des matchs sélectionnés
+          $betRepository = new BetRepository();
+          $existingBet = $betRepository->findOneByGameAndUser($gameId, $userId);
+          if ($existingBet) {
+            // Je récupère la date du match pour configurer le message d'erreur
+            $game = $gameRepository->findOneById($gameId);
+            $errors['bet'] = [
+              'message' => 'Vous avez déjà misé sur le match du ' . $game->getGameDate() . '. Veuillez refaire votre sélection.',
+              'redirection_slug' => constant('URL_SUBFOLDER') . '/bet/multiple',
+              'redirection_text' => 'Retour à la sélection de matchs'
+            ];
+            break;
+          }
+
+          // Je récupère les données pour chaque pari selon l'Id du match puis j'instancie un nouvel objet Bet.
+          // L'indice $key permet de retrouver les mises correspondantes aux GameId considéré.
+          $bet = new Bet();
+          $bet->setGameId($gameId);
+          $bet->setUserId($userId);
+          $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d H:i:s'));
+          $bet->setBetAmount1(floatval($_POST['bet_amount1'][$key]));
+          $bet->setBetAmount2(floatval($_POST['bet_amount2'][$key]));
+
+          // On valide les données
+          $errors = $bet->validate();
+
+          // S'il n'y a pas d'erreurs
+          if (empty($errors)) {
+            // On enregistre la mise en base de données
+            $betRepository = new BetRepository();
+            $betRepository->persist($bet);
+          }
         }
 
-        // On redirige l'utilisateur vers la page de configuration des paris multiples
-        // header('Location: ' . constant('URL_SUBFOLDER') . '/bet/multiple/config?games=' . implode(',', $gamesSelectionArray));
-        // exit();
+        // On redirige l'utilisateur vers la page ...
+        //
       }
-      // elseif (isset($_POST['submitBetMultipleConfig']) && empty($_POST['games'])) {
-      //   // Si l'utilisateur n'a pas sélectionné de match, on affiche un message d'erreur
-      // }
 
       // On affiche la vue betMultipleConfigForm.php
       $this->render('bet/betMultipleConfigForm', [
