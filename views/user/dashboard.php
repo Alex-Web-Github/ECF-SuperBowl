@@ -14,7 +14,7 @@
       <a class="nav-link " id="live-tab" data-bs-toggle="tab" data-bs-target="#live-tab-pane" role="tab" aria-controls="live-tab-pane" aria-selected="false" href="#">Mes informations</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link " id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming-tab-pane" role="tab" aria-controls="upcoming-tab-pane" aria-selected="false" href="#">Historique des mises</a>
+      <a class="nav-link " id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming-tab-pane" role="tab" aria-controls="upcoming-tab-pane" aria-selected="false" href="#">Historique</a>
     </li>
 
   </ul>

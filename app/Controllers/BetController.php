@@ -126,18 +126,17 @@ class BetController extends Controller
         $userId = SecurityTools::getCurrentUserId();
 
         // Je récupère les Id des Games sélectionnés
-        $gameSelectionArray = [];
+        $gamesSelectionArray = [];
         foreach ($_POST['games'] as $gameId) {
-          $gameSelectionArray[] = $gameId;
+          $gamesSelectionArray[] = $gameId;
         }
-        $gameSelectionList = implode(", ", $gameSelectionArray);
-        die(var_dump($gameSelectionList));
 
         //   // On redirige l'utilisateur vers son dashboard
         //   header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
         //   exit();
         // }
       } elseif (isset($_POST['submitBetSelection']) && empty($_POST['games'])) {
+        // Si l'utilisateur n'a pas sélectionné de match, on affiche un message d'erreur
         $errors['betSelection'] = 'Sélectionnez au moins un match .';
       }
 

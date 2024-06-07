@@ -1,96 +1,38 @@
-// Override Bootstrap's Sass default variables
-//
-// Nearly all variables in Bootstrap are written with the `!default` flag.
-// This allows you to override the default values of those variables before
-// you import Bootstrap's source Sass files.
-//
-// Overriding the default variable values is the best way to customize your
-// CSS without writing _new_ styles. For example, you can either change
-// `$body-color` or write more CSS that override's Bootstrap's CSS like so:
-// `body { color: red; }`.
-
-// Option 1
-//
-// Import all of Bootstrap's CSS
-
-// @import "bootstrap/scss/bootstrap";
-
-// Option 2
-//
-// Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
+// Import Bootstrap and custom styles
 
 // Toggle global options
 // $enable-gradients: true;
 $enable-shadows: true;
-
 // $offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 
 // Include functions first
 @import "../node_modules/bootstrap/scss/functions";
 
-// Customize some defaults
-// $body-color: #333;
-$body-bg: rgb(27, 71, 60);
+//
+// Colors
+//
 $primary: #7a7443;
 $secondary: #1c3934;
-$success: #28a745;
-$danger: #dc3545;
-$warning: #fd7e14;
-$info: #07297c;
+$success: #bae139;
+$danger: #b9314f;
+$warning: #d5a18e;
+$info: #4dccbd;
 $light: #f8f9fa;
 $dark: #475460;
-
+$body-bg: #1b473c;
+// Others
 $border-radius: 0.5rem;
+// Navigation
+$nav-link-font-size: 1.1rem;
 
-// Required
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/variables-dark";
-@import "../node_modules/bootstrap/scss/maps";
-@import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/utilities";
-@import "../node_modules/bootstrap/scss/root";
-@import "../node_modules/bootstrap/scss/reboot";
-
-@import "../node_modules/bootstrap/scss/type";
-// @import "../node_modules/bootstrap/scss/images";
-@import "../node_modules/bootstrap/scss/containers";
-@import "../node_modules/bootstrap/scss/grid";
-@import "../node_modules/bootstrap/scss/tables";
-@import "../node_modules/bootstrap/scss/forms";
-@import "../node_modules/bootstrap/scss/buttons";
-@import "../node_modules/bootstrap/scss/transitions";
-@import "../node_modules/bootstrap/scss/dropdown";
-@import "../node_modules/bootstrap/scss/button-group";
-@import "../node_modules/bootstrap/scss/nav";
-@import "../node_modules/bootstrap/scss/navbar"; // Requires nav
-// @import "../node_modules/bootstrap/scss/card";
-// @import "../node_modules/bootstrap/scss/breadcrumb";
-// @import "../node_modules/bootstrap/scss/accordion";
-@import "../node_modules/bootstrap/scss/pagination";
-@import "../node_modules/bootstrap/scss/badge";
-@import "../node_modules/bootstrap/scss/alert";
-// @import "../node_modules/bootstrap/scss/progress";
-// @import "../node_modules/bootstrap/scss/list-group";
-@import "../node_modules/bootstrap/scss/close";
-// @import "../node_modules/bootstrap/scss/toasts";
-@import "../node_modules/bootstrap/scss/modal"; // Requires transitions
-// @import "../node_modules/bootstrap/scss/tooltip";
-@import "../node_modules/bootstrap/scss/popover";
-// @import "../node_modules/bootstrap/scss/carousel";
-// @import "../node_modules/bootstrap/scss/spinners";
-@import "../node_modules/bootstrap/scss/offcanvas"; // Requires transitions
-@import "../node_modules/bootstrap/scss/placeholders";
-
-// Helpers
-@import "../node_modules/bootstrap/scss/helpers";
-
-// Utilities
-@import "../node_modules/bootstrap/scss/utilities/api";
+//
+// Import des modules Bootstrap
+//
+@import "_bootstrap-modules";
 
 //
 // Custom styles
 //
-
 .nav-underline {
   --bs-emphasis-color: #fff;
 }
@@ -111,67 +53,7 @@ $border-radius: 0.5rem;
   border-color: var(--primary);
 }
 
-header {
-  background-image: var(--bs-gradient);
-}
-
-form {
-  background-color: rgba(19, 49, 42, 0.25);
-  padding: 4rem;
-  border-radius: $border-radius;
-  input,
-  select {
-    background-color: $secondary !important;
-  }
-  & input.form-check-input {
-    width: 1.2em;
-    height: 1.2em;
-    background-color: unset !important;
-    border: 0.15rem solid $secondary !important;
-    &:checked {
-      background-color: $secondary !important;
-    }
-  }
-}
-
-// .btn-primary {
-//   --bs-btn-color: #fff;
-//   --bs-btn-bg: var(--primary);
-//   --bs-btn-border-color: var(--primary);
-//   --bs-btn-hover-color: #fff;
-//   --bs-btn-hover-bg: #84a4bc;
-//   --bs-btn-hover-border-color: #84a4bc;
-//   --bs-btn-focus-shadow-rgb: 49, 132, 253;
-//   --bs-btn-active-color: #fff;
-//   --bs-btn-active-bg: #17a2b8;
-//   --bs-btn-active-border-color: #84a4bc;
-//   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-//   --bs-btn-disabled-color: #fff;
-//   --bs-btn-disabled-bg: #4f4f4f;
-//   --bs-btn-disabled-border-color: #343434;
-// }
-
-// .btn-outline-primary {
-//   --bs-btn-color: var(--primary);
-//   --bs-btn-border-color: var(--primary);
-//   --bs-btn-hover-color: #fff;
-//   --bs-btn-hover-bg: var(--secondary);
-//   --bs-btn-hover-border-color: var(--primary);
-//   --bs-btn-focus-shadow-rgb: 13, 110, 253;
-//   --bs-btn-active-color: #fff;
-//   --bs-btn-active-bg: var(--primary);
-//   --bs-btn-active-border-color: var(--primary);
-//   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-//   --bs-btn-disabled-color: var(--primary);
-//   --bs-btn-disabled-bg: transparent;
-//   --bs-btn-disabled-border-color: var(--primary);
-//   --bs-gradient: none;
-// }
-
-// .nav-pills {
-//   --bs-nav-pills-border-radius: 0.375rem;
-//   --bs-nav-pills-link-active-color: #fff;
-//   --bs-nav-pills-link-active-bg: var(--primary);
-// }
-
+//
+// My Custom styles
+//
 @import "_custom";

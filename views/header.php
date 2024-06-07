@@ -83,7 +83,7 @@ use App\Tools\SecurityTools;
 
   <main class="flex-shrink-0 mb-5">
     <!-- Banner -->
-    <div class="banner text-center pb-3">
+    <div class="banner text-center">
       <h1 class="display-5 fw-bold text-white">Money Bowl<span class="ps-md-2 fs-5 fw-light d-block d-md-inline">paris sportifs en ligne</span></h1>
       <p class="fs-5 fw-normal fst-italic lead text-white pt-0 pt-md-2">Misez tout sur le Football Américain !</p>
     </div>
