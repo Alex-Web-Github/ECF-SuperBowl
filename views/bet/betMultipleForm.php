@@ -17,6 +17,7 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 <div class="container-lg my-4 px-2">
 
   <form class="p-0" method="post" action="<?= constant('URL_SUBFOLDER') . '/bet/multiple' ?>">
+
     <?php
     // Affichage de tous les Games 'À venir'
     require APP_ROOT . '/views/game/games-list.php';

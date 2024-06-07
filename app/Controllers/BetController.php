@@ -119,22 +119,20 @@ class BetController extends Controller
         throw new \Exception('Aucun match disponible pour le moment.');
       }
 
-      // On vérifie que le formulaire a été soumis te n'est pas vide
+      // SUBMIT : On vérifie que le formulaire a été soumis te n'est pas vide
       if (isset($_POST['submitBetSelection']) && !empty($_POST['games'])) {
 
         // On récupère l'Id de l'utilisateur connecté
         $userId = SecurityTools::getCurrentUserId();
-
         // Je récupère les Id des Games sélectionnés
         $gamesSelectionArray = [];
         foreach ($_POST['games'] as $gameId) {
           $gamesSelectionArray[] = $gameId;
         }
 
-        //   // On redirige l'utilisateur vers son dashboard
-        //   header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
-        //   exit();
-        // }
+        // On redirige l'utilisateur vers la page de configuration des paris multiples (les Id des Games sélectionnés sont dans la liste des paramètres de l'URL - Méthode GET)
+        header('Location: ' . constant('URL_SUBFOLDER') . '/bet/multiple/config?games=' . implode(',', $gamesSelectionArray));
+        exit();
       } elseif (isset($_POST['submitBetSelection']) && empty($_POST['games'])) {
         // Si l'utilisateur n'a pas sélectionné de match, on affiche un message d'erreur
         $errors['betSelection'] = 'Sélectionnez au moins un match .';
@@ -143,6 +141,70 @@ class BetController extends Controller
       // On affiche la vue betMultipleForm.php
       $this->render('bet/betMultipleForm', [
         'gamesList' => $gamesList ?? [],
+        'error' => $errors ?? [],
+      ]);
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_slug' => '/',
+        'redirection_text' => 'Retour vers la page Accueil'
+      ]);
+    }
+  }
+
+  public function betMultipleConfigAction(): void
+  {
+    try {
+      $errors = [];
+
+      // On vérifie que l'utilisateur est connecté
+      if (!SecurityTools::isLogged()) {
+        header('Location: ' . constant('URL_SUBFOLDER') . '/login');
+        exit();
+      }
+      // Je récupère les Id des Games sélectionnés (Méthode GET) et je les mets dans un tableau
+      $gamesSelectionArray = explode(',', $_GET['games']);
+
+      // On récupère les données des matchs sélectionnés pour les afficher dans la vue
+      $gameRepository = new GameRepository();
+
+      $gamesSelectedData = [];
+      // pour chaque Id de match sélectionné, je récupère les données du match sous la forme d'un tableau contenant des objets Game
+      foreach ($gamesSelectionArray as $gameId) {
+        $game = $gameRepository->findOneById($gameId);
+        if ($game) {
+          $gamesSelectedData[] = $game;
+        }
+      }
+
+      // Si aucun match n'est disponible, on redirige l'utilisateur vers la page d'accueil
+      if (!$gamesSelectedData) {
+        throw new \Exception('Aucun match disponible pour le moment.');
+      }
+
+      // SUBMIT : On vérifie que le formulaire a été soumis et n'est pas vide
+      if (isset($_POST['submitBetMultipleConfig'])) {
+        die(var_dump($_POST));
+
+        // On récupère l'Id de l'utilisateur connecté
+        $userId = SecurityTools::getCurrentUserId();
+        // Je récupère les Id des Games sélectionnés
+        $gamesSelectionArray = [];
+        foreach ($_POST['games'] as $gameId) {
+          $gamesSelectionArray[] = $gameId;
+        }
+
+        // On redirige l'utilisateur vers la page de configuration des paris multiples
+        // header('Location: ' . constant('URL_SUBFOLDER') . '/bet/multiple/config?games=' . implode(',', $gamesSelectionArray));
+        // exit();
+      }
+      // elseif (isset($_POST['submitBetMultipleConfig']) && empty($_POST['games'])) {
+      //   // Si l'utilisateur n'a pas sélectionné de match, on affiche un message d'erreur
+      // }
+
+      // On affiche la vue betMultipleConfigForm.php
+      $this->render('bet/betMultipleConfigForm', [
+        'gamesSelectedData' => $gamesSelectedData ?? [],
         'error' => $errors ?? [],
       ]);
     } catch (\Exception $e) {
