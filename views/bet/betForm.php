@@ -7,8 +7,8 @@
 
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
-<div class="container-md my-4 px-2">
-  <h2 class="display-6 fw-bolder text-white text-center mb-4">Miser sur le match</h2>
+<div class="container-md my-4 p-2">
+  <h2 class="display-6 fw-bolder text-white text-center mb-5">Miser sur le match</h2>
 
   <?php if (isset($error['bet']['message'])) { ?>
     <div class="alert alert-danger">

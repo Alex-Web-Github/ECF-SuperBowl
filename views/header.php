@@ -2,10 +2,10 @@
 
 use App\Tools\NavigationTools;
 use App\Tools\SecurityTools;
-?>
 
+?>
 <!DOCTYPE html>
-<html lang="fr" class="h-100">
+<html lang="fr" class="vh-100">
 
 <head>
   <meta charset="utf-8" />
@@ -17,9 +17,9 @@ use App\Tools\SecurityTools;
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column">
 
-  <header class="header-fixed">
+  <header id="customHeader" class="header-fixed">
     <div class="container-md px-2">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-dark">
@@ -32,25 +32,24 @@ use App\Tools\SecurityTools;
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', 'home') ?>" href=" <?= constant('URL_SUBFOLDER') . '/' ?>">Tous les matchs</a>
+            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/') ?>" href=" <?= constant('URL_SUBFOLDER') . '/' ?>">Tous les matchs</a>
             </li>
-            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', '') ?>" href="<?= constant('URL_SUBFOLDER') . '/bet/multiple' ?>">Parier</a>
+            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/bet/multiple') ?>" href="<?= constant('URL_SUBFOLDER') . '/bet/multiple' ?>">Parier</a>
             </li>
             <?php if (SecurityTools::islogged() === false) { ?>
               <li class="nav-item">
-                <!-- TODO: ajout de la class active sur le lien -->
-                <a class="nav-link <?= NavigationTools::addActiveClass('user', 'register') ?>" href="<?= constant('URL_SUBFOLDER') . '/register' ?>">Créer un compte</a>
+                <a class="nav-link <?= NavigationTools::addActiveClass('/register') ?>" href="<?= constant('URL_SUBFOLDER') . '/register' ?>">Créer un compte</a>
               </li>
             <?php } ?>
 
             <?php
             // Condition isAdmin
             if (SecurityTools::isAdmin()) { ?>
-              <li class=" nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('admin', 'dashboard') ?>" href="<?= constant('URL_SUBFOLDER') . '/admin/dashboard' ?>">Mon espace</a></li>
+              <li class=" nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/admin/dashboard') ?>" href="<?= constant('URL_SUBFOLDER') . '/admin/dashboard' ?>">Mon espace</a></li>
             <?php }
             if (SecurityTools::isUser()) { ?>
               <li class="nav-item">
-                <a class="nav-link <?= NavigationTools::addActiveClass('user', 'profile') ?>" href="<?= constant('URL_SUBFOLDER') . '/dashboard' ?>" title="mon espace utilisateur">Mon espace</a>
+                <a class="nav-link <?= NavigationTools::addActiveClass('/dashboard') ?>" href="<?= constant('URL_SUBFOLDER') . '/dashboard' ?>" title="mon espace utilisateur">Mon espace</a>
               </li>
             <?php } ?>
             <?php if (SecurityTools::isLogged()) { ?>
@@ -63,7 +62,7 @@ use App\Tools\SecurityTools;
                 </a>
               </li>
             <?php } else { ?>
-              <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('auth', 'login') ?>" href=" <?= constant('URL_SUBFOLDER') . '/login' ?>" title="Connexion">Se connecter
+              <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/login') ?>" href=" <?= constant('URL_SUBFOLDER') . '/login' ?>" title="Connexion">Se connecter
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
                     <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
@@ -81,7 +80,7 @@ use App\Tools\SecurityTools;
 
   </header>
 
-  <main class="flex-shrink-0 mb-5">
+  <main class="flex-shrink-0 pb-5">
     <!-- Banner -->
     <div class="banner text-center">
       <h1 class="display-5 fw-bold text-white">Money Bowl<span class="ps-md-2 fs-5 fw-light d-block d-md-inline">paris sportifs en ligne</span></h1>

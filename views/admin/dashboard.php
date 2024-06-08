@@ -8,8 +8,8 @@
 
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
-<div class="container my-4 px-2">
-  <h2 class="display-6 fw-bolder text-white text-center mb-4">Espace Administrateur</h2>
+<div class="container my-4 p-2">
+  <h2 class="display-6 fw-bolder text-white text-center mb-5">Espace Administrateur</h2>
 
   <!-- Navigation des matchs -->
   <ul class="nav nav-pills mb-4" id="myTab" role="tablist">
