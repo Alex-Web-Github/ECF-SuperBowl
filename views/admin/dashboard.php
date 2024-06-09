@@ -12,11 +12,10 @@
   <h2 class="display-6 fw-bolder text-white text-center mb-5">Espace Administrateur</h2>
 
   <!-- Navigation des matchs -->
-  <ul class="nav nav-pills mb-4" id="myTab" role="tablist">
+  <ul class="nav nav-pills mb-5" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button type="button" class="nav-link <?php echo $activeTab !== 'team' ? 'active' : '' ?>" id="match-tab" data-bs-toggle="tab" data-bs-target="#match" role="tab" aria-controls="match" aria-selected="<?php echo $activeTab !== 'team' ? 'true' : 'false' ?>">Les matches</button>
     </li>
-
     <li class="nav-item" role="presentation">
       <button type="button" class="nav-link <?php echo $activeTab == 'team' ? 'active' : '' ?>" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" role="tab" aria-controls="team" aria-selected="<?php echo $activeTab == 'team' ? 'true' : 'false' ?>" tabindex="-1">Les équipes & joueurs</button>
     </li>

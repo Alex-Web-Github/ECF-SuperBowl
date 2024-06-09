@@ -7,6 +7,12 @@
 
 <form class="row g-3 text-left mt-4 mx-0" action="/admin/dashboard" method="post">
 
+  <!-- Bouton de validation -->
+  <div class="col-12 text-center mb-5">
+    <button type="submit" name="createTeam" class="btn btn-secondary">Créer cette équipe</button>
+  </div>
+
+
   <!-- Nom de l'équipe -->
   <div class="col-md-4 mb-2">
     <label for="teamName" class="form-label text-white">Nom de l'équipe</label>
@@ -35,7 +41,7 @@
     <?php if (isset($errors['team_players'])) { ?>
       <div class="invalid-feedback"><?= $errors['team_players'] ?></div>
     <?php } ?>
-    <button type="button" id="addPlayers" class="btn btn-primary mt-2">Ajouter ce(s) joueur(s)</button>
+    <button type="button" id="addPlayers" class="btn btn-primary mt-2">Ajouter ce(s) joueur(s) à votre équipe</button>
   </div>
 
   <!-- Affichage des joueurs ajoutés -->
@@ -122,9 +128,4 @@
     </script>
   </div>
 
-
-  <!-- Bouton de validation -->
-  <div class="col-12">
-    <button type="submit" name="createTeam" class="btn btn-secondary">Ajouter l'équipe</button>
-  </div>
 </form>

@@ -7,6 +7,12 @@
 
 <form class="row justify-content-center g-3 text-left mt-4 mx-0" action="/admin/dashboard" method="post">
 
+  <!-- Bouton Submit -->
+  <div class="col-12 text-center mb-5">
+    <button type="submit" name="createGame" class="btn btn-secondary">Créer ce match</button>
+  </div>
+
+
   <!-- Date du match -->
   <div class="col-md-3 mb-2">
     <label for="gameDate" class="form-label text-white">Date du match</label>
@@ -76,8 +82,4 @@
     <?php } ?>
   </div>
 
-  <!-- Bouton Submit -->
-  <div class="col-12 col-md-8 text-center mt-4">
-    <button type="submit" name="createGame" class="btn btn-secondary mt-4">Créer le match</button>
-  </div>
 </form>
