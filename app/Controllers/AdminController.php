@@ -26,6 +26,8 @@ class AdminController extends Controller
       $errors = [];
       $team = new Team();
       $game = new Game();
+      // Par défaut, c'est l'onglet "Les matches" qui est actif
+      $activeTab = '';
 
       // Si le formulaire de création d'équipe est soumis
       if (isset($_POST['createTeam'])) {
@@ -49,7 +51,10 @@ class AdminController extends Controller
 
         if (empty($errors)) {
           $teamRepository->persist($team);
-          header('Location: ' . $routes->get('adminDashboard')->getPath());
+          header('Location: ' . $routes->get('adminDashboard')->getPath() . '#team');
+        } else {
+          // Je rends 'active' l'onglet "Les équipes & joueurs" pour afficher les erreurs s'il y en a
+          $activeTab = 'team';
         }
       }
       // Si le formulaire de création de match est soumis
@@ -74,7 +79,8 @@ class AdminController extends Controller
       $this->render('admin/dashboard', [
         'players' => $playersList,
         'teams' => $teams,
-        'errors' => $errors
+        'errors' => $errors,
+        'activeTab' => $activeTab
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
