@@ -18,7 +18,11 @@ use App\Tools\SecurityTools;
         <th scope="col">Status</th>
         <th scope="col">Score</th>
         <th scope="col">Détails</th>
-        <th scope="col">Parier</th>
+        <?php
+        // Supprimer cette colonne sur la page d'accueil uniquement
+        if ($_SERVER['REQUEST_URI'] != '/') : ?>
+          <th scope="col">Parier</th>
+        <?php endif; ?>
       </tr>
     </thead>
 
@@ -63,22 +67,26 @@ use App\Tools\SecurityTools;
                 </button>
               </a>
             </td>
-            <td>
-              <?php if (SecurityTools::isLogged()) : ?>
-                <div class="form-check">
-                  <label class="form-check-label" for="myCheck"></label>
-                  <input class="form-check-input <?= (!empty($error['betSelection']) ? 'is-invalid' : '') ?>" type="checkbox" id="game<?= $game->getGameId(); ?>" name="games[]" value="<?= $game->getGameId(); ?>">
-                  <?php if (isset($error['betSelection'])) { ?>
-                    <div class="invalid-feedback"><?= $error['betSelection'] ?></div>
-                  <?php } ?>
-                </div>
+            <?php
+            // Supprimer cette colonne sur la page d'accueil uniquement
+            if ($_SERVER['REQUEST_URI'] != '/') : ?>
+              <td>
+                <?php if (SecurityTools::isLogged()) : ?>
+                  <div class="form-check">
+                    <label class="form-check-label" for="myCheck"></label>
+                    <input class="form-check-input <?= (!empty($error['betSelection']) ? 'is-invalid' : '') ?>" type="checkbox" id="game<?= $game->getGameId(); ?>" name="games[]" value="<?= $game->getGameId(); ?>">
+                    <?php if (isset($error['betSelection'])) { ?>
+                      <div class="invalid-feedback"><?= $error['betSelection'] ?></div>
+                    <?php } ?>
+                  </div>
 
-              <?php else : ?>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" disabled>
-                </div>
-              <?php endif; ?>
-            </td>
+                <?php else : ?>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" disabled>
+                  </div>
+                <?php endif; ?>
+              </td>
+            <?php endif; ?>
           </tr>
         <?php endforeach; ?>
       <?php else : ?>
