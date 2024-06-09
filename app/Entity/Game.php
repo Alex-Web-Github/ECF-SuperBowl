@@ -124,7 +124,7 @@ class Game extends Entity
    */
   public function setTeam1Id(?int $team1_id): self
   {
-    $this->team1_id = $team1_id;
+    $this->team1_id = (int)$team1_id;
 
     return $this;
   }
@@ -142,7 +142,7 @@ class Game extends Entity
    */
   public function setTeam2Id(?int $team2_id): self
   {
-    $this->team2_id = $team2_id;
+    $this->team2_id = (int)$team2_id;
 
     return $this;
   }

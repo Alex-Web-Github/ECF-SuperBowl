@@ -59,6 +59,10 @@ class AdminController extends Controller
       }
       // Si le formulaire de création de match est soumis
       if (isset($_POST['createGame'])) {
+        // die(var_dump($_POST));
+
+        is_string($_POST['team1_id']) ? $_POST['team1_id'] = null : $_POST['team1_id'];
+        is_string($_POST['team2_id']) ? $_POST['team2_id'] = null : $_POST['team2_id'];
 
         $game->hydrate($_POST);
 

@@ -12,7 +12,7 @@
   <h2 class="display-6 fw-bolder text-white text-center mb-5">Espace Administrateur</h2>
 
   <!-- Navigation des matchs -->
-  <ul class="nav nav-pills mb-5" id="myTab" role="tablist">
+  <ul class="nav nav-pills mb-4" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button type="button" class="nav-link <?php echo $activeTab !== 'team' ? 'active' : '' ?>" id="match-tab" data-bs-toggle="tab" data-bs-target="#match" role="tab" aria-controls="match" aria-selected="<?php echo $activeTab !== 'team' ? 'true' : 'false' ?>">Les matches</button>
     </li>
@@ -24,7 +24,7 @@
   <div class="tab-content">
     <!-- Bloc Matches -->
     <div class="tab-pane <?php echo $activeTab !== 'team' ? 'active' : '' ?>" id="match" role="tabpanel" aria-labelledby="match-tab" tabindex="0">
-      <h3 class="display-6 fw-bolder text-white text-center mb-4">Créer un match</h3>
+      <h3 class="fs-2 fw-bolder text-white text-center mb-4">Créer un match</h3>
 
       <?php require_once APP_ROOT . '/views/admin/add-game.php'; ?>
 
@@ -32,7 +32,7 @@
 
     <!-- bloc Équipes/Joueurs -->
     <div class="tab-pane <?php echo $activeTab == 'team' ? 'active' : '' ?>" id="team" role="tabpanel" aria-labelledby="team-tab" tabindex="0">
-      <h3 class="display-6 fw-bolder text-white text-center mb-4">Créer une équipe</h3>
+      <h3 class="fs-2 fw-bolder text-white text-center mb-4">Créer une équipe</h3>
 
       <?php require_once APP_ROOT . '/views/admin/add-team.php'; ?>
 
