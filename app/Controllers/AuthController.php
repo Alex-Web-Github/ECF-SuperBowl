@@ -35,10 +35,10 @@ class AuthController extends Controller
 
           // Je vérifie si le mot de passe qui correspond à l'email est correct
           if ($user && SecurityTools::verifyPassword($_POST['password'], $user)) {
-            // Je regénère l'id de Session pour éviter la "fixation de session"
-            session_regenerate_id(true);
+            // Régénbération d'id de Session peut entraîner une perte de session en cas de réseeau instable-> Je le désactive
+            // session_regenerate_id(true);
 
-            // On stocke en Session tous les attributs de l'objet User
+            // Je stocke en Session tous les attributs de l'objet User
             // Attention : $_SESSION['user'] devient un objet User
             $_SESSION['user'] = $user;
 
@@ -71,11 +71,10 @@ class AuthController extends Controller
 
   public function logoutAction(RouteCollection $routes)
   {
-    // Supprime les données de session du serveur
-    session_destroy();
-    // Supprime les données du tableau $_SESSION
-    unset($_SESSION);
-    // Redirige vers la page d'accueil
+
+    // Supprime toutes les données de session
+    unset($_SESSION['user']);
+    // Redirige vers la page Accueil
     header('Location: ' . $routes->get('homepage')->getPath());
   }
 }

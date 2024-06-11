@@ -8,7 +8,6 @@
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <div class="container-lg my-4 px-2">
-
   <!-- Navigation des matchs -->
   <ul class="nav nav-underline mb-4" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
