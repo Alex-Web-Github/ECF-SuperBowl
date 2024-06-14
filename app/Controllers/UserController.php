@@ -7,7 +7,6 @@ use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Tools\SecurityTools;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
@@ -46,45 +45,42 @@ class UserController extends Controller
           /**
            *  Envoi d'un email de confirmation avec PHPMailer
            */
+
+          // J'instancie un nouvel objet PHPMailer (true-> pour activer les exceptions)
           $mail = new PHPMailer(true);
 
-          try {
-            //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
-            $mail->isSMTP(); //Send using SMTP
-            $mail->Host       = 'smtp.example.com'; //Set the SMTP server to send through
-            $mail->SMTPAuth   = true; //Enable SMTP authentication
-            $mail->Username   = 'user@example.com'; //SMTP username
-            $mail->Password   = 'secret'; //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            //Enable implicit TLS encryption
-            $mail->Port       = 465;
-            //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+          // Server settings
+          // $mail->SMTPDebug = 2;  // Enable verbose debug output
+          $mail->SMTPDebug = 0;
+          $mail->isSMTP();  // Send using SMTP
+          $mail->Host       = 'localhost';  // Set the SMTP server to send through
+          $mail->SMTPAuth   = false;  // Enable SMTP authentication
+          // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+          $mail->Port       = 1025;
 
-            //Recipients
-            $mail->setFrom('from@example.com', 'Mailer');
-            $mail->addAddress('alexandre-foulc@orange.fr', 'Joe User'); //Add a recipient
-            // $mail->addAddress('ellen@example.com'); //Name is optional
-            $mail->addReplyTo('alexandre-foulc@orange.fr', '');
-            // $mail->addCC('cc@example.com');
-            // $mail->addBCC('bcc@example.com');
+          // Recipients
+          $mail->setFrom('from@example.com', 'SuperBowl Admin');  // Set who the message is to be sent from
+          // $mail->addAddress('$user->getUserEmail()', $user->getUserFirstName());
+          $mail->addAddress('joe@example.net', $user->getUserFirstName() . ' ' . $user->getUserLastName());  // Add a recipient
 
-            //Attachments
-            // $mail->addAttachment('/var/tmp/file.tar.gz'); //Add attachments
-            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg'); //Optional name
+          // Content
+          $mail->isHTML(true);  // Set email format to HTML
+          $mail->Subject = 'Votre inscription sur le site MoneyBowl';
+          $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="http://localhost:8000/validate/' . $user->getUserToken() . '">Valider mon inscription</a>';
 
-            //Content
-            $mail->isHTML(true); //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+          $mail->AltBody = 'Bonjour ,Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant : http://localhost:8000/validate/' . $user->getUserToken() . '';
 
-            $mail->send();
-            echo 'Message has been sent';
-          } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+          if (!$mail->send()) {
+            // Si l'envoi a réussi, j'affiche un message de confirmation
+            $error['mail'] = [
+              'message' => 'Votre inscription a bien été enregistrée. Un email de confirmation vous a été envoyé à l\'adresse suivante : ' . $user->getUserEmail(),
+              'redirection_text' => 'Retour à la page de connexion',
+              'redirection_slug' => $routes->get('login')->getPath()
+            ];
+          } else {
+            // Si l'email n'a pas pu être envoyé, je lève une exception
+            throw new \Exception('Votre inscription a bien été enregistrée. Cependant, une erreur est survenue lors de l\'envoi de l\'email de confirmation. Veuillez réessayer ultérieurement.');
           }
-
 
           // Puis on redirige vers la page Login
           header('Location: ' . $routes->get('login')->getPath());

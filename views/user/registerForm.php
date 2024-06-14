@@ -9,6 +9,13 @@
   <div class="col-12 col-sm-10 col-xl-8 m-auto">
     <div class="row m-auto mt-4 px-md-5">
 
+      <?php if (isset($error['mail']['message'])) { ?>
+        <div class="alert alert-danger">
+          <?= $error['mail']['message']; ?>
+          <a href="<?= constant('URL_SUBFOLDER') . $error['mail']['redirection_slug'] ?>" class="btn-primary"><?= $error['mail']['redirection_text'] ?></a>
+        </div>
+      <?php } ?>
+
       <form class="row g-3 text-left mx-0 mt-4 p-4" method="post">
 
         <h1 class="display-6 fw-bolder text-white text-center mb-4">Créer un compte</h1>
