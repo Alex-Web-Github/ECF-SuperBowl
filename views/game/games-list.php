@@ -20,7 +20,7 @@ use App\Tools\SecurityTools;
         <th scope="col">Détails</th>
         <?php
         // Supprimer cette colonne sur la page d'accueil uniquement
-        if ($_SERVER['REQUEST_URI'] != '/') : ?>
+        if ($_SERVER['REQUEST_URI'] !== '/game') : ?>
           <th scope="col">Parier</th>
         <?php endif; ?>
       </tr>
@@ -69,7 +69,7 @@ use App\Tools\SecurityTools;
             </td>
             <?php
             // Supprimer cette colonne sur la page d'accueil uniquement
-            if ($_SERVER['REQUEST_URI'] != '/') : ?>
+            if ($_SERVER['REQUEST_URI'] != '/game') : ?>
               <td>
                 <?php if (SecurityTools::isLogged()) : ?>
                   <div class="form-check">
