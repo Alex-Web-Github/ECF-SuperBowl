@@ -6,6 +6,11 @@ use Symfony\Component\Routing\RouteCollection;
 // Création de la collection de routes
 $routes = new RouteCollection();
 
+if (empty($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI'] === '/') {
+  header('Location: ' . constant('URL_SUBFOLDER') . '/game');
+  exit();
+}
+
 // Ajout des routes :
 // Redirection vers la page d'accueil
 $routes->add('homepage', new Route(constant('URL_SUBFOLDER') . '/game', array('controller' => 'PageController', 'method' => 'homeAction'), array()));

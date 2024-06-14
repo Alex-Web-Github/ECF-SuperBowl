@@ -33,8 +33,13 @@ class AuthController extends Controller
           $userRepository = new UserRepository();
           $user = $userRepository->findOneByEmail($_POST['email']);
 
-          // Je vérifie si le mot de passe qui correspond à l'email est correct
-          if ($user && SecurityTools::verifyPassword($_POST['password'], $user)) {
+          // Je vérifie que le compte de l'utilisateur est bien vérifié
+          if ($user->getUserIsChecked() !== 1) {
+            throw new \Exception('Votre compte n\'a pas encore été vérifié. Veuillez vérifier vos emails.');
+          }
+
+          // Je vérifie si le mot de passe qui correspond à l'email est correct ET que son compte est bien vérifié
+          if ($user && $user->getUserIsChecked() === 1 && SecurityTools::verifyPassword($_POST['password'], $user)) {
             // Régénération d'id de Session peut entraîner une perte de session en cas de réseeau instable-> Je le désactive
             // session_regenerate_id(true);
 

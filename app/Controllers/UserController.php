@@ -53,6 +53,7 @@ class UserController extends Controller
           $user = $userRepository->findOneByEmail($_POST['user_email']);
 
           // Server settings
+          // Settings for localhost with MailHog (http://localhost:8025/)
           // $mail->SMTPDebug = 2;  // Enable verbose debug output
           $mail->SMTPDebug = 0;
           $mail->isSMTP();  // Send using SMTP
@@ -71,7 +72,7 @@ class UserController extends Controller
           $mail->Subject = 'Votre inscription sur le site MoneyBowl';
           $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="' . constant('URL_SUBFOLDER') . '/check?id=' . $user->getUserId() . '&token=' . $user->getUserToken() . '">Valider mon inscription</a>';
 
-          $mail->AltBody = 'Bonjour ,Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant : http://localhost:8000/validate/' . $user->getUserToken() . '';
+          $mail->AltBody = 'Bonjour ,Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant reçu par email.';
 
           if (!$mail->send()) {
             // Si l'email n'a pas pu être envoyé, je lève une exception
