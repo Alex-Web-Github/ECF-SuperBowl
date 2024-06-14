@@ -35,7 +35,7 @@ class AuthController extends Controller
 
           // Je vérifie si le mot de passe qui correspond à l'email est correct
           if ($user && SecurityTools::verifyPassword($_POST['password'], $user)) {
-            // Régénbération d'id de Session peut entraîner une perte de session en cas de réseeau instable-> Je le désactive
+            // Régénération d'id de Session peut entraîner une perte de session en cas de réseeau instable-> Je le désactive
             // session_regenerate_id(true);
 
             // Je stocke en Session tous les attributs de l'objet User

@@ -19,13 +19,17 @@ class UserRepository extends Repository
     } else {
       // Si pas d'Id, il s'agit d'un nouvel Utilisateur
       $query = $this->pdo->prepare(
-        'INSERT INTO users (user_first_name, user_last_name, user_email, user_password, user_role) VALUES (:first_name, :last_name, :email, :password, :role)'
+        'INSERT INTO users (user_first_name, user_last_name, user_email, user_password, user_role, user_is_checked, user_token) VALUES (:first_name, :last_name, :email, :password, :role, :is_checked, :token)'
       );
       // Je définis le rôle 'user' par défaut à toute nouvelle inscription
       $query->bindValue(':role', $user->getUserRole(), $this->pdo::PARAM_STR);
+      // Je définis un token unique pour chaque nouvel utilisateur
+      $query->bindValue(':token', $user->getUserToken(), $this->pdo::PARAM_STR);
+      // J'initialise user_is_checked à 0 par défaut
+      $query->bindValue(':is_checked', 0, $this->pdo::PARAM_INT);
+      // Je chiffre le mot de passe avant de l'enregistrer en BDD
       $query->bindValue(':password', password_hash($user->getUserPassword(), PASSWORD_DEFAULT), $this->pdo::PARAM_STR);
     }
-
     $query->bindValue(':first_name', $user->getUserFirstName(), $this->pdo::PARAM_STR);
     $query->bindValue(':last_name', $user->getUserLastName(), $this->pdo::PARAM_STR);
     $query->bindValue(':email', $user->getUserEmail(), $this->pdo::PARAM_STR);

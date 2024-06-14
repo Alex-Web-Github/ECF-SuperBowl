@@ -11,6 +11,7 @@
 	},
 	"require": {
 		"symfony/routing": "^4.4",
-		"symfony/http-foundation": "^4.4"
+		"symfony/http-foundation": "^4.4",
+		"phpmailer/phpmailer": "^6.9.1"
 	}
 }

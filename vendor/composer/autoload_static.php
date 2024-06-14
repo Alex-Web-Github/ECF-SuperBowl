@@ -27,6 +27,10 @@ class ComposerStaticInit975425ef6c7e437a45155c4f0cf6ce89
             'Symfony\\Component\\Mime\\' => 23,
             'Symfony\\Component\\HttpFoundation\\' => 33,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -66,6 +70,10 @@ class ComposerStaticInit975425ef6c7e437a45155c4f0cf6ce89
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -73,10 +81,30 @@ class ComposerStaticInit975425ef6c7e437a45155c4f0cf6ce89
     );
 
     public static $classMap = array (
+        'App\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Controllers/AdminController.php',
+        'App\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Controllers/AuthController.php',
+        'App\\Controllers\\BetController' => __DIR__ . '/../..' . '/app/Controllers/BetController.php',
+        'App\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Controllers/Controller.php',
+        'App\\Controllers\\GameController' => __DIR__ . '/../..' . '/app/Controllers/GameController.php',
         'App\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Controllers/PageController.php',
-        'App\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Controllers/ProductController.php',
-        'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
+        'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Controllers/UserController.php',
+        'App\\Db\\Mysql' => __DIR__ . '/../..' . '/app/Db/MySql.php',
+        'App\\Entity\\Bet' => __DIR__ . '/../..' . '/app/Entity/Bet.php',
+        'App\\Entity\\Entity' => __DIR__ . '/../..' . '/app/Entity/Entity.php',
+        'App\\Entity\\Game' => __DIR__ . '/../..' . '/app/Entity/Game.php',
+        'App\\Entity\\Player' => __DIR__ . '/../..' . '/app/Entity/Player.php',
+        'App\\Entity\\Team' => __DIR__ . '/../..' . '/app/Entity/Team.php',
+        'App\\Entity\\User' => __DIR__ . '/../..' . '/app/Entity/User.php',
+        'App\\Repository\\BetRepository' => __DIR__ . '/../..' . '/app/Repository/BetRepository.php',
+        'App\\Repository\\GameRepository' => __DIR__ . '/../..' . '/app/Repository/GameRepository.php',
+        'App\\Repository\\PlayerRepository' => __DIR__ . '/../..' . '/app/Repository/PlayerRepository.php',
+        'App\\Repository\\Repository' => __DIR__ . '/../..' . '/app/Repository/Repository.php',
+        'App\\Repository\\TeamRepository' => __DIR__ . '/../..' . '/app/Repository/TeamRepository.php',
+        'App\\Repository\\UserRepository' => __DIR__ . '/../..' . '/app/Repository/UserRepository.php',
         'App\\Router' => __DIR__ . '/../..' . '/app/Router.php',
+        'App\\Tools\\NavigationTools' => __DIR__ . '/../..' . '/app/Tools/NavigationTools.php',
+        'App\\Tools\\SecurityTools' => __DIR__ . '/../..' . '/app/Tools/SecurityTools.php',
+        'App\\Tools\\StringTools' => __DIR__ . '/../..' . '/app/Tools/StringTools.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
