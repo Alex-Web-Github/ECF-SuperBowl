@@ -5,7 +5,7 @@ use App\Tools\SecurityTools;
 
 ?>
 <!DOCTYPE html>
-<html lang="fr" class="vh-100">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8" />
