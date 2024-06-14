@@ -16,6 +16,9 @@ $routes->add('login', new Route(constant('URL_SUBFOLDER') . '/login', array('con
 // Page Logout
 $routes->add('logout', new Route(constant('URL_SUBFOLDER') . '/logout', array('controller' => 'AuthController', 'method' => 'logoutAction'), array()));
 
+// Page Check (a new subscription with token)
+$routes->add('check', new Route(constant('URL_SUBFOLDER') . '/check', array('controller' => 'UserController', 'method' => 'checkAction'), array()));
+
 // Page Register
 $routes->add('register', new Route(constant('URL_SUBFOLDER') . '/register', array('controller' => 'UserController', 'method' => 'registerFormAction'), array()));
 

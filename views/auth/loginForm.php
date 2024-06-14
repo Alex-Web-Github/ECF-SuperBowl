@@ -11,6 +11,13 @@
   <div class="row mx-0">
     <h1 class="col-12 display-5 fw-bolder text-white text-center mb-4">Connexion</h1>
 
+    <?php if (isset($error['mail']['message'])) { ?>
+      <div class="alert alert-danger">
+        <?= $error['mail']['message']; ?>
+        <a href="<?= constant('URL_SUBFOLDER') . $error['mail']['redirection_slug'] ?>" class="btn-primary"><?= $error['mail']['redirection_text'] ?></a>
+      </div>
+    <?php } ?>
+
     <form class="col col-sm-8 col-md-6 col-lg-4 text-left mx-auto px-4 py-4" method="post" action="<?= constant('URL_SUBFOLDER') . '/login' ?>">
       <div class="mb-2">
         <label for="email" class="form-label text-white">E-mail</label>

@@ -39,15 +39,18 @@ class UserController extends Controller
           // Si il n'y a pas d'erreurs, alors on enregistre l'utilisateur en BDD
           $userRepository = new UserRepository();
 
-          // La méthode persist() permet à la fois de créer ou modifier un utilisateur suivant si un Id est renseigné (ie: Utilisateur déjà enregistré) ou non en BDD
+          // La méthode persist() permet de créer (ou modifier un utilisateur si cet Utilisateur est déjà enregistré) un nouvel Utilisateur en BDD
           $userRepository->persist($user);
 
           /**
            *  Envoi d'un email de confirmation avec PHPMailer
            */
-
           // J'instancie un nouvel objet PHPMailer (true-> pour activer les exceptions)
           $mail = new PHPMailer(true);
+
+
+          // Je récupère les données de l'utilisateur pour les afficher dans le mail (§notamment son Id pour le lien de validation)
+          $user = $userRepository->findOneByEmail($_POST['user_email']);
 
           // Server settings
           // $mail->SMTPDebug = 2;  // Enable verbose debug output
@@ -66,30 +69,27 @@ class UserController extends Controller
           // Content
           $mail->isHTML(true);  // Set email format to HTML
           $mail->Subject = 'Votre inscription sur le site MoneyBowl';
-          $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="http://localhost:8000/validate/' . $user->getUserToken() . '">Valider mon inscription</a>';
+          $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="' . constant('URL_SUBFOLDER') . '/check?id=' . $user->getUserId() . '&token=' . $user->getUserToken() . '">Valider mon inscription</a>';
 
           $mail->AltBody = 'Bonjour ,Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant : http://localhost:8000/validate/' . $user->getUserToken() . '';
 
           if (!$mail->send()) {
-            // Si l'envoi a réussi, j'affiche un message de confirmation
-            $error['mail'] = [
-              'message' => 'Votre inscription a bien été enregistrée. Un email de confirmation vous a été envoyé à l\'adresse suivante : ' . $user->getUserEmail(),
-              'redirection_text' => 'Retour à la page de connexion',
-              'redirection_slug' => $routes->get('login')->getPath()
-            ];
-          } else {
             // Si l'email n'a pas pu être envoyé, je lève une exception
-            throw new \Exception('Votre inscription a bien été enregistrée. Cependant, une erreur est survenue lors de l\'envoi de l\'email de confirmation. Veuillez réessayer ultérieurement.');
+            throw new \Exception('Votre inscription a bien été enregistrée. Cependant, une erreur est survenue lors de l\'envoi de l\'email de confirmation. Veuillez contacter l\'administrateur du site.');
           }
 
-          // Puis on redirige vers la page Login
-          header('Location: ' . $routes->get('login')->getPath());
+          // Sinon je paramètre un message d'envoi de mail de confirmation réussi'
+          $errors['mail'] = [
+            'message' => 'Votre inscription a bien été enregistrée. Un email de confirmation vous a été envoyé. Veuillez cliquer sur le lien de validation pour activer votre compte. ',
+            'redirection_text' => 'Retour à l\'accueil',
+            'redirection_slug' => '/'
+          ];
         }
       }
 
       // charger la page registerForm.php
       $this->render('user/registerForm', [
-        'errors' => $errors
+        'error' => $errors ?? [],
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
@@ -97,6 +97,52 @@ class UserController extends Controller
       ]);
     }
   }
+
+  public function checkAction(RouteCollection $routes)
+  {
+    try {
+      // Je vérifie si l'Id et le Token sont nuls ou absents dans l'URL
+      if (isset($_GET['id']) && isset($_GET['token']) && !empty($_GET['id']) && !empty($_GET['token'])) {
+        // Je vérifie si l'Id est un nombre entier
+        if (ctype_digit($_GET['id'])) {
+          // Je vérifie si l'Id et le Token correspondent à un utilisateur enregistré en BDD
+          $userRepository = new UserRepository();
+          $user = $userRepository->findOneById($_GET['id']);
+          if ($user && $user->getUserToken() === $_GET['token']) {
+            // Si l'Id et le Token correspondent à un utilisateur enregistré en BDD, je mets à jour le champ user_is_checked à 1
+            $user->setUserIsChecked(1);
+            $userRepository->persist($user);
+
+            // J'affiche un message de confirmation sur la page Login
+            $errors['mail'] = [
+              'message' => 'Votre inscription a bien été validée. Vous pouvez désormais vous connecter.',
+              'redirection_text' => '',
+              'redirection_slug' => ''
+            ];
+          } else {
+            // Si l'Id et le Token ne correspondent pas à un utilisateur enregistré en BDD, je lève une exception
+            throw new \Exception('L\'utilisateur n\'existe pas ou le token est incorrect');
+          }
+        } else {
+          // Si l'Id n'est pas un nombre entier, je lève une exception
+          throw new \Exception('L\'Id doit être un nombre entier');
+        }
+      } else {
+        // Si l'Id et/ou le Token sont absents dans l'URL, je lève une exception
+        throw new \Exception('L\'Id et/ou le Token sont absents dans l\'URL');
+      }
+
+      // charger la page check.php
+      $this->render('/auth/loginForm', [
+        'error' => $errors ?? []
+      ]);
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
+
 
   public function dashboardAction(RouteCollection $routes)
   {

@@ -9,13 +9,13 @@ class UserRepository extends Repository
 
   public function persist(User $user): bool
   {
-
     if ($user->getUserId() !== null) {
       $query = $this->pdo->prepare(
-        'UPDATE users SET user_first_name = :first_name, user_last_name = :last_name, user_email = :email, user_password = :password WHERE user_id = :id'
+        'UPDATE users SET user_first_name = :first_name, user_last_name = :last_name, user_email = :email, user_password = :password, user_is_checked = :is_checked WHERE user_id = :id'
       );
       $query->bindValue(':id', $user->getUserId(), $this->pdo::PARAM_INT);
       $query->bindValue(':password', $user->getUserPassword(), $this->pdo::PARAM_STR);
+      $query->bindValue(':is_checked', $user->getUserIsChecked(), $this->pdo::PARAM_INT);
     } else {
       // Si pas d'Id, il s'agit d'un nouvel Utilisateur
       $query = $this->pdo->prepare(
@@ -62,5 +62,17 @@ class UserRepository extends Repository
       $usersList[] = User::createAndHydrate($user);
     }
     return $usersList;
+  }
+
+  public function findOneById(int $id): User|bool
+  {
+    $query = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :id");
+    $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
+    $query->execute();
+    $user = $query->fetch($this->pdo::FETCH_ASSOC);
+    if ($user) {
+      return User::createAndHydrate($user);
+    }
+    return false;
   }
 }
