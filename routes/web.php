@@ -6,14 +6,15 @@ use Symfony\Component\Routing\RouteCollection;
 // Création de la collection de routes
 $routes = new RouteCollection();
 
+// Redirection vers la page d'accueil (liste des matchs) si l'URL est vide
 if (empty($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI'] === '/') {
-  header('Location: ' . constant('URL_SUBFOLDER') . '/game');
+  header('Location: ' . constant('URL_SUBFOLDER') . '/all-games');
   exit();
 }
 
 // Ajout des routes :
-// Redirection vers la page d'accueil
-$routes->add('homepage', new Route(constant('URL_SUBFOLDER') . '/game', array('controller' => 'PageController', 'method' => 'homeAction'), array()));
+// Redirection vers la page d'accueil (liste des matchs)
+$routes->add('all-games', new Route(constant('URL_SUBFOLDER') . '/all-games', array('controller' => 'PageController', 'method' => 'homeAction'), array()));
 
 // Page Login 
 $routes->add('login', new Route(constant('URL_SUBFOLDER') . '/login', array('controller' => 'AuthController', 'method' => 'loginAction'), array()));
@@ -34,7 +35,7 @@ $routes->add('userDashboard', new Route(constant('URL_SUBFOLDER') . '/dashboard'
 $routes->add('adminDashboard', new Route(constant('URL_SUBFOLDER') . '/admin/dashboard', array('controller' => 'AdminController', 'method' => 'dashboardAction'), array()));
 
 // Page Data Game selon l'Id
-$routes->add('game', new Route(constant('URL_SUBFOLDER') . '/game/{id}', array('controller' => 'GameController', 'method' => 'singleGameAction'), array('id' => '\d+')));
+$routes->add('game', new Route(constant('URL_SUBFOLDER') . '/all-games/{id}', array('controller' => 'GameController', 'method' => 'singleGameAction'), array('id' => '\d+')));
 // ici '\d+' signifie que l'on attend un nombre entier. Cela permet de sécuriser la route et d'éviter les injections SQL.
 
 // Page pour Miser sur un match donné

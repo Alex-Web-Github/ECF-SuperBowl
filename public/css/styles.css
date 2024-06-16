@@ -10668,6 +10668,15 @@ textarea.form-control-lg {
   border-color: var(--primary);
 }
 
+tbody {
+  position: relative;
+}
+
+.invalid-tooltip {
+  top: -30px !important;
+  right: 0 !important;
+}
+
 body,
 html {
   min-height: 100vh;

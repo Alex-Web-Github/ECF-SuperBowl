@@ -56,7 +56,7 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
                   <td>
                     <input type="number" name="bet_amount1[]" id="bet_amount1_<?= $game->getGameId() ?>" class="form-control <?= (isset($error['bet_amount1']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="0.01" value="<?php echo isset($error['bet']['betAmount1Old']) ? $error['bet']['betAmount1Old'] : '' ?>">
                     <?php if (isset($error['bet_amount1'])) { ?>
-                      <div class="invalid-feedback"><?= $error['bet_amount1'] ?></div>
+                      <div class="invalid-tooltip"><?= $error['bet_amount1'] ?></div>
                     <?php } ?>
                   </td>
                 </tr>
@@ -82,7 +82,7 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
                   <td>
                     <input type="number" id="bet_amount2_<?= $game->getGameId() ?>" name="bet_amount2[]" class="form-control <?= (isset($error['bet_amount2']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="0.01" value="<?php echo isset($error['bet']['betAmount2Old']) ? $error['bet']['betAmount2Old'] : '' ?>">
                     <?php if (isset($error['bet_amount2'])) { ?>
-                      <div class="invalid-feedback"><?= $error['bet_amount2'] ?></div>
+                      <div class="invalid-tooltip"><?= $error['bet_amount2'] ?></div>
                     <?php } ?>
                   </td>
                 </tr>

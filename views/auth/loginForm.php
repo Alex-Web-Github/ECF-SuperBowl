@@ -23,14 +23,14 @@
         <label for="email" class="form-label text-white">E-mail</label>
         <input type="email" class="form-control <?= (isset($error['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
         <?php if (isset($error['email'])) { ?>
-          <div class="invalid-feedback"><?= $error['email'] ?></div>
+          <div class="invalid-tooltip"><?= $error['email'] ?></div>
         <?php } ?>
       </div>
       <div class="mb-2">
         <label for="password" class="form-label text-white">Mot de passe</label>
-        <input type="text" class="form-control <?= (isset($error['password']) ? 'is-invalid' : '') ?>" id="password" name="password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
+        <input type="password" class="form-control <?= (isset($error['password']) ? 'is-invalid' : '') ?>" id="password" name="password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
         <?php if (isset($error['password'])) { ?>
-          <div class="invalid-feedback"><?= $error['password'] ?></div>
+          <div class="invalid-tooltip"><?= $error['password'] ?></div>
         <?php } ?>
       </div>
       <div class="col-12 mt-4 text-center mx-auto">

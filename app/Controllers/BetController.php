@@ -46,7 +46,7 @@ class BetController extends Controller
         // On récupère les Data de la mise déjà existante pour les afficher dans les champs Input du formulaire
         $existingBet->setBetAmount1(floatval($existingBet->getBetAmount1()));
         $existingBet->setBetAmount2(floatval($existingBet->getBetAmount2()));
-        // On crée un message d'erreur pour informer l'utilisateur qu'il a déjà misé sur ce match et exporter ces données dans la vue.
+        // On crée un message d'avertissement pour informer l'utilisateur qu'il a déjà misé sur ce match et j'injecte les données de ce pari dans la vue avec modificatiuon du texte du boutonj de validation.
         $errors['bet'] = [
           'message' => 'Vous avez déjà misé sur ce match. Vous pouvez modifier votre mise ci-dessous (Attention, si vous mettez 0 pour les 2 mises, votre mise sera supprimée)',
           'betAmount1Old' => $existingBet->getBetAmount1(),
@@ -75,6 +75,10 @@ class BetController extends Controller
         // Si les 2 mises sont nulles (comme ils sont de type Float, il faut écrire 0.0 et simplement 0 !), et qu'il s'agit d'une actualisation de mise, alors on supprime la mise
         if (null !== $bet->getBetId() && $bet->getBetAmount1() === 0.0 && $bet->getBetAmount2() === 0.0) {
           $betRepository->delete($bet->getBetId());
+          // On crée un message de confirmation pour informer l'utilisateur que sa mise a été supprimée
+          $errors['bet'] = [
+            'message' => 'Votre mise a été supprimée.'
+          ];
         }
 
         // On valide les données

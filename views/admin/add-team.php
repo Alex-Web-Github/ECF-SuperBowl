@@ -18,7 +18,7 @@
     <label for="teamName" class="form-label text-white">Nom de l'équipe</label>
     <input type="text" class="form-control <?= (isset($errors['team_name']) ? 'is-invalid' : '') ?>" id="teamName" name="teamName" value="<?= isset($_POST['teamName']) ? $_POST['teamName'] : '' ?>">
     <?php if (isset($errors['team_name'])) { ?>
-      <div class="invalid-feedback"><?= $errors['team_name'] ?></div>
+      <div class="invalid-tooltip"><?= $errors['team_name'] ?></div>
     <?php } ?>
   </div>
   <!-- Nom du Pays -->
@@ -26,7 +26,7 @@
     <label for="teamCountry" class="form-label text-white">Pays</label>
     <input type="text" class="form-control <?= (isset($errors['team_country']) ? 'is-invalid' : '') ?>" id="teamCountry" name="teamCountry" value="<?= isset($_POST['teamCountry']) ? $_POST['teamCountry'] : '' ?>">
     <?php if (isset($errors['team_country'])) { ?>
-      <div class="invalid-feedback"><?= $errors['team_country'] ?></div>
+      <div class="invalid-tooltip"><?= $errors['team_country'] ?></div>
     <?php } ?>
   </div>
 
@@ -39,7 +39,7 @@
       <?php } ?>
     </select>
     <?php if (isset($errors['team_players'])) { ?>
-      <div class="invalid-feedback"><?= $errors['team_players'] ?></div>
+      <div class="invalid-tooltip"><?= $errors['team_players'] ?></div>
     <?php } ?>
     <button type="button" id="addPlayers" class="btn btn-primary mt-2">Ajouter ce(s) joueur(s) à votre équipe</button>
   </div>

@@ -32,7 +32,7 @@ use App\Tools\SecurityTools;
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/game') ?>" href=" <?= constant('URL_SUBFOLDER') . '/game' ?>">Tous les matchs</a>
+            <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/all-games') ?>" href=" <?= constant('URL_SUBFOLDER') . '/all-games' ?>">Tous les matchs</a>
             </li>
             <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('/bet/') ?>" href="<?= constant('URL_SUBFOLDER') . '/bet/multiple' ?>">Parier</a>
             </li>

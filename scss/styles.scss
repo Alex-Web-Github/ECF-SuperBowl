@@ -52,6 +52,14 @@ $nav-link-font-size: 1.1rem;
   background-color: var(--primary);
   border-color: var(--primary);
 }
+tbody {
+  // Pour l'affichage des erreurs de formulaires (invalid-tooltip) au bon endroit
+  position: relative;
+}
+.invalid-tooltip {
+  top: -30px !important;
+  right: 0 !important;
+}
 
 //
 // My Custom styles

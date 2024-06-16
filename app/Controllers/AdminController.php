@@ -20,7 +20,8 @@ class AdminController extends Controller
 
       // Si l'utilisateur n'est pas un Admin, on le redirige vers la page d'accueil
       if (SecurityTools::isAdmin() === false) {
-        header('Location: ' . $routes->get('homepage')->getPath());
+        header('Location: ' . $routes->get('all-games')->getPath());
+        exit();
       }
 
       $errors = [];
@@ -52,6 +53,7 @@ class AdminController extends Controller
         if (empty($errors)) {
           $teamRepository->persist($team);
           header('Location: ' . $routes->get('adminDashboard')->getPath() . '#team');
+          exit();
         } else {
           // Je rends 'active' l'onglet "Les équipes & joueurs" pour afficher les erreurs s'il y en a
           $activeTab = 'team';
@@ -72,6 +74,7 @@ class AdminController extends Controller
           $gameRepository = new GameRepository();
           $gameRepository->persist($game);
           header('Location: ' . $routes->get('adminDashboard')->getPath());
+          exit();
         }
       }
 

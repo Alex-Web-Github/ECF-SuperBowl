@@ -151,6 +151,7 @@ class UserController extends Controller
       // Si l'utilisateur n'est pas connecté ou connecté en Admin, on le redirige vers la page de login
       if (SecurityTools::isLogged() === false || SecurityTools::isAdmin()) {
         header('Location: ' . $routes->get('login')->getPath());
+        exit();
       }
 
       // charger la page dashboard.php

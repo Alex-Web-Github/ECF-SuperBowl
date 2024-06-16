@@ -24,7 +24,7 @@
           <label for="user_first_name" class="form-label text-white">Prénom</label>
           <input type="text" class="form-control <?= (isset($errors['user_first_name']) ? 'is-invalid' : '') ?>" id="user_first_name" name="user_first_name" value="<?= isset($_POST['user_first_name']) ? $_POST['user_first_name'] : '' ?>">
           <?php if (isset($errors['user_first_name'])) { ?>
-            <div class="invalid-feedback"><?= $errors['user_first_name'] ?></div>
+            <div class="invalid-tooltip"><?= $errors['user_first_name'] ?></div>
           <?php } ?>
         </div>
 
@@ -32,7 +32,7 @@
           <label for="user_last_name" class="form-label text-white">Nom</label>
           <input type="text" class="form-control <?= (isset($errors['user_last_name']) ? 'is-invalid' : '') ?>" id="user_last_name" name="user_last_name" value="<?= isset($_POST['user_last_name']) ? $_POST['user_last_name'] : '' ?>">
           <?php if (isset($errors['user_last_name'])) { ?>
-            <div class="invalid-feedback"><?= $errors['user_last_name'] ?></div>
+            <div class="invalid-tooltip"><?= $errors['user_last_name'] ?></div>
           <?php } ?>
         </div>
 
@@ -40,7 +40,7 @@
           <label for="user_email" class="form-label text-white">E-mail</label>
           <input type="user_email" class="form-control <?= (isset($errors['user_email']) ? 'is-invalid' : '') ?>" id="user_email" name="user_email" value="<?= isset($_POST['user_email']) ? $_POST['user_email'] : '' ?>">
           <?php if (isset($errors['user_email'])) { ?>
-            <div class="invalid-feedback"><?= $errors['user_email'] ?></div>
+            <div class="invalid-tooltip"><?= $errors['user_email'] ?></div>
           <?php } ?>
         </div>
 
@@ -48,7 +48,7 @@
           <label for="user_password" class="form-label text-white">Mot de passe</label>
           <input type="text" class="form-control <?= (isset($errors['user_password']) ? 'is-invalid' : '') ?>" id="user_password" name="user_password" value="<?= isset($_POST['user_password']) ? $_POST['user_password'] : '' ?>">
           <?php if (isset($errors['user_password'])) { ?>
-            <div class="invalid-feedback"><?= $errors['user_password'] ?></div>
+            <div class="invalid-tooltip"><?= $errors['user_password'] ?></div>
           <?php } ?>
         </div>
 
