@@ -72,10 +72,21 @@ class AuthController extends Controller
 
   public function logoutAction(RouteCollection $routes)
   {
+    // Si la session n'est pas démarrée, je la démarre
+    if (!isset($_SESSION)) {
+      session_start();
+    }
+    // Je supprime toutes les données de session
+    $_SESSION = [];
+    session_destroy();
 
-    // Supprime toutes les données de session
-    unset($_SESSION['user']);
-    // Redirige vers la page Accueil
+    // Vérifie si la route existe au cas où je l'aurais supprimée
+    if (!$routes->get('all-games')) {
+      header('Location: ' . $routes->get('404')->getPath());
+      exit();
+    }
+
+    // Redirige vers la page d'Accueil
     header('Location: ' . $routes->get('all-games')->getPath());
     exit();
   }

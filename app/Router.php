@@ -41,7 +41,8 @@ class Router
       // On appelle la méthode de la classe correspondante
       call_user_func_array(array($classInstance, $matcher['method']), array_values($params));
     } catch (\Exception $e) {
-      require_once APP_ROOT . '/public/404.php';
+      header('Location: ' . $routes->get('404')->getPath());
+      exit();
     }
   }
 }

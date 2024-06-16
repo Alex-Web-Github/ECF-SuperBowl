@@ -12,7 +12,13 @@ if (empty($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI'] === '/') {
   exit();
 }
 
-// Ajout des routes :
+/**
+ * Configuration des Routes :
+ */
+
+// Redirection vers page 404
+$routes->add('404', new Route(constant('URL_SUBFOLDER') . '/404', array('controller' => 'PageController', 'method' => 'error404Action'), array()));
+
 // Redirection vers la page d'accueil (liste des matchs)
 $routes->add('all-games', new Route(constant('URL_SUBFOLDER') . '/all-games', array('controller' => 'PageController', 'method' => 'homeAction'), array()));
 

@@ -53,4 +53,9 @@ class PageController extends Controller
       $errors[] = $e->getMessage();
     }
   }
+
+  public function error404Action(RouteCollection $routes)
+  {
+    $this->render('404');
+  }
 }

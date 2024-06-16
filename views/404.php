@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * Vue de la page 404
+ */
+
+// ne pas faire indexer cette page par les moteurs de recherche
+http_response_code(404);
+?>
+
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
 <div class="container-md mt-4 px-2">
