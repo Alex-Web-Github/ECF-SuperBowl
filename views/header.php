@@ -10,10 +10,19 @@ use App\Tools\SecurityTools;
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="Enfin une application de gestion intuitive pour suivre vos cryptos et gérer facilement vos gains" />
+  <meta name="description" content="Application de pari en ligne : miser sur le Football Américain" />
   <title>Money Bowl</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="apple-mobile-web-app-title" content="MoneyBowl">
+  <meta name="application-name" content="MoneyBowl">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Styles CSS -->
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
@@ -23,8 +32,8 @@ use App\Tools\SecurityTools;
     <div class="container-md px-2">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="/">
-          <img src="" alt="Logo" width="50" height="50" class="d-inline-block me-1">Money BOWL</a>
+        <a class="navbar-brand d-flex align-items-center" href="/">
+          <img src="/images/moneybowl-logo.png" alt="Logo" width="25" height="25" class="me-2">Money BOWL</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
