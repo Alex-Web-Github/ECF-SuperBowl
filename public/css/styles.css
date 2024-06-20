@@ -10669,6 +10669,10 @@ tbody {
   position: relative;
 }
 
+input + .invalid-tooltip {
+  position: static;
+}
+
 .form-link {
   color: white;
   opacity: 0.75;
@@ -10677,7 +10681,6 @@ tbody {
 }
 .form-link:hover {
   opacity: 1;
-  text-decoration: underline;
 }
 
 body,

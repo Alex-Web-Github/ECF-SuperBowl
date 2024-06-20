@@ -12,7 +12,7 @@ class User extends Entity
   protected ?string $user_password = '';
   protected ?string $user_role = '';
   protected ?string $user_token = '';
-  protected ?int $user_is_checked = null;
+  protected ?int $user_is_checked = 0;
 
   public function validate(): array
   {

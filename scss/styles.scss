@@ -55,6 +55,9 @@ tbody {
   position: relative;
 }
 
+input + .invalid-tooltip {
+  position: static;
+}
 .form-link {
   color: white;
   opacity: 0.75;
@@ -62,7 +65,7 @@ tbody {
   transition: opacity 0.15s ease-in-out;
   &:hover {
     opacity: 1;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 }
 

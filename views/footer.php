@@ -8,9 +8,9 @@
         <div class="small m-0 text-white">Money Bowl | <?= date('Y'); ?></div>
       </div>
       <div class="col-auto">
-        <a class="link-light small" href="/">Mentions légales</a>
+        <a class="form-link small" href="/">Mentions légales</a>
         <span class="text-white mx-1">&middot;</span>
-        <a class="link-light small" href="/">Contact</a>
+        <a class="form-link small" href="/">Contact</a>
       </div>
     </div>
   </div>

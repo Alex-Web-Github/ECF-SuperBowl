@@ -106,7 +106,7 @@ class AuthController extends Controller
           $modal_errors['email'] = 'L\'email n\'est pas valide';
         }
         // SI il y a des erreurs dans le formulaire de la Modal :
-        // je retourne sur la page de connexion et j'ouvre la modal '#lostPwModal' en JavaScript pour y afficher ces erreurs
+        // je retourne sur la page de connexion et j'ouvre la modal '#lostPwModal' en JavaScript pour y afficher ces erreurs. Ce script est au bas de la page 'loginForm.php'
         if (!empty($modal_errors)) {
           $this->render('auth/loginForm', [
             // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
@@ -132,9 +132,12 @@ class AuthController extends Controller
 
             // Je mets à jour le mot de passe en BDD
             $userRepository->persist($user);
+
+            // J'envoie le nouveau mot de passe par email
+            $userRepository->sendNewPassword($user, $newPassword);
           } else {
             // Je lance une exception si l'email et/ou le mot de passe sont incorrects
-            throw new \Exception('Mot de passe oublié : </br>Votre adresse e-mail est incorrecte.');
+            throw new \Exception('Mot de passe oublié : </br></br>Votre adresse e-mail est incorrecte.');
           }
         }
       }
