@@ -18,7 +18,7 @@
       </div>
     <?php } ?>
 
-    <form class="col col-sm-8 col-md-6 col-lg-4 text-left mx-auto px-4 py-4" method="post" action="<?= constant('URL_SUBFOLDER') . '/login' ?>">
+    <form class="col col-sm-8 col-md-6 col-lg-6 col-xl-5 text-left mx-auto px-4 py-4" method="post" action="<?= constant('URL_SUBFOLDER') . '/login' ?>">
       <div class="mb-2">
         <label for="email" class="form-label text-white">E-mail</label>
         <input type="email" class="form-control <?= (isset($error['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
@@ -33,13 +33,19 @@
           <div class="invalid-tooltip"><?= $error['password'] ?></div>
         <?php } ?>
       </div>
-      <div class="col-12 mt-4 text-center mx-auto">
+
+      <div class="d-flex flex-column flex-lg-row align-items-center gap-4 flex-wrap mt-4">
         <button type="submit" name="loginUser" class="btn btn-primary">Je me connecte</button>
+        <a class="form-link" type="button" data-bs-toggle="modal" data-bs-target="#lostPwModal">
+          Mot de passe oublié ?</a>
       </div>
     </form>
 
   </div>
 
 </div>
+
+<!-- Modal de réinitialisation de PW -->
+<?php require_once APP_ROOT . '/views/auth/lostPW-modal.php'; ?>
 
 <?php require_once APP_ROOT . '/views/footer.php'; ?>

@@ -10660,21 +10660,24 @@ textarea.form-control-lg {
   color: rgba(255, 255, 255, 0.25);
 }
 
-.active > .page-link,
-.page-link.active {
-  z-index: 3;
-  color: var(--bs-pagination-active-color);
-  background-color: var(--primary);
-  border-color: var(--primary);
+.invalid-tooltip {
+  top: -30px !important;
+  right: 0 !important;
 }
 
 tbody {
   position: relative;
 }
 
-.invalid-tooltip {
-  top: -30px !important;
-  right: 0 !important;
+.form-link {
+  color: white;
+  opacity: 0.75;
+  text-decoration: none;
+  transition: opacity 0.15s ease-in-out;
+}
+.form-link:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 body,
