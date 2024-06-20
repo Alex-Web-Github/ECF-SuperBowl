@@ -28,6 +28,9 @@ $routes->add('login', new Route(constant('URL_SUBFOLDER') . '/login', array('con
 // Page Logout
 $routes->add('logout', new Route(constant('URL_SUBFOLDER') . '/logout', array('controller' => 'AuthController', 'method' => 'logoutAction'), array()));
 
+// Page Lost Password
+$routes->add('lostPW', new Route(constant('URL_SUBFOLDER') . '/lostPW', array('controller' => 'AuthController', 'method' => 'lostPWAction'), array()));
+
 // Page Check (a new subscription with token)
 $routes->add('check', new Route(constant('URL_SUBFOLDER') . '/check', array('controller' => 'UserController', 'method' => 'checkAction'), array()));
 

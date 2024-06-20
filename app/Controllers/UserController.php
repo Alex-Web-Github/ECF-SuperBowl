@@ -27,10 +27,8 @@ class UserController extends Controller
         // Puis on attribue, par défaut, le rôle "user" à l'utilisateur
         $user->setUserRole('user');
 
-        // Puis je génère un token unique pour l'utilisateur (true -> plus de caractères, plus de sécurité)
-        $user->setUserToken(
-          uniqid($prefix = 'D', $more_entropy = true)
-        );
+        // Puis on attribue un token unique à l'utilisateur
+        $user->setUserToken(SecurityTools::generateToken());
 
         // Méthode validate() : permet de vérifier si les données sont valides
         $errors = $user->validate();

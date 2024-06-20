@@ -14,19 +14,19 @@
       <div class="modal-body fs-bold fs-5">
         Remplir ce formulaire puis vous recevrez un nouveau mot de passe par e-mail.</br>Vous devrez le changer lors de prochaine connexion.
         <!-- Formulaire de renseignement -->
-        <form class="col mx-auto px-4 py-4" method="post" action="<?= constant('URL_SUBFOLDER') . '/login' ?>">
+        <form class="col mx-auto px-4 py-4" method="post" action="<?= constant('URL_SUBFOLDER') . '/lostPW' ?>">
           <div class="mb-2">
             <label for="lastName" class="form-label ">Nom</label>
-            <input type="text" class="form-control <?= (isset($error['lastName']) ? 'is-invalid' : '') ?>" id="lastName" name="lastName" value="<?= isset($_POST['lastName']) ? $_POST['lastName'] : '' ?>">
-            <?php if (isset($error['lastName'])) { ?>
-              <div class="invalid-tooltip"><?= $error['lastName'] ?></div>
+            <input type="text" class="form-control <?= (isset($modal_error['lastName']) ? 'is-invalid' : '') ?>" id="lastName" name="lastName" value="<?= isset($_POST['lastName']) ? $_POST['lastName'] : '' ?>">
+            <?php if (isset($modal_error['lastName'])) { ?>
+              <div class="invalid-tooltip"><?= $modal_error['lastName'] ?></div>
             <?php } ?>
           </div>
           <div class="mb-2">
             <label for="email" class="form-label ">E-mail</label>
-            <input type="email" class="form-control <?= (isset($error['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
-            <?php if (isset($error['email'])) { ?>
-              <div class="invalid-tooltip"><?= $error['email'] ?></div>
+            <input type="email" class="form-control <?= (isset($modal_error['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
+            <?php if (isset($modal_error['email'])) { ?>
+              <div class="invalid-tooltip"><?= $modal_error['email'] ?></div>
             <?php } ?>
           </div>
 

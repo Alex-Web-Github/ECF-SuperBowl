@@ -69,7 +69,6 @@ class AuthController extends Controller
     }
   }
 
-
   public function logoutAction(RouteCollection $routes)
   {
     // Si la session n'est pas démarrée, je la démarre
@@ -89,5 +88,62 @@ class AuthController extends Controller
     // Redirige vers la page d'Accueil
     header('Location: ' . $routes->get('all-games')->getPath());
     exit();
+  }
+
+  public function lostPWAction(RouteCollection $routes)
+  {
+    try {
+      $errors = [];
+      $modal_errors = [];
+      $user = new User();
+
+      if (isset($_POST['lostPwModal'])) {
+
+        // Je valide les champs envoyés par le formulaire
+        if (empty($_POST['lastName']) || empty($_POST['email'])) {
+          $modal_errors['lastName'] = $modal_errors['email'] = 'Les champs nom et/ou e-mail ne doivent pas être vides';
+        } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+          $modal_errors['email'] = 'L\'email n\'est pas valide';
+        }
+        // SI il y a des erreurs dans le formulaire de la Modal :
+        // je retourne sur la page de connexion et j'ouvre la modal '#lostPwModal' en JavaScript pour y afficher ces erreurs
+        if (!empty($modal_errors)) {
+          $this->render('auth/loginForm', [
+            // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
+            'modal_error' => $modal_errors ?? [],
+            'error' => $errors ?? [],
+          ]);
+          return;
+        }
+
+        if (empty($errors)) {
+          // Si il n'y a pas d'erreurs de validation, alors on vérifie si l'utilisateur existe en BDD
+          $userRepository = new UserRepository();
+          $user = $userRepository->findOneByEmail($_POST['email']);
+
+          // Je vérifie si l'utilisateur existe en BDD
+          if ($user) {
+
+            // Je génère un nouveau mot de passe
+            $newPassword = SecurityTools::generatePassword();
+
+            // Je crypte le mot de passe
+            $user->setUserPassword(SecurityTools::hashPassword($newPassword));
+
+            // Je mets à jour le mot de passe en BDD
+            $userRepository->persist($user);
+          } else {
+            // Je lance une exception si l'email et/ou le mot de passe sont incorrects
+            throw new \Exception('Mot de passe oublié : </br>Votre adresse e-mail est incorrecte.');
+          }
+        }
+      }
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_slug' => '/login',
+        'redirection_text' => 'Retour vers la page Connexion'
+      ]);
+    }
   }
 }

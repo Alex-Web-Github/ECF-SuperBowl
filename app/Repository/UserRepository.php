@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Tools\SecurityTools;
+
 
 class UserRepository extends Repository
 {
@@ -28,7 +30,7 @@ class UserRepository extends Repository
       // J'initialise user_is_checked à 0 par défaut
       $query->bindValue(':is_checked', 0, $this->pdo::PARAM_INT);
       // Je chiffre le mot de passe avant de l'enregistrer en BDD
-      $query->bindValue(':password', password_hash($user->getUserPassword(), PASSWORD_DEFAULT), $this->pdo::PARAM_STR);
+      $query->bindValue(':password', SecurityTools::hashPassword($user->getUserPassword()), $this->pdo::PARAM_STR);
     }
     $query->bindValue(':first_name', $user->getUserFirstName(), $this->pdo::PARAM_STR);
     $query->bindValue(':last_name', $user->getUserLastName(), $this->pdo::PARAM_STR);

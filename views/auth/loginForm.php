@@ -6,6 +6,7 @@
 ?>
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
+
 <div class="container mt-4 px-2">
 
   <div class="row mx-0">
@@ -47,5 +48,19 @@
 
 <!-- Modal de réinitialisation de PW -->
 <?php require_once APP_ROOT . '/views/auth/lostPW-modal.php'; ?>
+
+<?php
+// Si il y a des erreurs dans le formulaire de la Modal de réinitialisation du mot de passe, alors on affiche la modal
+if (isset($modal_error['email'])) { ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var lostPwModal = document.getElementById('lostPwModal');
+      var modal = new bootstrap.Modal(lostPwModal);
+      modal.show();
+      // console.log('Modal LostPW affichée');
+    });
+  </script>
+<?php } ?>
+
 
 <?php require_once APP_ROOT . '/views/footer.php'; ?>
