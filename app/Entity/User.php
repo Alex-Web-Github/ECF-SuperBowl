@@ -13,6 +13,8 @@ class User extends Entity
   protected ?string $user_role = '';
   protected ?string $user_token = '';
   protected ?int $user_is_checked = 0;
+  protected ?string $user_created_at = '';
+  // TODO quel fuseau horaire ? --> date_default_timezone_set('Europe/Paris'); ???
 
   public function validate(): array
   {
@@ -176,6 +178,24 @@ class User extends Entity
 
   {
     $this->user_is_checked = $user_is_checked;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of user_created_at
+   */
+  public function getUserCreatedAt(): ?string
+  {
+    return $this->user_created_at;
+  }
+
+  /**
+   * Set the value of user_created_at
+   */
+  public function setUserCreatedAt(?string $user_created_at): self
+  {
+    $this->user_created_at = $user_created_at;
 
     return $this;
   }

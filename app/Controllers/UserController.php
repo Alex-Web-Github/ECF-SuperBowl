@@ -7,13 +7,13 @@ use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Tools\SecurityTools;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use App\Repository\BetRepository;
 
 
 class UserController extends Controller
 {
 
-  public function registerFormAction(RouteCollection $routes)
+  public function registerFormAction(): void
   {
     try {
       $errors = [];
@@ -99,7 +99,7 @@ class UserController extends Controller
     }
   }
 
-  public function checkAction(RouteCollection $routes)
+  public function checkAction(): void
   {
     try {
       // Je vérifie si l'Id et le Token sont nuls ou absents dans l'URL
@@ -144,7 +144,6 @@ class UserController extends Controller
     }
   }
 
-
   public function dashboardAction(RouteCollection $routes)
   {
     try {
@@ -159,12 +158,20 @@ class UserController extends Controller
       // Je récupère les infos de l'utilisateur connecté
       $userRepository = new UserRepository();
       $user = $userRepository->findOneById($_SESSION['user']->getUserId());
-
       // die(var_dump($user));
+
+      // Je récupère tous les paris+infos du Game de l'utilisateur connecté
+      $betRepository = new BetRepository();
+      $betsArray = $betRepository->findAllBetsWithGameByUser($user->getUserId());
+      // TODO A faire : faire une condition si pas de paris existant avant d'afficher la page
+
+      // die(var_dump($betsArray));
+
 
       // charger la page dashboard.php
       $this->render('user/dashboard', [
         'user' => $user,
+        'betsArray' => $betsArray,
         'error' => $errors ?? []
       ]);
     } catch (\Exception $e) {

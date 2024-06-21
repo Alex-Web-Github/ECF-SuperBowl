@@ -41,7 +41,7 @@ $nav-link-font-size: 1.1rem;
   }
 }
 
-// Couleurs - Navigation Underline dans les Dashboard
+// Navigation Underline dans les Dashboard
 .nav-underline {
   --bs-emphasis-color: #fff;
   --bs-nav-underline-border-width: 0.14rem;
@@ -60,6 +60,20 @@ $nav-link-font-size: 1.1rem;
 .nav-underline .nav-link.active {
   font-weight: 500;
 }
+#myTab.nav-underline {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  .nav-item {
+    padding: 0;
+  }
+  .nav-item .nav-link:not(.active) {
+    flex-shrink: 1;
+    word-wrap: break-word;
+  }
+  .nav-item .nav-link.active {
+    width: max-content;
+  }
+} // TODO: A revoir
 
 // Affichage des erreurs 'champs invalides' dans les formulaires
 .invalid-tooltip {

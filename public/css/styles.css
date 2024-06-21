@@ -10671,6 +10671,21 @@ textarea.form-control-lg {
   font-weight: 500;
 }
 
+#myTab.nav-underline {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+#myTab.nav-underline .nav-item {
+  padding: 0;
+}
+#myTab.nav-underline .nav-item .nav-link:not(.active) {
+  flex-shrink: 1;
+  word-wrap: break-word;
+}
+#myTab.nav-underline .nav-item .nav-link.active {
+  width: max-content;
+}
+
 .invalid-tooltip {
   top: -30px !important;
   right: 0 !important;

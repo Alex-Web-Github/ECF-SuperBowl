@@ -36,7 +36,7 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
         <tbody class="table-group-divider">
           <tr>
             <td><?= $game->getTeam1Name() ?></td>
-            <td><?= $game->getGameDate() ?></td>
+            <td><?= date('d/m/y', strtotime($game->getGameDate())) ?></td>
             <td><?= $game->getGameStart() ?></td>
             <td><?= $game->getGameEnd() ?></td>
             <td><?= $game->getTeam2Name() ?></td>

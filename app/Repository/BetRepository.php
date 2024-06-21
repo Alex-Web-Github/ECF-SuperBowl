@@ -30,6 +30,7 @@ class BetRepository extends Repository
     $query->execute();
   }
 
+  // Renvoit un pari si il existe (sinon False) pour un match et un utilisateur donnés
   public function findOneByGameAndUser(int $gameId, int $userId): Bet|bool
   {
     $query = $this->pdo->prepare('SELECT * FROM bets WHERE game_id = :game_id AND user_id = :user_id');
@@ -39,6 +40,43 @@ class BetRepository extends Repository
     $bet = $query->fetch($this->pdo::FETCH_ASSOC);
     if ($bet) {
       return $bet = Bet::createAndHydrate($bet);
+    } else {
+      return false;
+    }
+  }
+
+  public function findAllByUser(int $userId): array|bool
+  {
+    $query = $this->pdo->prepare('SELECT * FROM bets WHERE user_id = :user_id');
+    $query->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
+    $query->execute();
+    $bets = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    $betsArray = [];
+    if ($bets) {
+      foreach ($bets as $bet) {
+        $betsArray[] = Bet::createAndHydrate($bet);
+      }
+      return $betsArray;
+    } else {
+      return False;
+    }
+  }
+
+  public function findAllBetsWithGameByUser($userId): array|bool
+  {
+    $sql = "SELECT bets.*, games.*, team1.team_name as team1_name, team2.team_name as team2_name 
+        FROM bets 
+        INNER JOIN games ON bets.game_id = games.game_id 
+        INNER JOIN teams as team1 ON games.team1_id = team1.team_id 
+        INNER JOIN teams as team2 ON games.team2_id = team2.team_id 
+        WHERE bets.user_id = :userId";
+
+    $query = $this->pdo->prepare($sql);
+    $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
+    $query->execute();
+    $betsArray = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    if ($betsArray) {
+      return $betsArray;
     } else {
       return false;
     }

@@ -32,7 +32,7 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
     foreach ($gamesSelectedData as $game) : ?>
       <div class="p-3 border rounded-3 mb-4">
 
-        <p class="text-white">Date du match : <span class="fs-6 text-white"><?= $game->getGameDate() ?></span></p>
+        <p class="text-white">Date du match : <span class="fs-6 text-white"><?= date('d/m/y', strtotime($game->getGameDate())) ?></span></p>
 
         <!-- Ajout des champs de formulaire pour bet_amount1 et bet_amount2 -->
         <input type="hidden" name="game_id[]" value="<?= $game->getGameId() ?>">
