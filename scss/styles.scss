@@ -33,31 +33,48 @@ $nav-link-font-size: 1.1rem;
 //
 // Custom styles
 //
+
+// Navigation principale
+.navbar-collapse.collapse:not(.show) {
+  .navbar-nav .nav-link {
+    font-size: 1.2rem;
+  }
+}
+
+// Couleurs - Navigation Underline dans les Dashboard
 .nav-underline {
   --bs-emphasis-color: #fff;
+  --bs-nav-underline-border-width: 0.14rem;
 }
-.nav-underline .nav-link {
-  color: rgba(255, 255, 255, 0.55);
+.nav-underline .nav-link,
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.7);
 }
-.nav-underline .nav-link:hover {
-  color: rgba(255, 255, 255, 0.75);
+.nav-underline .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 1);
 }
 .nav-underline .nav-link.disabled {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
 }
+.nav-underline .nav-link.active {
+  font-weight: 500;
+}
+
+// Affichage des erreurs 'champs invalides' dans les formulaires
 .invalid-tooltip {
   top: -30px !important;
   right: 0 !important;
 }
-
 tbody {
   // Pour l'affichage des erreurs de formulaires (invalid-tooltip) au bon endroit
   position: relative;
 }
-
 input + .invalid-tooltip {
   position: static;
 }
+
+// Affichage des liens
 .form-link {
   color: white;
   opacity: 0.75;

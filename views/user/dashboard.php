@@ -1,38 +1,73 @@
+<?php
+
+/** 
+ * Vue du Dashboard de l'espace Utilisateur
+ * 
+ */
+?>
+
 <?php require_once APP_ROOT . '/views/header.php'; ?>
 
+<div class="container my-4 p-2">
+  <h2 class="display-6 fw-bolder text-white text-center mb-5">Espace Utilisateur</h2>
 
-<div class="container-md mt-4 px-2">
-
-  <h1 class="display-5 fw-bolder text-white text-center mb-4">Bienvenue sur votre espace</h1>
-
-  <!-- Navigation des matchs -->
+  <!-- Onglets de navigation -->
   <ul class="nav nav-underline mb-4" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane" role="tab" aria-controls="all-tab-pane" aria-selected="true" href="#">Dashboard</a>
+      <button type="button" class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</button>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link " id="live-tab" data-bs-toggle="tab" data-bs-target="#live-tab-pane" role="tab" aria-controls="live-tab-pane" aria-selected="false" href="#">Mes informations</a>
+      <button type="button" class="nav-link" id="myAccount-tab" data-bs-toggle="tab" data-bs-target="#myAccount" role="tab" aria-controls="myAccount" aria-selected="false" tabindex="-1">Mes informations</button>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link " id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming-tab-pane" role="tab" aria-controls="upcoming-tab-pane" aria-selected="false" href="#">Historique</a>
+      <button type="button" class="nav-link" id="myBets-tab" data-bs-toggle="tab" data-bs-target="#myBets" role="tab" aria-controls="myBets" aria-selected="false" tabindex="-1">Historique des mises</button>
     </li>
-
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab" tabindex="0">
-      <!-- Graphique dates des paris / montants gagnés-perdus -->
+    <!-- Bloc Dashboard -->
+    <div class="tab-pane active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
+
+
     </div>
 
-    <div class="tab-pane " id="live-tab-pane" role="tabpanel">
-      <!-- Mes informations -->
+    <!-- bloc Mes informations -->
+    <div class="tab-pane" id="myAccount" role="tabpanel" aria-labelledby="myAccount-tab" tabindex="0">
+      <div class="container-md my-4 p-2">
+        <div class="row mx-0 mt-4">
+          <div class="col-lg-8 table-responsive mb-2 px-0">
+            <table class="table table-hover table-light table-striped table-rounded">
+              <thead>
+                <tr>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Prénom</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr>
+                  <td><?= $user->getUserLastName() ?></td>
+                  <td><?= $user->getUserFirstName() ?></td>
+                  <td><?= $user->getUserEmail() ?></td>
+                  <td>
+                    <a href="#" class="btn btn-primary disabled">Modifier</a>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="tab-pane " id="upcoming-tab-pane" role="tabpanel">
-      <!-- Historique des mises -->
+    <!-- bloc Historique des mises -->
+    <div class="tab-pane" id="myBets" role="tabpanel" aria-labelledby="myBets-tab" tabindex="0">
+
+
     </div>
 
   </div>
+
 </div>
 
 

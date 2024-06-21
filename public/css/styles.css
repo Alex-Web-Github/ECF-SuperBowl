@@ -10644,20 +10644,31 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.navbar-collapse.collapse:not(.show) .navbar-nav .nav-link {
+  font-size: 1.2rem;
+}
+
 .nav-underline {
   --bs-emphasis-color: #fff;
+  --bs-nav-underline-border-width: 0.14rem;
 }
 
-.nav-underline .nav-link {
-  color: rgba(255, 255, 255, 0.55);
+.nav-underline .nav-link,
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.nav-underline .nav-link:hover {
-  color: rgba(255, 255, 255, 0.75);
+.nav-underline .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  color: rgb(255, 255, 255);
 }
 
 .nav-underline .nav-link.disabled {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-underline .nav-link.active {
+  font-weight: 500;
 }
 
 .invalid-tooltip {
