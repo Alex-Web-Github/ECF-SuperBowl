@@ -158,12 +158,11 @@ class UserController extends Controller
       // Je récupère les infos de l'utilisateur connecté
       $userRepository = new UserRepository();
       $user = $userRepository->findOneById($_SESSION['user']->getUserId());
-      // die(var_dump($user));
 
       // Je récupère tous les paris+infos du Game de l'utilisateur connecté
       $betRepository = new BetRepository();
       $betsArray = $betRepository->findAllBetsWithGameByUser($user->getUserId());
-      // TODO A faire : faire une condition si pas de paris existant avant d'afficher la page
+      // TODO A faire : faire une condition si aucun pari existant avant d'afficher la page
 
       // die(var_dump($betsArray));
 

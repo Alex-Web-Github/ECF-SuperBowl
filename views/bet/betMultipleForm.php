@@ -27,7 +27,9 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
     <div class="form-group">
       <?php if (SecurityTools::isLogged()) : ?>
         <button type="submit" name="submitBetSelection" class="btn btn-primary">Miser sur la sélection</button>
-      <?php else : ?>
+      <?php
+      // Si l'utilisateur n'est pas connecté, on affiche le bouton qui ouvre la modal de connexion
+      else : ?>
         <button type="button" name="submitBetSelection" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#betAuthModal">Miser sur la sélection</button>
       <?php endif; ?>
     </div>

@@ -74,7 +74,7 @@ class BetController extends Controller
 
         // Si les 2 mises sont nulles (comme ils sont de type Float, il faut écrire 0.0 et simplement 0 !), et qu'il s'agit d'une actualisation de mise, alors on supprime la mise
         if (null !== $bet->getBetId() && $bet->getBetAmount1() === 0.0 && $bet->getBetAmount2() === 0.0) {
-          $betRepository->delete($bet->getBetId());
+          $betRepository->deleteBetById($bet->getBetId());
           // On crée un message de confirmation pour informer l'utilisateur que sa mise a été supprimée
           $errors['bet'] = [
             'message' => 'Votre mise a été supprimée.'
@@ -190,14 +190,13 @@ class BetController extends Controller
 
       // SUBMIT : On vérifie que le formulaire a été soumis et n'est pas vide
       if (isset($_POST['submitBetMultipleConfig'])) {
-        // die(var_dump($_POST));
 
         // On récupère l'Id de l'utilisateur connecté
         $userId = SecurityTools::getCurrentUserId();
 
         foreach ($_POST['game_id'] as $key => $gameId) {
 
-          // Je vérifie que l'utilisateur n'a pas déjà misé sur un des matchs sélectionnés
+          // Je vérifie que l'utilisateur n'a pas déjà misé sur un/plusieurs des matchs sélectionnés
           $betRepository = new BetRepository();
           $existingBet = $betRepository->findOneByGameAndUser($gameId, $userId);
           if ($existingBet) {
@@ -240,6 +239,47 @@ class BetController extends Controller
         'gamesSelectedData' => $gamesSelectedData ?? [],
         'error' => $errors ?? [],
       ]);
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_slug' => '/',
+        'redirection_text' => 'Retour vers la page Accueil'
+      ]);
+    }
+  }
+
+  public function deleteBetAction($id): void
+  {
+    try {
+      $errors = [];
+
+      // On vérifie que l'utilisateur est connecté
+      if (!SecurityTools::isLogged()) {
+        header('Location: ' . constant('URL_SUBFOLDER') . '/login');
+        exit();
+      }
+
+      // On vérifie que l'Id de la mise est un nombre entier
+      if (!is_numeric($id)) {
+        throw new \Exception('L\'Id de la mise doit être un nombre entier');
+      }
+
+      // On récupère l'Id de l'utilisateur connecté
+      $userId = SecurityTools::getCurrentUserId();
+
+      // On vérifie que la mise appartient bien à l'utilisateur connecté
+      $betRepository = new BetRepository();
+      $bet = $betRepository->findOneById($id);
+      if (!$bet || $bet->getUserId() !== $userId) {
+        throw new \Exception('Cette mise ne vous appartient pas !');
+      }
+
+      // On supprime la mise
+      $betRepository->deleteBetById($id);
+
+      // On redirige l'utilisateur vers son dashboard
+      header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
+      exit();
     } catch (\Exception $e) {
       $this->render('errors/default', [
         'error' => $e->getMessage(),

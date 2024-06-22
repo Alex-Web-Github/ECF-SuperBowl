@@ -9,7 +9,7 @@ use App\Tools\SecurityTools;
 
 <?php
 // Modal de demande de confirmation pour la validation du pari multiple
-require_once APP_ROOT . '/views/bet/confirmation-modal.php';
+require_once APP_ROOT . '/views/bet/multipleBetValidation-modal.php';
 // Modal si l'utilisateur n'est pas connecté
 require_once APP_ROOT . '/views/auth/login-modal.php';
 ?>

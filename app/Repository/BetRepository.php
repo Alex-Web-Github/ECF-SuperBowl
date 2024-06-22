@@ -82,10 +82,23 @@ class BetRepository extends Repository
     }
   }
 
-  public function delete(int $betId): void
+  public function deleteBetById(int $betId): void
   {
     $query = $this->pdo->prepare('DELETE FROM bets WHERE bet_id = :id');
     $query->bindValue(':id', $betId, $this->pdo::PARAM_INT);
     $query->execute();
+  }
+
+  public function findOneById(int $betId): Bet|bool
+  {
+    $query = $this->pdo->prepare('SELECT * FROM bets WHERE bet_id = :id');
+    $query->bindValue(':id', $betId, $this->pdo::PARAM_INT);
+    $query->execute();
+    $bet = $query->fetch($this->pdo::FETCH_ASSOC);
+    if ($bet) {
+      return Bet::createAndHydrate($bet);
+    } else {
+      return false;
+    }
   }
 }

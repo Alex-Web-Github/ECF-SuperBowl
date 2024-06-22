@@ -40,6 +40,9 @@ $routes->add('register', new Route(constant('URL_SUBFOLDER') . '/register', arra
 // Page Dashboard User
 $routes->add('userDashboard', new Route(constant('URL_SUBFOLDER') . '/dashboard', array('controller' => 'UserController', 'method' => 'dashboardAction'), array()));
 
+// Suppression d'un pari depuis le Dashboard User (Méthode POST)
+$routes->add('deleteBet', new Route(constant('URL_SUBFOLDER') . '/delete-bet/{id}', array('controller' => 'BetController', 'method' => 'deleteBetAction'), array('id' => '\d+')));
+
 // Page Dashboard Admin
 $routes->add('adminDashboard', new Route(constant('URL_SUBFOLDER') . '/admin/dashboard', array('controller' => 'AdminController', 'method' => 'dashboardAction'), array()));
 
