@@ -16,9 +16,8 @@ class BetController extends Controller
   {
     try {
       $errors = [];
-      $bet = new Bet();
 
-      // On vérifie que l'utilisateur est connecté, même si le bouton "miser" est caché pour les utilisateurs non connectés
+      // On vérifie que l'utilisateur est connecté (même si le bouton "miser" est normalement caché pour les utilisateurs non connectés...), sinon -> Redirection vers page Accueil.
       if (!SecurityTools::isLogged()) {
         header('Location: ' . constant('URL_SUBFOLDER') . '/login');
         exit();
@@ -29,28 +28,26 @@ class BetController extends Controller
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($id);
 
-      // Redirection si le match n'existe pas ou est terminé ou en cours
+      // Redirection si le match n'existe pas OU est terminé OU est en cours
       if (!$game || $game->getGameStatus() === 'Terminé' || $game->getGameStatus() === 'En cours') {
-        header('Location: ' . constant('URL_SUBFOLDER') . '/');
-        exit();
+        throw new \Exception('Ce match n\'existe pas ou est terminé ou en cours.');
       }
 
       // On récupère l'Id de l'utilisateur connecté
       $userId = SecurityTools::getCurrentUserId();
 
-      // On vérifie que l'utilisateur n'a pas déjà misé sur ce match
+      /**
+       **** On vérifie si l'utilisateur a déjà misé sur ce match ?
+       */
       $betRepository = new BetRepository();
+      // Je récupère une mise si elle existe pour le match, sinon je récupère "False".
       $existingBet = $betRepository->findOneByGameAndUser($id, $userId);
 
       if ($existingBet) {
-        // On récupère les Data de la mise déjà existante pour les afficher dans les champs Input du formulaire
-        $existingBet->setBetAmount1(floatval($existingBet->getBetAmount1()));
-        $existingBet->setBetAmount2(floatval($existingBet->getBetAmount2()));
-        // On crée un message d'avertissement pour informer l'utilisateur qu'il a déjà misé sur ce match et j'injecte les données de ce pari dans la vue avec modificatiuon du texte du boutonj de validation.
+        // On crée un message d'avertissement pour informer l'utilisateur qu'il a déjà misé sur ce match et je modifie le texte du bouton de validation.
+        // Les mises existantes sont envoyées à la vue pour affichage (variable $existingBet).
         $errors['bet'] = [
-          'message' => 'Vous avez déjà misé sur ce match. Vous pouvez modifier votre mise ci-dessous (Attention, si vous mettez 0 pour les 2 mises, votre mise sera supprimée)',
-          'betAmount1Old' => $existingBet->getBetAmount1(),
-          'betAmount2Old' => $existingBet->getBetAmount2(),
+          'message' => 'Vous avez déjà misé sur ce match mais vous pouvez modifier votre mise ci-dessous.</br>Attention, si vous mettez 0 pour les 2 mises, votre mise sera supprimée',
           'textButton' => 'Actualiser ma mise',
         ];
       }
@@ -58,52 +55,57 @@ class BetController extends Controller
       // On vérifie que le formulaire a été soumis
       if (isset($_POST['submitBet'])) {
 
-        // Important : si l'utilisateur a déjà misé, on récupère l'Id de la mise pour la modifier
-        if ($existingBet) {
-          $bet->setBetId($existingBet->getBetId());
-        }
+        // Je filtre les données du formulaire contre les failles XSS
+        $_POST['bet_amount1'] = strip_tags($_POST['bet_amount1']);
+        $_POST['bet_amount2'] = strip_tags($_POST['bet_amount2']);
 
-        // Les données du formulaire concernant les mises sont renvoyées sous la forme de String. Il faut donc les convertir en Float par la fonction PHP floatval().
-        $bet->setBetAmount1(floatval($_POST['bet_amount1']));
-        $bet->setBetAmount2(floatval($_POST['bet_amount2']));
-
-        // On attribue l'Id du match et l'Id de l'utilisateur à la mise
+        // J'instancie un nouvel objet Bet
+        $bet = new Bet();
+        // Je "caste" les montants de mise en entier (elles arrivent sous la forme de chaînes de caractères)
+        $bet->setBetAmount1((int)$_POST['bet_amount1']);
+        $bet->setBetAmount2((int)$_POST['bet_amount2']);
+        // On attribue l'Id du match et l'Id de1&&&&& l'utilisateur à la mise
         $bet->setGameId($id);
         $bet->setUserId($userId);
         $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d H:i:s'));
 
-        // Si les 2 mises sont nulles (comme ils sont de type Float, il faut écrire 0.0 et simplement 0 !), et qu'il s'agit d'une actualisation de mise, alors on supprime la mise
-        if (null !== $bet->getBetId() && $bet->getBetAmount1() === 0.0 && $bet->getBetAmount2() === 0.0) {
-          $betRepository->deleteBetById($bet->getBetId());
-          // On crée un message de confirmation pour informer l'utilisateur que sa mise a été supprimée
-          $errors['bet'] = [
-            'message' => 'Votre mise a été supprimée.'
-          ];
+        // Important : si l'utilisateur a déjà misé, on récupère l'Id de la mise pour la modifier (variante UPDATE de la méthode persist() de BetRepository).
+        if ($existingBet) {
+          $bet->setBetId($existingBet->getBetId());
+          // Validation des champs de l'objet Bet dans le cas d'un pari déjà existant : on autorise les mises nulles (en vue d'une suppression de la mise)
+          $errors = $bet->validate(false);
+        } else {
+          $bet->setBetId(null);
+          // Je valide les données dans l'objet Bet
+          $errors = $bet->validate();
         }
 
-        // On valide les données
-        $errors = $bet->validate();
-
-        // S'il n'y a pas d'erreurs
         if (empty($errors)) {
-          // On enregistre la mise en base de données
+          // Si les 2 mises sont nulles, et qu'il s'agit d'une actualisation de mise, alors on supprime la mise.
+          if ($existingBet && $bet->getBetAmount1() === 0 && $bet->getBetAmount2() === 0) {
+            $betRepository->deleteBetById($bet->getBetId());
+          }
+
+          // On enregistre la mise en base de données (cas d'une création de mise ou d'une modification de mise existante)
           $betRepository = new BetRepository();
           $betRepository->persist($bet);
 
-          // On redirige l'utilisateur vers son dashboard
+          // Dans tous les cas, je redirige ensuite l'utilisateur vers son Dashboard.
           header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
           exit();
         }
       }
-
-      // On affiche la vue
+      // On affiche la vue betForm.php
       $this->render('bet/betForm', [
-        'game' => $game,
-        'error' => $errors,
+        'game' => $game ?? [],
+        'existingBet' => $existingBet ?? false,
+        'error' => $errors
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
-        'error' => $e->getMessage()
+        'error' => $e->getMessage(),
+        'redirection_slug' => '/',
+        'redirection_text' => 'Retour vers la page Accueil'
       ]);
     }
   }

@@ -81,9 +81,12 @@ use App\Tools\SecurityTools;
                   </div>
 
                 <?php else : ?>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" disabled>
+                  <div class="">
+                    <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#betAuthModal">
+                      Parier
+                    </button>
                   </div>
+
                 <?php endif; ?>
               </td>
             <?php endif; ?>

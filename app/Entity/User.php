@@ -19,10 +19,10 @@ class User extends Entity
   public function validate(): array
   {
     $errors = [];
-    if (isset($_POST['saveUser']) && empty($this->getUserFirstName())) {
+    if (empty($this->getUserFirstName())) {
       $errors['user_first_name'] = 'Le champ prénom ne doit pas être vide';
     }
-    if (isset($_POST['saveUser']) && empty($this->getUserLastName())) {
+    if (empty($this->getUserLastName())) {
       $errors['user_last_name'] = 'Le champ nom ne doit pas être vide';
     }
     if (empty($this->getUserEmail())) {

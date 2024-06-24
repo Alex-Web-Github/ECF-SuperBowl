@@ -75,8 +75,17 @@ class AuthController extends Controller
     if (!isset($_SESSION)) {
       session_start();
     }
-    // Je supprime toutes les données de session
-    $_SESSION = [];
+
+    // je reprends les paramètres du cookie de Session pour le détruire (voir public/index.php)
+    $path = '/';
+    $domain = $_SERVER['SERVER_NAME'];
+    $secure = false; // Changez selon votre configuration, False si pas de HTTPS
+    $httponly = true; // Garder httponly à true pour des raisons de sécurité
+
+    // Suppression du cookie
+    setcookie(session_name(), '', time() - 42000, $path, $domain, $secure, $httponly);
+
+    // Destruction de la session
     session_destroy();
 
     // Vérifie si la route existe au cas où je l'aurais supprimée

@@ -162,10 +162,7 @@ class UserController extends Controller
       // Je récupère tous les paris+infos du Game de l'utilisateur connecté
       $betRepository = new BetRepository();
       $betsArray = $betRepository->findAllBetsWithGameByUser($user->getUserId());
-      // TODO A faire : faire une condition si aucun pari existant avant d'afficher la page
-
       // die(var_dump($betsArray));
-
 
       // charger la page dashboard.php
       $this->render('user/dashboard', [

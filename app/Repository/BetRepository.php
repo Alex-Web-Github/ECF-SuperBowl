@@ -23,8 +23,8 @@ class BetRepository extends Repository
 
     $query->bindValue(':game_id', $bet->getGameId(), $this->pdo::PARAM_INT);
     $query->bindValue(':user_id', $bet->getUserId(), $this->pdo::PARAM_INT);
-    $query->bindValue(':bet_amount1', $bet->getBetAmount1(), $this->pdo::PARAM_STR);
-    $query->bindValue(':bet_amount2', $bet->getBetAmount2(), $this->pdo::PARAM_STR);
+    $query->bindValue(':bet_amount1', $bet->getBetAmount1(), $this->pdo::PARAM_INT);
+    $query->bindValue(':bet_amount2', $bet->getBetAmount2(), $this->pdo::PARAM_INT);
     $query->bindValue(':bet_date', $bet->getBetDate(), $this->pdo::PARAM_STR);
 
     $query->execute();
