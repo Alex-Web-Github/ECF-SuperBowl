@@ -18,25 +18,28 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
 <div class="container-lg my-4 px-2">
 
-  <?php if (isset($error['bet']['message'])) { ?>
-    <div class="alert alert-danger">
-      <?= $error['bet']['message']; ?>
-      <a href="<?= constant('URL_SUBFOLDER') . $error['bet']['redirection_slug'] ?>" class="btn-primary"><?= $error['bet']['redirection_text'] ?></a>
-    </div>
-  <?php } ?>
-
   <form id="betMultipleConfigForm" class="p-0" method="post" action="">
 
     <?php
     // Affichage du template PARTIAL du pari pour chaque match sélectionné
-    foreach ($gamesSelectedData as $game) : ?>
+    foreach ($gamesSelectedData as $game) :
+      $gameId = $game->getGameId();
+    ?>
+
       <div class="p-3 border rounded-3 mb-4">
-
         <p class="text-white">Date du match : <span class="fs-6 text-white"><?= date('d/m/y', strtotime($game->getGameDate())) ?></span></p>
-
+        <?php
+        // Alerte en cas d'erreur sur la mise du pari
+        if (isset($errorBetSelection[$gameId]) && !empty($errorBetSelection[$gameId]['message'])) {
+          echo '<div class="alert alert-danger">' . $errorBetSelection[$gameId]['message'] . '</div>';
+        }
+        // Alerte en cas d'existence d'un pari pour ce match
+        if (isset($messageBetSelection[$gameId]) && !empty($messageBetSelection[$gameId]['message'])) {
+          echo '<div class="alert alert-info">' . $messageBetSelection[$gameId]['message'] . '</div>';
+        }
+        ?>
         <!-- Ajout des champs de formulaire pour bet_amount1 et bet_amount2 -->
         <input type="hidden" name="game_id[]" value="<?= $game->getGameId() ?>">
-
         <div class="row mt-4 mx-0">
           <!-- Bloc Infos 1 -->
           <div class="col-lg mx-lg-2 p-3 mb-2 bg-light rounded-3">
@@ -54,9 +57,9 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
                   <td><?= $game->getTeam1Name() ?></td>
                   <td><?= $game->getTeam1Odds() ?></td>
                   <td>
-                    <input type="number" name="bet_amount1[]" id="bet_amount1_<?= $game->getGameId() ?>" class="form-control <?= (isset($error['bet_amount1']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="0.01" value="<?php echo isset($error['bet']['betAmount1Old']) ? $error['bet']['betAmount1Old'] : '' ?>">
-                    <?php if (isset($error['bet_amount1'])) { ?>
-                      <div class="invalid-tooltip"><?= $error['bet_amount1'] ?></div>
+                    <input type="number" name="bet_amount1[]" id="bet_amount1_<?= $game->getGameId() ?>" class="form-control <?= (isset($error[$game->getGameId()]['bet_amount1']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="1" value="<?= isset($oldBet[$gameId]['betAmount1_Old']) ? $oldBet[$gameId]['betAmount1_Old'] : '0' ?>">
+                    <?php if (isset($error[$game->getGameId()]['bet_amount1'])) { ?>
+                      <div class="invalid-tooltip"><?= $error[$game->getGameId()]['bet_amount1'] ?></div>
                     <?php } ?>
                   </td>
                 </tr>
@@ -80,9 +83,9 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
                   <td><?= $game->getTeam2Name() ?></td>
                   <td><?= $game->getTeam2Odds() ?></td>
                   <td>
-                    <input type="number" id="bet_amount2_<?= $game->getGameId() ?>" name="bet_amount2[]" class="form-control <?= (isset($error['bet_amount2']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="0.01" value="<?php echo isset($error['bet']['betAmount2Old']) ? $error['bet']['betAmount2Old'] : '' ?>">
-                    <?php if (isset($error['bet_amount2'])) { ?>
-                      <div class="invalid-tooltip"><?= $error['bet_amount2'] ?></div>
+                    <input type="number" name="bet_amount2[]" id="bet_amount2_<?= $game->getGameId() ?>" class="form-control <?= (isset($error[$game->getGameId()]['bet_amount2']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="1" value="<?= isset($oldBet[$gameId]['betAmount2_Old']) ? $oldBet[$gameId]['betAmount2_Old'] : '0' ?>">
+                    <?php if (isset($error[$game->getGameId()]['bet_amount2'])) { ?>
+                      <div class="invalid-tooltip"><?= $error[$game->getGameId()]['bet_amount2'] ?></div>
                     <?php } ?>
                   </td>
                 </tr>
@@ -90,7 +93,6 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
             </table>
           </div>
         </div>
-
       </div>
     <?php endforeach; ?>
 
