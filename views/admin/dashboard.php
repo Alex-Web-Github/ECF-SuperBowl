@@ -11,6 +11,17 @@
 <div class="container my-4 p-2">
   <h2 class="display-6 fw-bolder text-white text-center mb-5">Espace Administrateur</h2>
 
+  <?php if (isset($error['gameCreate']['message'])) { ?>
+    <div class="alert alert-success">
+      <?= $error['gameCreate']['message']; ?>
+    </div>
+  <?php } elseif (isset($error['teamCreate']['message'])) { ?>
+    <div class="alert alert-success">
+      <?= $error['teamCreate']['message']; ?>
+    </div>
+  <?php }
+  ?>
+
   <!-- Navigation des matchs -->
   <ul class="nav nav-underline mb-4" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">

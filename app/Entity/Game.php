@@ -29,12 +29,16 @@ class Game extends Entity
       $errors['game_date'] = 'La date ne doit pas être vide';
     }
 
-    if (empty($this->team1_id)) {
+    if (empty($this->team1_id) || (int)$this->team1_id === 0) {
       $errors['team1_id'] = 'L\'équipe 1 ne doit pas être vide';
     }
 
-    if (empty($this->team2_id) || $this->team1_id === $this->team2_id) {
-      $errors['team2_id'] = 'L\'équipe 2 ne doit pas être vide et différente de l\'équipe 1';
+    if (empty($this->team2_id) || (int)$this->team2_id === 0) {
+      $errors['team2_id'] = 'L\'équipe 2 ne doit pas être vide';
+    }
+
+    if ($this->team1_id === $this->team2_id) {
+      $errors['team2_id'] = 'L\'équipe 2 doit être différente de l\'équipe 1';
     }
 
     if (empty($this->game_start)) {

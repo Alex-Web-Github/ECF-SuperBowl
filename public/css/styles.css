@@ -10695,7 +10695,8 @@ tbody {
   position: relative;
 }
 
-input + .invalid-tooltip {
+input + .invalid-tooltip,
+select + .invalid-tooltip {
   position: static;
 }
 

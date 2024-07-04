@@ -84,7 +84,8 @@ tbody {
   // Pour l'affichage des erreurs de formulaires (invalid-tooltip) au bon endroit
   position: relative;
 }
-input + .invalid-tooltip {
+input + .invalid-tooltip,
+select + .invalid-tooltip {
   position: static;
 }
 

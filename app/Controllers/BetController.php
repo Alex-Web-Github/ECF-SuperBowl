@@ -283,13 +283,12 @@ class BetController extends Controller
           }
         }
 
-        // die(var_dump($errorBetSelection));
+        die(var_dump($errorBetSelection));
 
         // Avant de rediriger l'utilisateur, je vérifie qu'aucun des matchs sélectionnés n'a d'erreur dans le formulaire
         // header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');
         // exit();
-        //TODO: à améliorer  
-
+        // TODO: à améliorer  
 
 
       }

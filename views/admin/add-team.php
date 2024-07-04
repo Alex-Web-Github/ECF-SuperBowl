@@ -9,39 +9,39 @@
 
   <!-- Bouton de validation -->
   <div class="col-12 text-center mb-5">
-    <button type="submit" name="createTeam" class="btn btn-secondary">Créer cette équipe</button>
+    <button type="submit" name="createTeam" class="btn btn-primary">Créer cette équipe</button>
   </div>
 
 
   <!-- Nom de l'équipe -->
   <div class="col-md-4 mb-2">
     <label for="teamName" class="form-label text-white">Nom de l'équipe</label>
-    <input type="text" class="form-control <?= (isset($errors['team_name']) ? 'is-invalid' : '') ?>" id="teamName" name="teamName" value="<?= isset($_POST['teamName']) ? $_POST['teamName'] : '' ?>">
-    <?php if (isset($errors['team_name'])) { ?>
-      <div class="invalid-tooltip"><?= $errors['team_name'] ?></div>
+    <input type="text" class="form-control <?= (isset($error['team_name']) ? 'is-invalid' : '') ?>" id="teamName" name="teamName" value="<?= isset($_POST['teamName']) ? $_POST['teamName'] : '' ?>">
+    <?php if (isset($error['team_name'])) { ?>
+      <div class="invalid-tooltip"><?= $error['team_name'] ?></div>
     <?php } ?>
   </div>
   <!-- Nom du Pays -->
   <div class="col-md-4 offset-md-2 mb-2">
     <label for="teamCountry" class="form-label text-white">Pays</label>
-    <input type="text" class="form-control <?= (isset($errors['team_country']) ? 'is-invalid' : '') ?>" id="teamCountry" name="teamCountry" value="<?= isset($_POST['teamCountry']) ? $_POST['teamCountry'] : '' ?>">
-    <?php if (isset($errors['team_country'])) { ?>
-      <div class="invalid-tooltip"><?= $errors['team_country'] ?></div>
+    <input type="text" class="form-control <?= (isset($error['team_country']) ? 'is-invalid' : '') ?>" id="teamCountry" name="teamCountry" value="<?= isset($_POST['teamCountry']) ? $_POST['teamCountry'] : '' ?>">
+    <?php if (isset($error['team_country'])) { ?>
+      <div class="invalid-tooltip"><?= $error['team_country'] ?></div>
     <?php } ?>
   </div>
 
   <!-- choix des 11 joueurs -->
   <div class="col-md-6 mb-2">
-    <label for="teamPlayers" class="form-label text-white">Choisir 11 joueurs</label>
-    <select class="form-select <?= (isset($errors['team_players']) ? 'is-invalid' : '') ?>" id="teamPlayers" name="teamPlayers[]" multiple>
+    <label for="teamPlayers" class="form-label text-white">Choisir 11 joueurs dans la liste</label>
+    <select class="form-select <?= (isset($error['team_players']) ? 'is-invalid' : '') ?>" id="teamPlayers" name="teamPlayers[]" multiple>
       <?php foreach ($players as $player) { ?>
         <option value="<?= $player->getPlayerId() ?>"><?= $player->getPlayerFirstname() . ' ' . $player->getPlayerLastname() . ' - ' . $player->getPlayerNumber() ?></option>
       <?php } ?>
     </select>
-    <?php if (isset($errors['team_players'])) { ?>
-      <div class="invalid-tooltip"><?= $errors['team_players'] ?></div>
+    <?php if (isset($error['team_players'])) { ?>
+      <div class="invalid-tooltip"><?= $error['team_players'] ?></div>
     <?php } ?>
-    <button type="button" id="addPlayers" class="btn btn-primary mt-2">Ajouter ce(s) joueur(s) à votre équipe</button>
+    <button type="button" id="addPlayers" class="btn btn-primary mt-3">Ajouter ce(s) joueur(s) à votre équipe</button>
   </div>
 
   <!-- Affichage des joueurs ajoutés -->
