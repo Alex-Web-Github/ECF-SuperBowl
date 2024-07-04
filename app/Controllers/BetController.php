@@ -56,16 +56,12 @@ class BetController extends Controller
       // On vérifie que le formulaire a été soumis
       if (isset($_POST['submitBet'])) {
 
-        // Je filtre les données du formulaire contre les failles XSS
-        $_POST['bet_amount1'] = strip_tags($_POST['bet_amount1']);
-        $_POST['bet_amount2'] = strip_tags($_POST['bet_amount2']);
-
         // J'instancie un nouvel objet Bet
         $bet = new Bet();
         // Je "caste" les montants de mise en entier (elles arrivent sous la forme de chaînes de caractères)
         $bet->setBetAmount1((int)$_POST['bet_amount1']);
         $bet->setBetAmount2((int)$_POST['bet_amount2']);
-        // On attribue l'Id du match et l'Id de1&&&&& l'utilisateur à la mise
+        // On attribue l'Id du match et l'Id de l'utilisateur à la mise
         $bet->setGameId($id);
         $bet->setUserId($userId);
         $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d H:i:s'));
@@ -240,8 +236,8 @@ class BetController extends Controller
           $bet->setGameId($gameId);
           $bet->setUserId($userId);
           $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d H:i:s'));
-          $_POST['bet_amount1'][$key] = strip_tags($_POST['bet_amount1'][$key]);
-          $_POST['bet_amount2'][$key] = strip_tags($_POST['bet_amount2'][$key]);
+          // $_POST['bet_amount1'][$key] = strip_tags($_POST['bet_amount1'][$key]);
+          // $_POST['bet_amount2'][$key] = strip_tags($_POST['bet_amount2'][$key]);
           $bet->setBetAmount1((int)$_POST['bet_amount1'][$key]);
           $bet->setBetAmount2((int)$_POST['bet_amount2'][$key]);
 
@@ -283,7 +279,7 @@ class BetController extends Controller
           }
         }
 
-        die(var_dump($errorBetSelection));
+        // die(var_dump($errorBetSelection));
 
         // Avant de rediriger l'utilisateur, je vérifie qu'aucun des matchs sélectionnés n'a d'erreur dans le formulaire
         // header('Location: ' . constant('URL_SUBFOLDER') . '/dashboard');

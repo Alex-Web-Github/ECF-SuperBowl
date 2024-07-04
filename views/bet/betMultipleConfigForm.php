@@ -54,8 +54,8 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
               <tbody class="table-group-divider">
                 <tr>
-                  <td><?= $game->getTeam1Name() ?></td>
-                  <td><?= $game->getTeam1Odds() ?></td>
+                  <td><?= htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8') ?></td>
+                  <td><?= htmlspecialchars($game->getTeam1Odds(), ENT_QUOTES, 'UTF-8') ?></td>
                   <td>
                     <input type="number" name="bet_amount1[]" id="bet_amount1_<?= $game->getGameId() ?>" class="form-control <?= (isset($error[$game->getGameId()]['bet_amount1']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="1" value="<?= isset($oldBet[$gameId]['betAmount1_Old']) ? $oldBet[$gameId]['betAmount1_Old'] : '0' ?>">
                     <?php if (isset($error[$game->getGameId()]['bet_amount1'])) { ?>
@@ -80,8 +80,8 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
               <tbody class="table-group-divider">
                 <tr>
-                  <td><?= $game->getTeam2Name() ?></td>
-                  <td><?= $game->getTeam2Odds() ?></td>
+                  <td><?= htmlspecialchars($game->getTeam2Name(), ENT_QUOTES, 'UTF-8') ?></td>
+                  <td><?= htmlspecialchars($game->getTeam2Odds(), ENT_QUOTES, 'UTF-8') ?></td>
                   <td>
                     <input type="number" name="bet_amount2[]" id="bet_amount2_<?= $game->getGameId() ?>" class="form-control <?= (isset($error[$game->getGameId()]['bet_amount2']) ? 'is-invalid' : '') ?>" placeholder="votre mise" step="1" value="<?= isset($oldBet[$gameId]['betAmount2_Old']) ? $oldBet[$gameId]['betAmount2_Old'] : '0' ?>">
                     <?php if (isset($error[$game->getGameId()]['bet_amount2'])) { ?>

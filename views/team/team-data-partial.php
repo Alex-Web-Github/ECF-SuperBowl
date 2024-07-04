@@ -23,8 +23,8 @@
       <tbody class="table-group-divider">
         <?php foreach ($teamPlayers as $player) : ?>
           <tr>
-            <td><?= $player->getPlayerFirstname() ?></td>
-            <td><?= $player->getPlayerLastname() ?></td>
+            <td><?= htmlspecialchars($player->getPlayerFirstname(), ENT_QUOTES, 'UTF-8') ?></td>
+            <td><?= htmlspecialchars($player->getPlayerLastname(), ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= $player->getPlayerNumber() ?></td>
           </tr>
         <?php endforeach; ?>

@@ -35,7 +35,7 @@
     <label for="teamPlayers" class="form-label text-white">Choisir 11 joueurs dans la liste</label>
     <select class="form-select <?= (isset($error['team_players']) ? 'is-invalid' : '') ?>" id="teamPlayers" name="teamPlayers[]" multiple>
       <?php foreach ($players as $player) { ?>
-        <option value="<?= $player->getPlayerId() ?>"><?= $player->getPlayerFirstname() . ' ' . $player->getPlayerLastname() . ' - ' . $player->getPlayerNumber() ?></option>
+        <option value="<?= $player->getPlayerId() ?>"><?= htmlspecialchars($player->getPlayerFirstname(), ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($player->getPlayerLastname(), ENT_QUOTES, 'UTF-8') . ' - ' . $player->getPlayerNumber() ?></option>
       <?php } ?>
     </select>
     <?php if (isset($error['team_players'])) { ?>

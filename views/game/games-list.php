@@ -30,8 +30,10 @@ use App\Tools\SecurityTools;
       <?php if ($gamesList !== null) : ?>
         <?php foreach ($gamesList as $game) : ?>
           <tr>
-            <td><?= $game->getTeam1Name() ?></td>
-            <td><?= $game->getTeam2Name() ?></td>
+            <td><?= htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8') // Protection contre les failles XSS 
+                ?></td>
+            <td><?= htmlspecialchars($game->getTeam2Name(), ENT_QUOTES, 'UTF-8') // Protection contre les failles XSS 
+                ?></td>
             <td><?= date('d/m/y', strtotime($game->getGameDate())) ?></td>
             <td><?= $game->getGameStart() ?></td>
             <td><?= $game->getGameEnd() ?></td>

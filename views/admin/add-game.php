@@ -44,7 +44,7 @@
     <select class="form-select <?= (isset($error['team1_id']) ? 'is-invalid' : '') ?>" id="team1_id" name="team1_id">
       <option selected>Choisir une équipe</option>
       <?php foreach ($teams as $team) { ?>
-        <option value="<?= $team->getTeamId() ?>"><?= $team->getTeamName() ?></option>
+        <option value="<?= $team->getTeamId() ?>"><?= htmlspecialchars($team->getTeamName(), ENT_QUOTES, 'UTF-8') ?></option>
       <?php } ?>
     </select>
     <?php if (isset($error['team1_id'])) { ?>
@@ -66,7 +66,7 @@
     <select class="form-select <?= (isset($error['team2_id']) ? 'is-invalid' : '') ?>" id="team2_id" name="team2_id">
       <option selected>Choisir une équipe</option>
       <?php foreach ($teams as $team) { ?>
-        <option value="<?= $team->getTeamId() ?>"><?= $team->getTeamName() ?></option>
+        <option value="<?= $team->getTeamId() ?>"><?= htmlspecialchars($team->getTeamName(), ENT_QUOTES, 'UTF-8') ?></option>
       <?php } ?>
     </select>
     <?php if (isset($error['team2_id'])) { ?>

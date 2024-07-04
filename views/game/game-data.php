@@ -35,11 +35,11 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
         <tbody class="table-group-divider">
           <tr>
-            <td><?= $game->getTeam1Name() ?></td>
+            <td><?= htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= date('d/m/y', strtotime($game->getGameDate())) ?></td>
             <td><?= $game->getGameStart() ?></td>
             <td><?= $game->getGameEnd() ?></td>
-            <td><?= $game->getTeam2Name() ?></td>
+            <td><?= htmlspecialchars($game->getTeam2Name(), ENT_QUOTES, 'UTF-8') ?></td>
           </tr>
         </tbody>
       </table>
@@ -57,11 +57,9 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
         <tbody class="table-group-divider">
           <tr>
-
             <td>
-              <div class="ps-3"><?= $game->getGameWeather() ?></div>
+              <div class="ps-3"><?= htmlspecialchars($game->getGameWeather(), ENT_QUOTES, 'UTF-8') ?></div>
             </td>
-
             <td>
               <span class="badge 
               <?php
@@ -79,7 +77,6 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
                 <?= $game->getGameStatus() ?>
               </span>
             </td>
-
             <td>
               <?php
               if ($game->getGameStatus() === 'A venir') : ?>
@@ -123,7 +120,6 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
               <?php endif; ?>
             </td>
           </tr>
-
         </tbody>
       </table>
     </div>
@@ -133,8 +129,8 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
     <!-- Infos Équipe 1 -->
     <?php
     $teamTitle = 'Équipe 1';
-    $teamName = $game->getTeam1Name();
-    $odds = $game->getTeam1Odds();
+    $teamName = htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8');
+    $odds = htmlspecialchars($game->getTeam1Odds(), ENT_QUOTES, 'UTF-8');
     $teamPlayers = $team1Players;
 
     require APP_ROOT . '/views/team/team-data-partial.php';
@@ -143,8 +139,8 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
     <!-- Infos Équipe 2 -->
     <?php
     $teamTitle = 'Équipe 2';
-    $teamName = $game->getTeam2Name();
-    $odds = $game->getTeam2Odds();
+    $teamName = htmlspecialchars($game->getTeam2Name(), ENT_QUOTES, 'UTF-8');
+    $odds = htmlspecialchars($game->getTeam2Odds(), ENT_QUOTES, 'UTF-8');
     $teamPlayers = $team2Players;
 
     require APP_ROOT . '/views/team/team-data-partial.php';

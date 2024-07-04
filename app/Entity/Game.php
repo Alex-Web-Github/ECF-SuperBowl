@@ -24,9 +24,12 @@ class Game extends Entity
   public function validate(): array
   {
     $errors = [];
+    $date_now = new \DateTime();
 
     if (empty($this->game_date)) {
       $errors['game_date'] = 'La date ne doit pas être vide';
+    } elseif (new \DateTime($this->game_date) < $date_now) {
+      $errors['game_date'] = 'La date doit être supérieure à la date actuelle';
     }
 
     if (empty($this->team1_id) || (int)$this->team1_id === 0) {
@@ -58,22 +61,22 @@ class Game extends Entity
 
     if (empty($this->team1_odds)) {
       $errors['team1_odds'] = 'La cote de l\'équipe 1 ne doit pas être vide';
+    } else if (!is_numeric($this->team1_odds)) {
+      $errors['team1_odds'] = 'La cote de l\'équipe 1 doit être un nombre';
     } else if ($this->team1_odds < 1) {
       $errors['team1_odds'] = 'La cote de l\'équipe 1 doit être supérieure à 1';
     } else if ($this->team1_odds > 10) {
       $errors['team1_odds'] = 'La cote de l\'équipe 1 doit être inférieure à 10';
-    } else if (!is_numeric($this->team1_odds)) {
-      $errors['team1_odds'] = 'La cote de l\'équipe 1 doit être un nombre';
     }
 
     if (empty($this->team2_odds)) {
       $errors['team2_odds'] = 'La cote de l\'équipe 2 ne doit pas être vide';
+    } else if (!is_numeric($this->team2_odds)) {
+      $errors['team2_odds'] = 'La cote de l\'équipe 2 doit être un nombre';
     } else if ($this->team2_odds < 1) {
       $errors['team2_odds'] = 'La cote de l\'équipe 2 doit être supérieure à 1';
     } else if ($this->team2_odds > 10) {
       $errors['team2_odds'] = 'La cote de l\'équipe 2 doit être inférieure à 10';
-    } else if (!is_numeric($this->team2_odds)) {
-      $errors['team2_odds'] = 'La cote de l\'équipe 2 doit être un nombre';
     }
 
     return $errors;

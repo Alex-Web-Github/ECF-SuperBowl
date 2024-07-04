@@ -52,8 +52,8 @@ require_once APP_ROOT . '/views/header.php';
               </thead>
               <tbody class="table-group-divider">
                 <tr>
-                  <td><?= $user->getUserLastName() ?></td>
-                  <td><?= $user->getUserFirstName() ?></td>
+                  <td><?= htmlspecialchars($user->getUserLastName(), ENT_QUOTES, 'UTF-8') ?></td>
+                  <td><?= htmlspecialchars($user->getUserFirstName(), ENT_QUOTES, 'UTF-8') ?></td>
                   <td><?= $user->getUserEmail() ?></td>
                   <td>
                     <!-- TODO A faire -->
@@ -87,7 +87,7 @@ require_once APP_ROOT . '/views/header.php';
               <th scope="col">Heure début</th>
               <th scope="col">Heure fin</th>
               <th scope="col">Mise</th>
-              <th scope="col">Gain/Perte</th>
+              <th scope="col">Résultat</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -96,17 +96,15 @@ require_once APP_ROOT . '/views/header.php';
             <?php if (isset($betsArray) && !empty($betsArray)) : ?>
               <?php foreach ($betsArray as $bet) : ?>
                 <tr>
-                  <td><?= $bet['team1_name'] ?></td>
-                  <td><?= $bet['team2_name'] ?></td>
+                  <td><?= htmlspecialchars($bet['team1_name'], ENT_QUOTES, 'UTF-8') ?></td>
+                  <td><?= htmlspecialchars($bet['team2_name'], ENT_QUOTES, 'UTF-8') ?></td>
                   <td><?= date('d/m/y', strtotime($bet['game_date'])) ?>
                   <td><?= $bet['game_start'] ?></td>
                   <td><?= $bet['game_end'] ?></td>
-
                   <td>
                     <span class="m-0"><?= ($bet['bet_amount1'] > 0) ? $bet['bet_amount1'] : $bet['bet_amount2'] ?> €</span>
                     <span class="small m-0">le <?= date('d/m/y', strtotime($bet['bet_date'])) ?></span>
                   </td>
-
                   <td>
                     <?php if ($bet['game_status'] !== 'Terminé') : ?>
                       <span class="badge 
@@ -124,11 +122,11 @@ require_once APP_ROOT . '/views/header.php';
                       ?>">
                         <?= $bet['game_status'] ?>
                       </span>
-                    <?php else : ?>
+                    <?php else : // Cas du match Terminé 
+                    ?>
                       <?= isset($bet['bet_result']) ? $bet['bet_result'] . ' €' : 'à calculer...' ?>
                     <?php endif; ?>
                   </td>
-
                   <td>
                     <?php if ($bet['game_status'] !== 'Terminé') : ?>
                       <div class="d-flex gap-3">
@@ -145,14 +143,13 @@ require_once APP_ROOT . '/views/header.php';
                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
                           </svg>
                         </a>
-
                         <form action="<?= constant('URL_SUBFOLDER') . '/delete-bet/' . $bet['bet_id'] ?>" method="POST">
                           <input type="hidden" name="bet_id" value="<?= $bet['bet_id'] ?>">
                           <button type="submit" id="deleteBet" name="deleteBet" class="btn btn-primary d-none">Supprimer</button>
                         </form>
-
                       </div>
-                    <?php else : ?>
+                    <?php else : // cas du match Terminé : aucune Action possible 
+                    ?>
                       <span>-</span>
                     <?php endif; ?>
                   </td>

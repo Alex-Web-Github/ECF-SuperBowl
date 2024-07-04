@@ -19,8 +19,8 @@
 
       <tbody class="table-group-divider">
         <tr>
-          <td><?= $game->getTeam1Name() ?></td>
-          <td><?= $game->getTeam1Odds() ?></td>
+          <td><?= htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8') ?></td>
+          <td><?= htmlspecialchars($game->getTeam1Odds(), ENT_QUOTES, 'UTF-8') ?></td>
           <td>
             <input type="number" name="bet_amount1" id="bet_amount1" class="form-control <?= (isset($error['bet_amount1']) ? 'is-invalid' : '') ?>" step="1" value="<?= ($existingBet) ? $existingBet->getBetAmount1() : 0 ?>">
             <?php if (isset($error['bet_amount1'])) { ?>
@@ -47,8 +47,8 @@
 
       <tbody class="table-group-divider">
         <tr>
-          <td><?= $game->getTeam2Name() ?></td>
-          <td><?= $game->getTeam2Odds() ?></td>
+          <td><?= htmlspecialchars($game->getTeam2Name(), ENT_QUOTES, 'UTF-8') ?></td>
+          <td><?= htmlspecialchars($game->getTeam2Odds(), ENT_QUOTES, 'UTF-8') ?></td>
           <td>
             <input type="number" name="bet_amount2" id="bet_amount2" class="form-control <?= (isset($error['bet_amount2']) ? 'is-invalid' : '') ?>" step="1" value="<?= ($existingBet) ? $existingBet->getBetAmount2() : 0 ?>">
             <?php if (isset($error['bet_amount2'])) { ?>

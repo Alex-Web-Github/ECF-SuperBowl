@@ -25,7 +25,6 @@ class Entity
         // exe: setUserFirstName pour la clé 'user_first_name'
 
         if (method_exists($this, $methodName)) {
-          // TODO : ajouter ici un filtrage des données pour éviter les injections SQL ??
           // {$methodName}($value) est un appel dynamique de méthode, équivalent de $this->setFirstName($value);
           $this->{$methodName}($value);
         }
