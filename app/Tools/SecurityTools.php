@@ -49,6 +49,11 @@ class SecurityTools
     return isset($_SESSION['user']) && $_SESSION['user']->getUserRole() === 'admin';
   }
 
+  public static function isSpeaker(): bool
+  {
+    return isset($_SESSION['user']) && $_SESSION['user']->getUserRole() === 'speaker';
+  }
+
   public static function getCurrentUserId(): int|bool
   {
     return (isset($_SESSION['user']) && (null !== $_SESSION['user']->getUserId())) ? $_SESSION['user']->getUserId() : false;

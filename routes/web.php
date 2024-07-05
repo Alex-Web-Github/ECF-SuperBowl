@@ -44,7 +44,7 @@ $routes->add('register', new Route(constant('URL_SUBFOLDER') . '/register', arra
 
 
 /****************************************************************************************
- * Configuration des Routes USERS & ADMIN 
+ * Configuration des Routes USERS & ADMIN & SPEAKER
  */
 
 // Page Dashboard User
@@ -53,6 +53,8 @@ $routes->add('userDashboard', new Route(constant('URL_SUBFOLDER') . '/dashboard'
 // Page Dashboard Admin
 $routes->add('adminDashboard', new Route(constant('URL_SUBFOLDER') . '/admin/dashboard', array('controller' => 'AdminController', 'method' => 'dashboardAction'), array()));
 
+// Page Dashboard Speaker
+$routes->add('speakerDashboard', new Route(constant('URL_SUBFOLDER') . '/speaker/dashboard', array('controller' => 'SpeakerController', 'method' => 'dashboardAction'), array()));
 
 /****************************************************************************************
  * Configuration des Routes BET
@@ -75,6 +77,12 @@ $routes->add('betMultipleConfig', new Route(constant('URL_SUBFOLDER') . '/bet/mu
  * Configuration des Routes GAME
  */
 
-// Page Data Game selon l'Id
-$routes->add('game', new Route(constant('URL_SUBFOLDER') . '/all-games/{id}', array('controller' => 'GameController', 'method' => 'singleGameAction'), array('id' => '\d+')));
+// Page Détails d'un Game selon l'Id
+$routes->add('game', new Route(constant('URL_SUBFOLDER') . '/game/{id}', array('controller' => 'GameController', 'method' => 'singleGameAction'), array('id' => '\d+')));
 // ici '\d+' signifie que l'on attend un nombre entier. Cela permet de sécuriser la route et d'éviter les injections SQL.
+
+// Page Détails d'un Game selon l'Id pour le Speaker
+$routes->add('speakerGame', new Route(constant('URL_SUBFOLDER') . '/speaker/game/{id}', array('controller' => 'GameController', 'method' => 'singleGameSpeakerAction'), array('id' => '\d+')));
+
+// Route pour fermer un match selon son Id pour le speaker
+$routes->add('closeGame', new Route(constant('URL_SUBFOLDER') . '/speaker/close-game/{id}', array('controller' => 'GameController', 'method' => 'closeGameAction'), array('id' => '\d+')));

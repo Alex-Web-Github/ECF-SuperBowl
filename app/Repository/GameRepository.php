@@ -106,6 +106,23 @@ class GameRepository extends Repository
     }
   }
 
+  public function findDailyGames(): array|bool
+  {
+    $query = $this->pdo->prepare("SELECT games.*, teams.team_name AS team1_name, teams2.team_name AS team2_name FROM games JOIN teams ON games.team1_id = teams.team_id JOIN teams AS teams2 ON games.team2_id = teams2.team_id WHERE game_date = CURDATE() ORDER BY game_start ASC");
+    $query->execute();
+    $dailyGames = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    $gamesList = [];
+
+    if ($dailyGames) {
+      foreach ($dailyGames as $dailyGame) {
+        $gamesList[] = Game::createAndHydrate($dailyGame);
+      }
+      return $gamesList;
+    } else {
+      return false;
+    }
+  }
+
   public function findOneByBetId(int $betId): Game|bool
   {
     $query = $this->pdo->prepare("SELECT games.*, teams.team_name AS team1_name, teams2.team_name AS team2_name FROM games JOIN teams ON games.team1_id = teams.team_id JOIN teams AS teams2 ON games.team2_id = teams2.team_id JOIN bets ON games.game_id = bets.game_id WHERE bets.bet_id = :bet_id");

@@ -45,6 +45,9 @@ class AuthController extends Controller
             if ($user->getUserRole() === 'admin') {
               header('Location: ' . $routes->get('adminDashboard')->getPath());
               exit();
+            } elseif ($user->getUserRole() === 'speaker') {
+              header('Location: ' . $routes->get('speakerDashboard')->getPath());
+              exit();
             } else {
               header('Location: ' . $routes->get('userDashboard')->getPath());
               exit();
