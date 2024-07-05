@@ -12,6 +12,7 @@ class Bet extends Entity
   protected ?int $bet_amount1 = null;
   protected ?int $bet_amount2 = null;
   protected ?string $bet_date = '';
+  protected ?float $bet_result = null;
 
   // Dans ma BDD, je stocke les mises dans des colonnes de type SMALLINT UNSIGNED : plage de valeurs entre 0 et 65535 (pour un INPUT max à 1000 euros, c'est suffisant).
 
@@ -148,6 +149,24 @@ class Bet extends Entity
   public function setBetDate(?string $bet_date): self
   {
     $this->bet_date = $bet_date;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of bet_result
+   */
+  public function getBetResult(): ?float
+  {
+    return $this->bet_result;
+  }
+
+  /**
+   * Set the value of bet_result
+   */
+  public function setBetResult(?float $bet_result): self
+  {
+    $this->bet_result = $bet_result;
 
     return $this;
   }

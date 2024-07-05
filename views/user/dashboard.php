@@ -10,7 +10,6 @@
 require_once APP_ROOT . '/views/bet/deleteBet-modal.php';
 
 require_once APP_ROOT . '/views/header.php';
-
 ?>
 
 <div class="container my-4 p-2">
@@ -33,6 +32,88 @@ require_once APP_ROOT . '/views/header.php';
     <!-- Bloc Dashboard -->
     <div class="tab-pane active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
 
+      <?php if (isset($betsArray) && !empty($betsArray)) : ?>
+
+        <div style="background-color: whitesmoke; padding: 1.5rem;">
+          <canvas id="userDashboardChart"></canvas>
+        </div>
+
+        <?php foreach ($betsArray as $bet) {
+          // Je récupère les données des paris pour cet utilisateur
+          $data[] = [
+            'date' => $bet['bet_date'],
+            'gain' => floatval($bet['bet_result'])
+          ];
+        }
+        // die(var_dump($data));
+        // Conversion en JSON pour l'utilisation dans ChartJS
+        $jsonData = json_encode($data);
+        ?>
+
+      <?php else :
+        // Message d'erreur si aucun pari n'a été trouvé
+        $redirection_slug = '/';
+        $redirection_text = 'Page Accueil';
+        $error = 'Vous n\'avez aucun pari enregistré pour le moment.';
+      ?>
+        <div class="d-flex justify-content-center px-2">
+          <div class="d-inline-flex flex-column flex-row-md mt-4 p-4 bg-light rounded-3">
+            <p><?= $error; ?></p>
+            <?php if (isset($redirection_slug) && isset($redirection_text)) { ?>
+              <a class="ps-2 text-decoration-none fw-bold text-secondary cursor-pointer" href="<?= constant('URL_SUBFOLDER') . $redirection_slug ?>" title="<?= $redirection_text ?>">Revenir à la <?= $redirection_text ?></a>
+            <?php } ?>
+          </div>
+        </div>
+
+      <?php endif; ?>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        // Récupération des données JSON pour le graphique
+        const dataFromPHP = <?php echo $jsonData; ?>;
+
+        // Transformer les données en deux tableaux séparés pour les labels et les données du graphique
+        const labels = dataFromPHP.map(item => item.date);
+        const data = dataFromPHP.map(item => item.gain);
+
+        const ctx = document.getElementById('userDashboardChart');
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels, // Utiliser les dates comme labels
+            datasets: [{
+              label: 'Gains / Pertes en €',
+              data: data, // Utiliser les gains comme données
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false,
+                //position: 'top',
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Date de la mise'
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Gains/Pertes en €'
+                }
+              }
+            }
+          },
+        });
+      </script>
 
     </div>
 

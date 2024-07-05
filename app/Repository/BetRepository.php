@@ -12,12 +12,13 @@ class BetRepository extends Repository
   {
     if ($bet->getBetId() !== null) {
       $query = $this->pdo->prepare(
-        'UPDATE bets SET game_id = :game_id, user_id = :user_id, bet_amount1 = :bet_amount1, bet_amount2 = :bet_amount2, bet_date = :bet_date WHERE bet_id = :id'
+        'UPDATE bets SET game_id = :game_id, user_id = :user_id, bet_amount1 = :bet_amount1, bet_amount2 = :bet_amount2, bet_date = :bet_date, bet_result = :bet_result WHERE bet_id = :id'
       );
       $query->bindValue(':id', $bet->getBetId(), $this->pdo::PARAM_INT);
+      $query->bindValue(':bet_result', $bet->getBetResult(), $this->pdo::PARAM_STR);
     } else {
       $query = $this->pdo->prepare(
-        'INSERT INTO bets (game_id, user_id, bet_amount1, bet_amount2, bet_date) VALUES (:game_id, :user_id, :bet_amount1, :bet_amount2, :bet_date)'
+        'INSERT INTO bets (game_id, user_id, bet_amount1, bet_amount2, bet_date, bet_result) VALUES (:game_id, :user_id, :bet_amount1, :bet_amount2, :bet_date, NULL)'
       );
     }
 

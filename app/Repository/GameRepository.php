@@ -23,7 +23,7 @@ class GameRepository extends Repository
       );
       // Je définis ces 3 propriétés à la création d'un nouveau Game
       $game->setGameStatus('A venir');
-      $game->setGameScore('-');
+      $game->setGameScore('0-0');
       $game->setGameWeather('-');
     }
     // nb: Nécessaire car \PDO ne peut pas gérer les objets DateTime, je laisse mes propriétés date et heure en String

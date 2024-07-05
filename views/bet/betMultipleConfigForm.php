@@ -98,11 +98,12 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
     <!-- Submit Button -->
     <div class="form-group">
-      <?php if (SecurityTools::isLogged()) : ?>
+      <?php if (SecurityTools::isLogged()) : // Display-none sur le 1er bouton pour permettre le fonctionnement de la Modal de confirmation 
+      ?>
         <button type="submit" name="submitBetMultipleConfig" class="d-none" id="betMultipleConfigFormSubmitButton"></button>
-
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#betConfModal">Valider ma sélection</button>
-      <?php else : ?>
+      <?php else : // Je demande à l'utilisateur de se connecter
+      ?>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#betAuthModal">Valider ma sélection</button>
       <?php endif; ?>
     </div>

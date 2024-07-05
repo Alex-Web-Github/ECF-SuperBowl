@@ -64,7 +64,7 @@ class BetController extends Controller
         // On attribue l'Id du match et l'Id de l'utilisateur à la mise
         $bet->setGameId($id);
         $bet->setUserId($userId);
-        $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d H:i:s'));
+        $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('d/m/Y'));
 
         // Important : si l'utilisateur a déjà misé, on récupère l'Id de la mise pour la modifier (variante UPDATE de la méthode persist() de BetRepository).
         if ($existingBet) {
@@ -235,9 +235,8 @@ class BetController extends Controller
 
           $bet->setGameId($gameId);
           $bet->setUserId($userId);
-          $bet->setBetDate((new \DateTime('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d H:i:s'));
-          // $_POST['bet_amount1'][$key] = strip_tags($_POST['bet_amount1'][$key]);
-          // $_POST['bet_amount2'][$key] = strip_tags($_POST['bet_amount2'][$key]);
+          $date_now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+          $bet->setBetDate($date_now->format('d/m/Y'));
           $bet->setBetAmount1((int)$_POST['bet_amount1'][$key]);
           $bet->setBetAmount2((int)$_POST['bet_amount2'][$key]);
 
@@ -266,11 +265,13 @@ class BetController extends Controller
             $betRepository->persist($bet);
 
             $messageBetSelection[$gameId] = [
-              'message' => 'Votre pari a bien été enregistré.',
+              'message' => 'Ce pari a bien été enregistré.',
             ];
             $errorBetSelection[$gameId] = [
               'message' => '',
             ]; // On réinitialise le message d'erreur
+
+
           } else {
             // sinon on reste sur la page de configuration des paris multiples
             $errorBetSelection[$gameId] = [

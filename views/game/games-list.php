@@ -57,7 +57,7 @@ use App\Tools\SecurityTools;
                 <?= $game->getGameStatus() ?>
               </span>
             </td>
-            <td><?= $game->getGameScore() ? $game->getGameScore() : '-' ?></td>
+            <td><?= $game->getGameScore() ? htmlspecialchars($game->getGameScore(), ENT_QUOTES, 'UTF-8') : 'Non défini' ?></td>
 
             <td>
               <a href="<?= constant('URL_SUBFOLDER') . '/all-games/' . $game->getGameId(); ?>" title="les détails du match">
