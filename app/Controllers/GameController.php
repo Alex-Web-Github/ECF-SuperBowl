@@ -77,7 +77,6 @@ class GameController extends Controller
       ]);
     } catch (\Exception $e) {
       $errors[] = $e->getMessage();
-
       // Afficher la View error.php
       $this->render('error', [
         'errors' => $errors
@@ -96,32 +95,48 @@ class GameController extends Controller
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($gameId);
 
-      // Vérifier si le match est déjà commencé et que l'heure actuelle est supérieure ou égale à l'heure de début + 1h
-      if ($game->getGameStatus() !== 'En cours') {
-        // throw new \Exception('Il n\'est pas possible de fermer ce match car il n\'est pas en cours.');
-        $errors['message'] = 'Il n\'est pas possible de fermer ce match car il n\'est pas en cours.';
-      } elseif (strtotime($game->getGameStart()) + 3600 >= time()) {
-        $errors['message'] = 'Il n\'est pas possible de fermer ce match car il n\'est pas commencé depuis au moins 1 heure.';
-        // throw new \Exception('Il n\'est pas possible de fermer ce match car il n\'est pas commencé depuis au moins 1 heure.');
+      if (isset($_POST) && !empty($_POST)) {
+        // Vérifier que le match est bien "En cours"
+        if ($game->getGameStatus() !== 'En cours') {
+          $errors['message'] = 'Il n\'est pas possible de fermer ce match car il n\'est pas en cours.';
+        }
+        // Validation des scores des équipes depuis le formulaire
+        if (empty($_POST['game_team1_score']) || empty($_POST['game_team2_score'])) {
+          $errors['message'] = 'Les scores des équipes ne doivent pas être vides.';
+        } elseif (!is_numeric($_POST['game_team1_score']) || !is_numeric($_POST['game_team2_score'])) {
+          $errors['message'] = 'Les scores des équipes doivent être des nombres.';
+        }
+
+        // Je récupère les champs de mon formulaire dans 'speaker-data-game.php' afin d'hydrater mon objet Game
+        $game->setGameId($gameId);
+        $game->setGameStatus($_POST['game_status']);
+        $game->setGameWeather($_POST['game_weather']);
+        $gameScore = (int)$_POST['game_team1_score'] . '-' . (int)$_POST['game_team2_score'];
+        $game->setGameScore($gameScore);
+        $game->setGameEnd($_POST['game_end']);
+
+        $errors = $game->validateClose();
+        // die(var_dump($errors));
+
+        if (empty($errors)) {
+          // Enregistrement en BDD
+          $gameRepository->persist($game);
+          // Rediriger vers la page d'accueil du Speaker
+          header('Location: ' . $routes->get('speakerDashboard')->getPath());
+          exit();
+        }
       }
 
-      if (empty($errors)) {
-        die('TODO  : Fermeture du match' . var_dump($_POST));
-
-
-        // Rediriger vers la page d'accueil du Speaker
-        header('Location: ' . $routes->get('speakerDashboard')->getPath());
-        exit();
-      } else {
-        // Je reste sur la page actuelle
-        $this->render('speaker/speaker-data-game', [
-          'game' => $game,
-          'error' => $errors
-        ]);
-      }
+      // Je reste sur la page actuelle
+      $this->render('speaker/speaker-data-game', [
+        'errors' => $errors,
+        'game' => $game
+      ]);
     } catch (\Exception $e) {
-      $this->render('errors/default', [
-        'error' => $e->getMessage()
+      $errors[] = $e->getMessage();
+      // Afficher la View error.php
+      $this->render('error', [
+        'errors' => $errors
       ]);
     }
   }

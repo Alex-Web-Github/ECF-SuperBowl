@@ -13,21 +13,26 @@ use App\Tools\SecurityTools;
   <h2 class="fs-2 fw-bolder text-white text-center mb-5">Les détails du match</h2>
 
   <?php // Affichage des erreurs éventuelles //TODO: à garder ???
-  if (isset($error['message'])) { ?>
+  if (isset($errors['message'])) { ?>
     <div class="alert alert-danger">
-      <?= $error['message']; ?>
+      <?= $errors['message']; ?>
     </div>
   <?php } ?>
 
-  <form action="<?= constant('URL_SUBFOLDER') . '/speaker/close-game/' . $game->getGameId() ?>" method="post">
+  <form action="<?= constant('URL_SUBFOLDER') . '/speaker/close-game/' . $game->getGameId() ?>" method="POST">
     <input type="hidden" name="game_id" value="<?= $game->getGameId() ?>">
     <input type="hidden" name="game_status" value="Terminé">
-    <input type="hidden" name="game_end" value="<?= date('Y-m-d H:i:s') ?>">
+    <?php
+    // Récupération de l'heure au moment de la fermeture du match
+    $date_now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+    $time_now = $date_now->format('H:i');
+    ?>
+    <input type="hidden" name="game_end" value="<?= $time_now ?>">
 
     <button type="submit" class="btn btn-danger mx-auto">Fermer ce match</button>
 
     <div class="row gap-4 mx-0 mt-4">
-      <!-- Bloc Infos 1 -->
+      <!-- Bloc Infos LEFT -->
       <div class="col-12 col-lg table-responsive-lg mb-2 px-0">
         <div class="table-responsive-lg">
           <table class="table table-hover table-light table-striped table-rounded">
@@ -42,8 +47,8 @@ use App\Tools\SecurityTools;
             <tbody class="table-group-divider">
               <?php if ($game !== null) : ?>
                 <tr>
-                  <td><?= $game->getGameStart() ?></td>
-                  <td><?= $game->getGameEnd() ?></td>
+                  <td><?= htmlspecialchars($game->getGameStart(), ENT_QUOTES, 'UTF-8') ?></td>
+                  <td><?= htmlspecialchars($game->getGameEnd(), ENT_QUOTES, 'UTF-8') ?></td>
                   <td>
                     <span class="badge 
                   <?php
@@ -76,7 +81,7 @@ use App\Tools\SecurityTools;
 
         </div>
       </div>
-      <!-- Bloc Infos 2 -->
+      <!-- Bloc Infos RIGHT -->
       <div class="col-12 col-lg table-responsive-lg mb-2 px-0">
         <div class="table-responsive-lg">
           <table class="table table-hover table-light table-striped table-rounded">
@@ -91,7 +96,7 @@ use App\Tools\SecurityTools;
               <?php if ($game !== null) : ?>
                 <tr>
                   <td>
-                    <select class="form-select form-select-sm" aria-label="météo du match" id="game_weather" name="game_weather">
+                    <select class="form-select form-select-sm <?= (isset($errors['game_weather']) ? 'is-invalid' : '') ?>" aria-label="météo du match" id="game_weather" name="game_weather">
                       <option selected>Choisir la météo</option>
                       <option value="Soleil">Soleil</option>
                       <option value="Pluie">Pluie</option>
@@ -99,10 +104,19 @@ use App\Tools\SecurityTools;
                       <option value="Brouillard">Brouillard</option>
                       <option value="Orage">Orage</option>
                     </select>
+                    <?php if (isset($errors['game_weather'])) { ?>
+                      <div class="invalid-tooltip"><?= $errors['game_weather'] ?></div>
+                    <?php } ?>
                   </td>
                   <td class="d-flex gap-1">
-                    <input type='number' class='form-control form-control-sm' id='game_team1_score' name='game_team1_score' placeholder='Equipe 1' min='0' max='20' required>
-                    <input type='number' class='form-control form-control-sm' id='game_team2_score' name='game_team2_score' placeholder='Equipe 2' min='0' max='20' required>
+                    <input type='number' class='form-control form-control-sm <?= (isset($errors['game_team1_score']) ? 'is-invalid' : '') ?>' id='game_team1_score' name='game_team1_score' placeholder='Equipe 1' min='0' max='20' required>
+                    <?php if (isset($errors['game_team1_score'])) { ?>
+                      <div class="invalid-tooltip"><?= $errors['game_team1_score'] ?></div>
+                    <?php } ?>
+                    <input type='number' class='form-control form-control-sm <?= (isset($errors['game_team2_score']) ? 'is-invalid' : '') ?>' id='game_team2_score' name='game_team2_score' placeholder='Equipe 2' min='0' max='20' required>
+                    <?php if (isset($errors['game_team2_score'])) { ?>
+                      <div class="invalid-tooltip"><?= $errors['game_team2_score'] ?></div>
+                    <?php } ?>
                   </td>
                 </tr>
               <?php else : ?>

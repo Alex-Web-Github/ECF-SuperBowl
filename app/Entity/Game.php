@@ -31,23 +31,18 @@ class Game extends Entity
     } elseif (new \DateTime($this->game_date) < $date_now) {
       $errors['game_date'] = 'La date doit être supérieure à la date actuelle';
     }
-
     if (empty($this->team1_id) || (int)$this->team1_id === 0) {
       $errors['team1_id'] = 'L\'équipe 1 ne doit pas être vide';
     }
-
     if (empty($this->team2_id) || (int)$this->team2_id === 0) {
       $errors['team2_id'] = 'L\'équipe 2 ne doit pas être vide';
     }
-
     if ($this->team1_id === $this->team2_id) {
       $errors['team2_id'] = 'L\'équipe 2 doit être différente de l\'équipe 1';
     }
-
     if (empty($this->game_start)) {
       $errors['game_start'] = 'L\'heure de début ne doit pas être vide';
     }
-
     if (empty($this->game_end)) {
       $errors['game_end'] = 'L\'heure de fin ne doit pas être vide';
     } else if (isset($this->game_end) && isset($this->game_start)) {
@@ -58,7 +53,6 @@ class Game extends Entity
         $errors['game_end'] = 'L\'heure de fin doit être supérieure à l\'heure de début plus une heure';
       }
     }
-
     if (empty($this->team1_odds)) {
       $errors['team1_odds'] = 'La cote de l\'équipe 1 ne doit pas être vide';
     } else if (!is_numeric($this->team1_odds)) {
@@ -68,7 +62,6 @@ class Game extends Entity
     } else if ($this->team1_odds > 10) {
       $errors['team1_odds'] = 'La cote de l\'équipe 1 doit être inférieure à 10';
     }
-
     if (empty($this->team2_odds)) {
       $errors['team2_odds'] = 'La cote de l\'équipe 2 ne doit pas être vide';
     } else if (!is_numeric($this->team2_odds)) {
@@ -82,6 +75,37 @@ class Game extends Entity
     return $errors;
   }
 
+  // Validation du formulaire de fermeture de match
+  public function validateClose(): array
+  {
+    $errors = [];
+
+    if (empty($this->game_status)) {
+      $errors['game_status'] = 'Le statut ne doit pas être vide';
+    } elseif ($this->game_status !== 'Terminé') {
+      $errors['game_status'] = 'Le statut doit être "Terminé"';
+    }
+    if (empty($this->game_weather) || ($this->game_weather === 'Choisir la météo')) {
+      $errors['game_weather'] = 'Le champs météo ne doit pas être vide';
+    }
+    if (empty($this->game_score)) {
+      $errors['game_score'] = 'Le score ne doit pas être vide';
+    } elseif (!preg_match('/^[0-9]{1,2}-[0-9]{1,2}$/', $this->game_score)) {
+      $errors['game_score'] = 'Le score doit être sous la forme "x-x"';
+    }
+    if (empty($this->game_end)) {
+      $errors['game_end'] = 'L\'heure de fin ne doit pas être vide';
+    } else if (isset($this->game_end) && isset($this->game_start)) {
+      $game_end_copy = new \DateTime($this->game_end);
+      $game_start_plus_one_hour = new \DateTime($this->game_start);
+      $game_start_plus_one_hour->add(new DateInterval('PT1H'));
+      if ($game_end_copy < $game_start_plus_one_hour) {
+        $errors['game_end'] = 'L\'heure de fin doit être supérieure à l\'heure de début plus une heure';
+      }
+    }
+
+    return $errors;
+  }
   /**
    * Get the value of game_id
    */
