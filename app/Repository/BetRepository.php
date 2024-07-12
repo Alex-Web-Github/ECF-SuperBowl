@@ -45,7 +45,7 @@ class BetRepository extends Repository
       return false;
     }
   }
-
+  // Renvoit un tableau de paris si il existe (sinon False) pour un utilisateur donné
   public function findAllByUser(int $userId): array|bool
   {
     $query = $this->pdo->prepare('SELECT * FROM bets WHERE user_id = :user_id');
@@ -62,7 +62,7 @@ class BetRepository extends Repository
       return False;
     }
   }
-
+  // Renvoit un tableau, si il existe (sinon False), de paris avec les matchs correspondants pour un utilisateur donné
   public function findAllBetsWithGameByUser($userId): array|bool
   {
     $sql = "SELECT bets.*, games.*, team1.team_name as team1_name, team2.team_name as team2_name 
@@ -82,14 +82,14 @@ class BetRepository extends Repository
       return false;
     }
   }
-
+  // Supprime un pari selon son Id
   public function deleteBetById(int $betId): void
   {
     $query = $this->pdo->prepare('DELETE FROM bets WHERE bet_id = :id');
     $query->bindValue(':id', $betId, $this->pdo::PARAM_INT);
     $query->execute();
   }
-
+  // Renvoit les données d'un pari, si il existe (sinon False), selon son id
   public function findOneById(int $betId): Bet|bool
   {
     $query = $this->pdo->prepare('SELECT * FROM bets WHERE bet_id = :id');
@@ -100,6 +100,23 @@ class BetRepository extends Repository
       return Bet::createAndHydrate($bet);
     } else {
       return false;
+    }
+  }
+  // Renvoit un tableau de paris, si il existe (sinon False), pour un match donné
+  public function findBetsByGameId($gameId): array|bool
+  {
+    $query = $this->pdo->prepare('SELECT * FROM bets WHERE game_id = :game_id');
+    $query->bindValue(':game_id', $gameId, $this->pdo::PARAM_INT);
+    $query->execute();
+    $bets = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    $betsArray = [];
+    if ($bets) {
+      foreach ($bets as $bet) {
+        $betsArray[] = Bet::createAndHydrate($bet);
+      }
+      return $betsArray;
+    } else {
+      return False;
     }
   }
 }

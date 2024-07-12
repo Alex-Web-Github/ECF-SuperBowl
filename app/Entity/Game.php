@@ -93,16 +93,6 @@ class Game extends Entity
     } elseif (!preg_match('/^[0-9]{1,2}-[0-9]{1,2}$/', $this->game_score)) {
       $errors['game_score'] = 'Le score doit être sous la forme "x-x"';
     }
-    if (empty($this->game_end)) {
-      $errors['game_end'] = 'L\'heure de fin ne doit pas être vide';
-    } else if (isset($this->game_end) && isset($this->game_start)) {
-      $game_end_copy = new \DateTime($this->game_end);
-      $game_start_plus_one_hour = new \DateTime($this->game_start);
-      $game_start_plus_one_hour->add(new DateInterval('PT1H'));
-      if ($game_end_copy < $game_start_plus_one_hour) {
-        $errors['game_end'] = 'L\'heure de fin doit être supérieure à l\'heure de début plus une heure';
-      }
-    }
 
     return $errors;
   }

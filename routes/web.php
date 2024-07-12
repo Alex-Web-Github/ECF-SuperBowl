@@ -84,5 +84,5 @@ $routes->add('game', new Route(constant('URL_SUBFOLDER') . '/game/{id}', array('
 // Page Détails d'un Game selon l'Id pour le Speaker
 $routes->add('speakerGame', new Route(constant('URL_SUBFOLDER') . '/speaker/game/{id}', array('controller' => 'GameController', 'method' => 'singleGameSpeakerAction'), array('id' => '\d+')));
 
-// Route pour fermer un match selon son Id pour le speaker
+// Route pour Fermer un match selon son Id pour le speaker
 $routes->add('closeGame', new Route(constant('URL_SUBFOLDER') . '/speaker/close-game/{id}', array('controller' => 'GameController', 'method' => 'closeGameAction'), array('id' => '\d+')));

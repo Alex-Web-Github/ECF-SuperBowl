@@ -4,9 +4,12 @@ namespace App\Controllers;
 
 use Symfony\Component\Routing\RouteCollection;
 use App\Entity\Game;
+use App\Entity\Bet;
 use App\Repository\GameRepository;
 use App\Repository\TeamRepository;
 use App\Repository\PlayerRepository;
+use App\Repository\BetRepository;
+use DateInterval;
 
 
 class GameController extends Controller
@@ -68,12 +71,29 @@ class GameController extends Controller
       $game = new Game();
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($gameId);
-      // die(var_dump($game));
+
+      // Récupération d'un tableau contenant les données des paris pour ce match
+      $betRepository = new BetRepository();
+      $betsArray = $betRepository->findBetsByGameId($gameId);
+
+      // Récupération du nombre de paris popur l'équipe 1 et l'équipe 2
+      $team1Bets = 0;
+      $team2Bets = 0;
+      foreach ($betsArray as $bet) {
+        if ($bet->getBetAmount1() !== 0) {
+          $team1Bets++;
+        } elseif ($bet->getBetAmount2() !== 0) {
+          $team2Bets++;
+        }
+      }
 
       // Afficher la Vue speaker-data-game.php
       $this->render('speaker/speaker-data-game', [
         'game' => $game,
-        'errors' => $errors
+        'errors' => $errors,
+        'betsArray' => $betsArray,
+        'team1Bets' => $team1Bets,
+        'team2Bets' => $team2Bets
       ]);
     } catch (\Exception $e) {
       $errors[] = $e->getMessage();
@@ -95,16 +115,35 @@ class GameController extends Controller
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($gameId);
 
+      // Si il y a soumission du formulaire de fermeture de match
       if (isset($_POST) && !empty($_POST)) {
         // Vérifier que le match est bien "En cours"
         if ($game->getGameStatus() !== 'En cours') {
           $errors['message'] = 'Il n\'est pas possible de fermer ce match car il n\'est pas en cours.';
         }
+
+        // Vérifier que la clôture du match est bien postérieure à l'heure de début + 1h
+        $date_now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        // Récupération de l'heure de début du match et ajout de 1 heure
+        $game_start = new \DateTime($game->getGameStart(), new \DateTimeZone('Europe/Paris'));
+        $game_start_plus_one_hour = clone $game_start;
+        $game_start_plus_one_hour->add(new \DateInterval('PT1H'));
+        // Debugging: Afficher les valeurs pour vérifier
+        // die(var_dump($date_now, $game_start, $game_start_plus_one_hour));
+
+        // Vérification que l'heure actuelle est postérieure à l'heure de début + 1 heure
+        if ($date_now < $game_start_plus_one_hour) {
+          throw new \Exception('Il n\'est pas possible de fermer ce match avant l\'heure de début + 1h.');
+        }
+
         // Validation des scores des équipes depuis le formulaire
         if (empty($_POST['game_team1_score']) || empty($_POST['game_team2_score'])) {
-          $errors['message'] = 'Les scores des équipes ne doivent pas être vides.';
-        } elseif (!is_numeric($_POST['game_team1_score']) || !is_numeric($_POST['game_team2_score'])) {
-          $errors['message'] = 'Les scores des équipes doivent être des nombres.';
+          $errors['game_team1_score'] = 'Les scores des équipes ne doivent pas être vides.';
+          $errors['game_team2_score'] = 'Les scores des équipes ne doivent pas être vides.';
+        } elseif (!is_numeric($_POST['game_team1_score'])) {
+          $errors['game_team1_score'] = 'Le score de l\'équipe doit être un nombre.';
+        } elseif (!is_numeric($_POST['game_team2_score'])) {
+          $errors['game_team2_score'] = 'Le score de l\'équipe doit être un nombre.';
         }
 
         // Je récupère les champs de mon formulaire dans 'speaker-data-game.php' afin d'hydrater mon objet Game
@@ -113,14 +152,18 @@ class GameController extends Controller
         $game->setGameWeather($_POST['game_weather']);
         $gameScore = (int)$_POST['game_team1_score'] . '-' . (int)$_POST['game_team2_score'];
         $game->setGameScore($gameScore);
-        $game->setGameEnd($_POST['game_end']);
+        $time_now = $date_now->format('H:i');
+        $game->setGameEnd($time_now);
 
         $errors = $game->validateClose();
-        // die(var_dump($errors));
+        // die(var_dump($game));
 
         if (empty($errors)) {
           // Enregistrement en BDD
           $gameRepository->persist($game);
+
+          // TODO Ajouter la fonction de calcul des gains des parieurs
+
           // Rediriger vers la page d'accueil du Speaker
           header('Location: ' . $routes->get('speakerDashboard')->getPath());
           exit();
@@ -133,10 +176,11 @@ class GameController extends Controller
         'game' => $game
       ]);
     } catch (\Exception $e) {
-      $errors[] = $e->getMessage();
       // Afficher la View error.php
-      $this->render('error', [
-        'errors' => $errors
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_text' => 'Retour à la page du match',
+        'redirection_slug' => '/speaker/game/' . $gameId
       ]);
     }
   }

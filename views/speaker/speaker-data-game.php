@@ -16,6 +16,9 @@ use App\Tools\SecurityTools;
   if (isset($errors['message'])) { ?>
     <div class="alert alert-danger">
       <?= $errors['message']; ?>
+      <?php if (isset($redirection_slug) && isset($redirection_text)) { ?>
+        <a class="ps-2 text-decoration-none fw-bold text-secondary cursor-pointer" href="<?= constant('URL_SUBFOLDER') . $redirection_slug ?>" title="<?= $redirection_text ?>"><?= $redirection_text ?></a>
+      <?php } ?>
     </div>
   <?php } ?>
 
@@ -27,8 +30,7 @@ use App\Tools\SecurityTools;
     $date_now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
     $time_now = $date_now->format('H:i');
     ?>
-    <input type="hidden" name="game_end" value="<?= $time_now ?>">
-
+    <!-- <input type="hidden" name="game_end" value="<?= $time_now ?>"> -->
     <button type="submit" class="btn btn-danger mx-auto">Fermer ce match</button>
 
     <div class="row gap-4 mx-0 mt-4">
@@ -69,11 +71,14 @@ use App\Tools\SecurityTools;
                       <?= $game->getGameStatus() ?>
                     </span>
                   </td>
-                  <td>xxx</td>
+                  <td>
+                    <?= count($betsArray); // Nombre de paris pour ce match  
+                    ?>
+                  </td>
                 </tr>
               <?php else : ?>
                 <tr>
-                  <td colspan="8">Aucun match n'a été trouvé</td>
+                  <td colspan="8">Aucun match n'a été trouvé</td> // TODO vraiment utile ?
                 </tr>
               <?php endif; ?>
             </tbody>
@@ -144,7 +149,7 @@ use App\Tools\SecurityTools;
         <span class="fw-bold ps-1"><?= $teamName ?></span>
       </div>
       <div class="my-3 px-2">Cote : <span class="fw-bold ps-1"><?= $odds ?></span></div>
-      <div class="my-3 px-2">Parieurs en faveur de cette équipe : <span class="fw-bold ps-1">xxx</span></div>
+      <div class="my-3 px-2">Parieurs en faveur de cette équipe : <span class="fw-bold ps-1"><?= htmlspecialchars($team1Bets) ?></span></div>
     </div>
 
     <!-- Infos Équipe 2 -->
@@ -159,7 +164,7 @@ use App\Tools\SecurityTools;
         <span class="fw-bold ps-1"><?= $teamName ?></span>
       </div>
       <div class="my-3 px-2">Cote : <span class="fw-bold ps-1"><?= $odds ?></span></div>
-      <div class="my-3 px-2">Parieurs en faveur de cette équipe : <span class="fw-bold ps-1">xxx</span></div>
+      <div class="my-3 px-2">Parieurs en faveur de cette équipe : <span class="fw-bold ps-1"><?= htmlspecialchars($team2Bets) ?></span></div>
     </div>
   </div>
 
