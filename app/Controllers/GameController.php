@@ -128,10 +128,7 @@ class GameController extends Controller
         $game_start = new \DateTime($game->getGameStart(), new \DateTimeZone('Europe/Paris'));
         $game_start_plus_one_hour = clone $game_start;
         $game_start_plus_one_hour->add(new \DateInterval('PT1H'));
-        // Debugging: Afficher les valeurs pour vérifier
         // die(var_dump($date_now, $game_start, $game_start_plus_one_hour));
-
-        // Vérification que l'heure actuelle est postérieure à l'heure de début + 1 heure
         if ($date_now < $game_start_plus_one_hour) {
           throw new \Exception('Il n\'est pas possible de fermer ce match avant l\'heure de début + 1h.');
         }
@@ -159,10 +156,23 @@ class GameController extends Controller
         // die(var_dump($game));
 
         if (empty($errors)) {
+          // Remplissage du champs "game_winner" de l'Objet Game
+          if ((int)$_POST['game_team1_score'] > (int)$_POST['game_team2_score']) {
+            $game->setGameWinner(1);
+          } elseif ((int)$_POST['game_team1_score'] < (int)$_POST['game_team2_score']) {
+            $game->setGameWinner(2);
+          } else {
+            $game->setGameWinner(0);
+          }
+
           // Enregistrement en BDD
           $gameRepository->persist($game);
 
           // TODO Ajouter la fonction de calcul des gains des parieurs
+          $betRepository = new BetRepository();
+          $betRepository->calculateGainByGameId($gameId);
+
+
 
           // Rediriger vers la page d'accueil du Speaker
           header('Location: ' . $routes->get('speakerDashboard')->getPath());

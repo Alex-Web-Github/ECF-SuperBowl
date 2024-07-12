@@ -19,6 +19,7 @@ class Game extends Entity
   protected ?string $game_status = '';
   protected ?string $game_score = '';
   protected ?string $game_weather = '';
+  protected ?int $game_winner = null; // 0 = match nul, 1 = équipe 1, 2 = équipe 2
 
   // Validation du formulaire de création de match
   public function validate(): array
@@ -326,6 +327,24 @@ class Game extends Entity
   public function setGameWeather(?string $game_weather): self
   {
     $this->game_weather = $game_weather;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of game_winner
+   */
+  public function getGameWinner(): ?int
+  {
+    return $this->game_winner;
+  }
+
+  /**
+   * Set the value of game_winner
+   */
+  public function setGameWinner(?int $game_winner): self
+  {
+    $this->game_winner = $game_winner;
 
     return $this;
   }

@@ -12,21 +12,22 @@ class GameRepository extends Repository
 
     if ($game->getGameId() !== null) {
       $query = $this->pdo->prepare(
-        'UPDATE games SET game_date = :date, team1_id = :team1_id, team2_id = :team2_id, game_start = :start_time, game_end = :end_time, team1_odds = :team1_odds, team2_odds = :team2_odds, game_status = :game_status, game_score = :game_score, game_weather = :game_weather WHERE game_id = :id'
+        'UPDATE games SET game_date = :date, team1_id = :team1_id, team2_id = :team2_id, game_start = :start_time, game_end = :end_time, team1_odds = :team1_odds, team2_odds = :team2_odds, game_status = :game_status, game_score = :game_score, game_weather = :game_weather, game_winner = :game_winner WHERE game_id = :id'
       );
 
       $query->bindValue(':id', $game->getGameId(), $this->pdo::PARAM_INT);
     } else {
       // Si pas d'Id, il s'agit d'un nouveau game (& status = upcoming par défaut)
       $query = $this->pdo->prepare(
-        'INSERT INTO games (game_date, team1_id, team2_id, game_start, game_end, team1_odds, team2_odds, game_status, game_score, game_weather) VALUES (:date, :team1_id, :team2_id, :start_time, :end_time, :team1_odds, :team2_odds, :game_status, :game_score, :game_weather)'
+        'INSERT INTO games (game_date, team1_id, team2_id, game_start, game_end, team1_odds, team2_odds, game_status, game_score, game_weather) VALUES (:date, :team1_id, :team2_id, :start_time, :end_time, :team1_odds, :team2_odds, :game_status, :game_score, :game_weather, :game_winner)'
       );
       // Je définis ces 3 propriétés à la création d'un nouveau Game
       $game->setGameStatus('A venir');
       $game->setGameScore('0-0');
       $game->setGameWeather('-');
+      $game->setGameWinner(0);
     }
-    // nb: Nécessaire car \PDO ne peut pas gérer les objets DateTime, je laisse mes propriétés date et heure en String
+    // nb: \PDO ne peut pas gérer les objets DateTime, je laisse mes propriétés date et heure en String
     $query->bindValue(':date', $game->getGameDate(), $this->pdo::PARAM_STR);
     $query->bindValue(':team1_id', $game->getTeam1Id(), $this->pdo::PARAM_INT);
     $query->bindValue(':team2_id', $game->getTeam2Id(), $this->pdo::PARAM_INT);
@@ -37,6 +38,7 @@ class GameRepository extends Repository
     $query->bindValue(':game_status', $game->getGameStatus(), $this->pdo::PARAM_STR);
     $query->bindValue(':game_score', $game->getGameScore(), $this->pdo::PARAM_STR);
     $query->bindValue(':game_weather', $game->getGameWeather(), $this->pdo::PARAM_STR);
+    $query->bindValue(':game_winner', $game->getGameWinner(), $this->pdo::PARAM_INT);
 
     return $query->execute();
   }
