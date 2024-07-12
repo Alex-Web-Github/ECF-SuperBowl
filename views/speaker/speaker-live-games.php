@@ -19,8 +19,8 @@ use App\Tools\SecurityTools;
     </thead>
 
     <tbody class="table-group-divider">
-      <?php if ($gamesList !== null) : ?>
-        <?php foreach ($gamesList as $game) : ?>
+      <?php if ($dailyGames) : ?>
+        <?php foreach ($dailyGames as $game) : ?>
           <tr>
             <td><?= htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8') // Protection contre les failles XSS 
                 ?></td>
@@ -61,7 +61,7 @@ use App\Tools\SecurityTools;
                     commenter
                   </button>
                 </a>
-              <?php } else { ?>
+              <?php } elseif ($game->getGameStatus() === 'Terminé') { ?>
                 <a href="<?= constant('URL_SUBFOLDER') . '/game/' . $game->getGameId(); ?>" title="détails du match" target="_blank">
                   <button type="button" class="btn btn-outline-primary btn-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -70,14 +70,15 @@ use App\Tools\SecurityTools;
                     infos
                   </button>
                 </a>
-
+              <?php } elseif ($game->getGameStatus() === 'A venir') { ?>
+                A venir
               <?php } ?>
             </td>
           </tr>
         <?php endforeach; ?>
       <?php else : ?>
         <tr>
-          <td colspan="8">Aucun match n'a été trouvé</td>
+          <td colspan="8">Aucun match prévu ce jour</td>
         </tr>
       <?php endif; ?>
     </tbody>

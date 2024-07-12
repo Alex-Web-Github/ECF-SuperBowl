@@ -4,9 +4,7 @@ namespace App\Controllers;
 
 use Symfony\Component\Routing\RouteCollection;
 use App\Tools\SecurityTools;
-use App\Entity\Game;
 use App\Repository\GameRepository;
-use App\Repository\Repository;
 
 class SpeakerController extends Controller
 {
@@ -25,9 +23,9 @@ class SpeakerController extends Controller
       $dailyGames = new GameRepository();
       $dailyGames = $dailyGames->findDailyGames();
 
-      // Je rends la vue avec les données nécessaires
+      // Je rends la vue speaker/dashboard.php
       $this->render('speaker/dashboard', [
-        'dailyGames' => $dailyGames ?? [],
+        'dailyGames' => $dailyGames,
         'error' => $errors,
       ]);
     } catch (\Exception $e) {

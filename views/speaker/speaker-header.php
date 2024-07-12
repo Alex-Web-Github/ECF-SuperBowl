@@ -54,7 +54,7 @@ use App\Tools\SecurityTools;
             </li>
 
             <li class="nav-item">
-              <a class="nav-link <?= NavigationTools::addActiveClass('/speaker/dashboard') ?>" href="<?= constant('URL_SUBFOLDER') . '/' ?>" target="_blank">Dashboard</a>
+              <a class="nav-link <?= NavigationTools::addActiveClass('/speaker/dashboard') ?>" href="<?= constant('URL_SUBFOLDER') . '/speaker/dashboard' ?>" target="_blank">Dashboard</a>
             </li>
 
             <?php if (SecurityTools::isLogged()) { ?>

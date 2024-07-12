@@ -11,7 +11,6 @@
   <h2 class="fs-2 fw-bolder text-white text-center mb-5">Les matchs du jour</h2>
 
   <?php
-  $gamesList = $dailyGames;
 
   require_once APP_ROOT . '/views/speaker/speaker-live-games.php';
   ?>
