@@ -19,12 +19,19 @@ class GameController extends Controller
   {
     try {
       $errors = [];
+      // Validation du $gameId
+      if (!is_numeric($gameId) || $gameId <= 0) {
+        throw new \Exception('L\'identifiant du match doit être un nombre entier positif.');
+      }
 
       // Récupérer un Objet Game, correspondant à l'Id désiré
       $game = new Game();
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($gameId);
-
+      // Si le match n'existe pas
+      if (!$game) {
+        throw new \Exception('Le match demandé n\'existe pas.');
+      }
       // Récupérer les données de chaque équipe par leur Id
       // Le retour est un Objet Team
       $teamRepository = new TeamRepository();
@@ -52,11 +59,11 @@ class GameController extends Controller
         'errors' => $errors
       ]);
     } catch (\Exception $e) {
-      $errors[] = $e->getMessage();
-
-      // Afficher la View error.php
-      $this->render('error', [
-        'errors' => $errors
+      // Afficher la Vue errors/default.php
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_text' => 'Retour à la page du match',
+        'redirection_slug' => '/speaker/dashboard'
       ]);
     }
   }
@@ -67,16 +74,28 @@ class GameController extends Controller
     try {
       $errors = [];
 
+      // Validation de $gameId
+      if (!is_numeric($gameId) || $gameId <= 0) {
+        throw new \Exception('L\'identifiant du match doit être un nombre entier positif.');
+      }
+
       // Récupérer un Objet Game, correspondant à l'Id désiré
       $game = new Game();
       $gameRepository = new GameRepository();
       $game = $gameRepository->findOneById($gameId);
+      // Si le match n'existe pas
+      if (!$game) {
+        throw new \Exception('Le match demandé n\'existe pas.');
+      }
 
       // Récupération d'un tableau contenant les données des paris pour ce match
       $betRepository = new BetRepository();
       $betsArray = $betRepository->findBetsByGameId($gameId);
-
-      // Récupération du nombre de paris popur l'équipe 1 et l'équipe 2
+      // Si il n'y a pas de paris pour ce match
+      if (!$betsArray) {
+        throw new \Exception('Il n\'y a pas de paris pour ce match.');
+      }
+      // Récupération du nombre de paris pour l'équipe 1 et l'équipe 2
       $team1Bets = 0;
       $team2Bets = 0;
       foreach ($betsArray as $bet) {
@@ -96,10 +115,11 @@ class GameController extends Controller
         'team2Bets' => $team2Bets
       ]);
     } catch (\Exception $e) {
-      $errors[] = $e->getMessage();
       // Afficher la View error.php
-      $this->render('error', [
-        'errors' => $errors
+      $this->render('errors/default', [
+        'error' => $e->getMessage(),
+        'redirection_text' => 'Retour au Dashboard',
+        'redirection_slug' => '/speaker/dashboard'
       ]);
     }
   }
@@ -168,11 +188,21 @@ class GameController extends Controller
           // Enregistrement en BDD
           $gameRepository->persist($game);
 
-          // TODO Ajouter la fonction de calcul des gains des parieurs
+          // Récupération d'un tableau contenant les paris pour ce match
           $betRepository = new BetRepository();
-          $betRepository->calculateGainByGameId($gameId);
-
-
+          $betsArray = $betRepository->findBetsByGameId($gameId);
+          foreach ($betsArray as $bet) {
+            // Calcul des gains pour chacun des paris
+            if ($game->getGameWinner() === 1 && $bet->getBetAmount1() !== 0) {
+              $bet->setBetResult($bet->getBetAmount1() * $game->getTeam1Odds());
+            } elseif ($game->getGameWinner() === 2 && $bet->getBetAmount2() !== 0) {
+              $bet->setBetResult($bet->getBetAmount2() * $game->getTeam2Odds());
+            } else {
+              $bet->setBetResult(0);
+            }
+            // Enregistrement en BDD
+            $betRepository->persist($bet);
+          }
 
           // Rediriger vers la page d'accueil du Speaker
           header('Location: ' . $routes->get('speakerDashboard')->getPath());

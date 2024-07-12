@@ -26,11 +26,7 @@ use App\Tools\SecurityTools;
     <input type="hidden" name="game_id" value="<?= $game->getGameId() ?>">
     <input type="hidden" name="game_status" value="Terminé">
     <?php
-    // Récupération de l'heure au moment de la fermeture du match
-    $date_now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-    $time_now = $date_now->format('H:i');
     ?>
-    <!-- <input type="hidden" name="game_end" value="<?= $time_now ?>"> -->
     <button type="submit" class="btn btn-danger mx-auto">Fermer ce match</button>
 
     <div class="row gap-4 mx-0 mt-4">
@@ -78,7 +74,10 @@ use App\Tools\SecurityTools;
                 </tr>
               <?php else : ?>
                 <tr>
-                  <td colspan="8">Aucun match n'a été trouvé</td> // TODO vraiment utile ?
+                  <td colspan="8">Aucun match n'a été trouvé</td>
+
+                  // TODO vraiment utile ?
+
                 </tr>
               <?php endif; ?>
             </tbody>

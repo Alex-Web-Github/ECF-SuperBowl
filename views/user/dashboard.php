@@ -32,7 +32,8 @@ require_once APP_ROOT . '/views/header.php';
     <!-- Bloc Dashboard -->
     <div class="tab-pane active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
 
-      <?php if (isset($betsArray) && !empty($betsArray)) : ?>
+      <?php if (isset($betsArray) && !empty($betsArray)) : // TODO A refactoriser 
+      ?>
 
         <div style="background-color: whitesmoke; padding: 1.5rem;">
           <canvas id="userDashboardChart"></canvas>
@@ -45,7 +46,6 @@ require_once APP_ROOT . '/views/header.php';
             'gain' => floatval($bet['bet_result'])
           ];
         }
-        // die(var_dump($data));
         // Conversion en JSON pour l'utilisation dans ChartJS
         $jsonData = json_encode($data);
         ?>
@@ -68,7 +68,9 @@ require_once APP_ROOT . '/views/header.php';
       <?php endif; ?>
 
 
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js">
+        // TODO voir pour hébergement en local...
+      </script>
       <script>
         // Récupération des données JSON pour le graphique
         const dataFromPHP = <?php echo $jsonData; ?>;
@@ -77,9 +79,8 @@ require_once APP_ROOT . '/views/header.php';
         const labels = dataFromPHP.map(item => item.date);
         const data = dataFromPHP.map(item => item.gain);
 
-        const ctx = document.getElementById('userDashboardChart');
-
-        new Chart(ctx, {
+        // Configuration du graphique
+        const config = {
           type: 'line',
           data: {
             labels: labels, // Utiliser les dates comme labels
@@ -112,7 +113,11 @@ require_once APP_ROOT . '/views/header.php';
               }
             }
           },
-        });
+        };
+
+        // Initialisation du graphique
+        const ctx = document.getElementById('userDashboardChart');
+        new Chart(ctx, config);
       </script>
 
     </div>

@@ -57,9 +57,7 @@ require_once APP_ROOT . '/views/auth/login-modal.php';
 
         <tbody class="table-group-divider">
           <tr>
-            <td>
-              <div class="ps-3"><?= htmlspecialchars($game->getGameWeather(), ENT_QUOTES, 'UTF-8') ?></div>
-            </td>
+            <td><?= htmlspecialchars($game->getGameWeather(), ENT_QUOTES, 'UTF-8') ?></td>
             <td>
               <span class="badge 
               <?php

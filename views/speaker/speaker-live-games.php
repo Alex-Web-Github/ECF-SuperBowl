@@ -19,7 +19,8 @@ use App\Tools\SecurityTools;
     </thead>
 
     <tbody class="table-group-divider">
-      <?php if ($dailyGames) : ?>
+      <?php // Affichage des matchs du jour 
+      if ($dailyGames) : ?>
         <?php foreach ($dailyGames as $game) : ?>
           <tr>
             <td><?= htmlspecialchars($game->getTeam1Name(), ENT_QUOTES, 'UTF-8') // Protection contre les failles XSS 

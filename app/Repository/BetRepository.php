@@ -70,7 +70,8 @@ class BetRepository extends Repository
         INNER JOIN games ON bets.game_id = games.game_id 
         INNER JOIN teams as team1 ON games.team1_id = team1.team_id 
         INNER JOIN teams as team2 ON games.team2_id = team2.team_id 
-        WHERE bets.user_id = :userId";
+        WHERE bets.user_id = :userId
+        ORDER BY bets.bet_date ASC";  // Tri par date de pari en ordre croissant
 
     $query = $this->pdo->prepare($sql);
     $query->bindValue(':userId', $userId, $this->pdo::PARAM_INT);
