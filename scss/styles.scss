@@ -1,0 +1,107 @@
+// Import Bootstrap and custom styles
+
+// Toggle global options
+// $enable-gradients: true;
+$enable-shadows: true;
+// $offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+
+// Include functions first
+@import "../node_modules/bootstrap/scss/functions";
+
+//
+// Colors
+//
+$primary: #7a7443;
+$secondary: #1c3934;
+$success: #bae139;
+$danger: #b9314f;
+$warning: #d5a18e;
+$info: #4dccbd;
+$light: #f8f9fa;
+$dark: #475460;
+$body-bg: #1b473c;
+// Others
+$border-radius: 0.5rem;
+// Navigation
+$nav-link-font-size: 1.1rem;
+
+//
+// Import des modules Bootstrap
+//
+@import "_bootstrap-modules";
+
+//
+// Custom styles
+//
+
+// Navigation principale
+.navbar-collapse.collapse:not(.show) {
+  .navbar-nav .nav-link {
+    font-size: 1.2rem;
+  }
+}
+
+// Navigation Underline dans les Dashboard
+.nav-underline {
+  --bs-emphasis-color: #fff;
+  --bs-nav-underline-border-width: 0.14rem;
+}
+.nav-underline .nav-link,
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+.nav-underline .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+.nav-underline .nav-link.disabled {
+  color: rgba(255, 255, 255, 0.3);
+}
+.nav-underline .nav-link.active {
+  font-weight: 500;
+}
+#myTab.nav-underline {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  .nav-item {
+    padding: 0;
+  }
+  .nav-item .nav-link:not(.active) {
+    flex-shrink: 1;
+    word-wrap: break-word;
+  }
+  .nav-item .nav-link.active {
+    width: max-content;
+  }
+} // TODO: A revoir
+
+// Affichage des erreurs 'champs invalides' dans les formulaires
+.invalid-tooltip {
+  top: -30px !important;
+  right: 0 !important;
+}
+tbody {
+  // Pour l'affichage des erreurs de formulaires (invalid-tooltip) au bon endroit
+  position: relative;
+}
+input + .invalid-tooltip,
+select + .invalid-tooltip {
+  position: static;
+}
+
+// Affichage des liens
+.form-link {
+  color: white;
+  opacity: 0.75;
+  text-decoration: none;
+  transition: opacity 0.15s ease-in-out;
+  &:hover {
+    opacity: 1;
+    // text-decoration: underline;
+  }
+}
+
+//
+// My Custom styles
+//
+@import "_custom";
