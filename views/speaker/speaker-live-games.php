@@ -4,7 +4,6 @@
  * TEMPLATE de la liste des matchs sur la page d'accueil dans /views/home.php 
  */
 
-use App\Tools\SecurityTools;
 ?>
 <div class="table-responsive-lg">
   <table class="table table-hover table-light table-striped table-rounded">

@@ -24,4 +24,24 @@ class Repository
       die($e->getMessage());
     }
   }
+
+  public function beginTransaction(): void
+  {
+    $this->pdo->beginTransaction();
+  }
+
+  public function commit(): void
+  {
+    $this->pdo->commit();
+  }
+
+  public function rollBack(): void
+  {
+    $this->pdo->rollBack();
+  }
+
+  public function inTransaction(): bool
+  {
+    return $this->pdo->inTransaction();
+  }
 }

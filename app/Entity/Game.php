@@ -76,27 +76,6 @@ class Game extends Entity
     return $errors;
   }
 
-  // Validation du formulaire de fermeture de match
-  public function validateClose(): array
-  {
-    $errors = [];
-
-    if (empty($this->game_status)) {
-      $errors['game_status'] = 'Le statut ne doit pas être vide';
-    } elseif ($this->game_status !== 'Terminé') {
-      $errors['game_status'] = 'Le statut doit être "Terminé"';
-    }
-    if (empty($this->game_weather) || ($this->game_weather === 'Choisir la météo')) {
-      $errors['game_weather'] = 'Le champs météo ne doit pas être vide';
-    }
-    if (empty($this->game_score)) {
-      $errors['game_score'] = 'Le score ne doit pas être vide';
-    } elseif (!preg_match('/^[0-9]{1,2}-[0-9]{1,2}$/', $this->game_score)) {
-      $errors['game_score'] = 'Le score doit être sous la forme "x-x"';
-    }
-
-    return $errors;
-  }
   /**
    * Get the value of game_id
    */

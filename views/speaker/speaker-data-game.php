@@ -4,7 +4,6 @@
  * Vue des détails d'un match pour le Commentateur
  */
 
-use App\Tools\SecurityTools;
 ?>
 
 <?php require_once APP_ROOT . '/views/speaker/speaker-header.php'; ?>
@@ -12,7 +11,8 @@ use App\Tools\SecurityTools;
 <div class="container my-4 p-2">
   <h2 class="fs-2 fw-bolder text-white text-center mb-5">Les détails du match</h2>
 
-  <?php // Affichage des erreurs éventuelles //TODO: à garder ???
+  <?php
+  // Affichage des erreurs éventuelles
   if (isset($errors['message'])) { ?>
     <div class="alert alert-danger">
       <?= $errors['message']; ?>
@@ -75,9 +75,6 @@ use App\Tools\SecurityTools;
               <?php else : ?>
                 <tr>
                   <td colspan="8">Aucun match n'a été trouvé</td>
-
-                  // TODO vraiment utile ?
-
                 </tr>
               <?php endif; ?>
             </tbody>
