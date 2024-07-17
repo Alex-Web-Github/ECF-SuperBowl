@@ -1,0 +1,4 @@
+# Pour rediriger vers le répertoire /public
+RewriteEngine On
+RewriteRule ^$ public/ [L]
+RewriteRule (.*) public/$1 [L]

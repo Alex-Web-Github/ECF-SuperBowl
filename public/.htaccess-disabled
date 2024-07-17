@@ -1,0 +1,5 @@
+# Redirection de la page Accueil vers /all-games pour afficher tous les matchs
+RewriteEngine On
+RewriteBase /
+# Règle permanente (301) et la dernière traitée :
+RewriteRule ^index\.php$ /all-games [R=301,L]

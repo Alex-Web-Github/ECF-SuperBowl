@@ -1,9 +1,6 @@
 <?php
-// Affichage des erreurs
-// ini_set('display_errors', '1');
-// ini_set('display_startup_errors', '1');
-// error_reporting(E_ALL);
 
+require_once '../error_display.php';
 // Chargement de l'autoloader de Composer
 require_once '../vendor/autoload.php';
 
