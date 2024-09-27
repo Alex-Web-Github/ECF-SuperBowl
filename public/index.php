@@ -1,6 +1,6 @@
 <?php
 
-require_once '../error_display.php';
+//require_once '../error_display.php';
 // Chargement de l'autoloader de Composer
 require_once '../vendor/autoload.php';
 

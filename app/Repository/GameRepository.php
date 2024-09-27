@@ -19,7 +19,7 @@ class GameRepository extends Repository
     } else {
       // Si pas d'Id, il s'agit d'un nouveau game (& status = upcoming par défaut)
       $query = $this->pdo->prepare(
-        'INSERT INTO games (game_date, team1_id, team2_id, game_start, game_end, team1_odds, team2_odds, game_status, game_score, game_weather) VALUES (:date, :team1_id, :team2_id, :start_time, :end_time, :team1_odds, :team2_odds, :game_status, :game_score, :game_weather, :game_winner)'
+        'INSERT INTO games (game_date, team1_id, team2_id, game_start, game_end, team1_odds, team2_odds, game_status, game_score, game_weather, game_winner) VALUES (:date, :team1_id, :team2_id, :start_time, :end_time, :team1_odds, :team2_odds, :game_status, :game_score, :game_weather, :game_winner)'
       );
       // Je définis ces 3 propriétés à la création d'un nouveau Game
       $game->setGameStatus('A venir');
