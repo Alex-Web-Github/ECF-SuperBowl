@@ -147,6 +147,9 @@ class AuthController extends Controller
 
             // J'envoie le nouveau mot de passe par email
             $userRepository->sendNewPassword($user, $newPassword);
+
+            header('Location: ' . $routes->get('login')->getPath());
+            exit;
           } else {
             // Je lance une exception si l'email et/ou le mot de passe sont incorrects
             throw new \Exception('Mot de passe oublié : </br></br>Votre adresse e-mail est incorrecte.');

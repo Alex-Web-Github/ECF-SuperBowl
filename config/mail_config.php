@@ -1,12 +1,14 @@
 <?php
+// NE PAS VERSIONNER CE FICHIER AVEC VOS IDENTIFIANTS DE CONNEXION
 return [
-  'host' => 'smtp.example.com',
+  'host' => 'alexcreationweb.fr',
+  //'host' => 'georgie.o2switch.net',
   'SMTPAuth' => true,
-  // 'SMTPSecure' => 'tls', // 'ssl' for `PHPMailer::ENCRYPTION_SMTPS`
-  'SMPTDebug' => 0, // 2 for verbose debug output
-  'port' => 587,
-  'username' => 'your_username',
-  'password' => 'your_password',
-  'encryption' => 'tls',
-  // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+  'SMTPSecure' => 'ssl', // 'ssl' for `PHPMailer::ENCRYPTION_SMTPS`
+  'SMPTDebug' => 0,
+  'port' => 465,
+  'username' => 'support@alexcreationweb.fr',
+  'password' => '4ezTKJE#aEdDC4y4&G',
+  'encryption' => 'PHPMailer::ENCRYPTION_SMTPS',
+
 ];
