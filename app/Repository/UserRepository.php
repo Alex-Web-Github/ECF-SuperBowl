@@ -84,43 +84,64 @@ class UserRepository extends Repository
   /**
    * Envoi d'un email de validation d'inscription
    */
+
   public function sendValidationEmail(User $user): bool
   {
-    // J'instancie un nouvel objet PHPMailer (true-> pour activer les exceptions)
-    $mail = new PHPMailer(true);
+    $mail = new PHPMailer(true); //(true-> pour activer les exceptions)
 
-    /** Import du fichier de configuration des paramètres de mail
-     * A décommenter ci-dessous en PRODUCTION
-     */
+    // Ligne à décommenter en PRODUCTION
     //$mailConfig = require_once APP_ROOT . '/config/mail_config.php';
 
     // Server settings (valeurs par défaut : en LOCAL avec MailHog (http://localhost:8025/)
-    $mail->isSMTP();
-    $mail->Host = $mailConfig['host'] ?? 'localhost';
-    $mail->SMTPAuth = $mailConfig['SMTPAuth'] ?? false;
-    $mail->SMTPDebug = $mailConfig['SMTPDebug'] ?? 2; // 2 for verbose debug output
-    $mail->Username = $mailConfig['username'] ?? '';
-    $mail->Password = $mailConfig['password'] ?? '';
-    $mail->SMTPSecure = $mailConfig['SMTPSecure'] ?? PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = $mailConfig['port'] ?? 1025;
+    try {
+      // Configuration SMTP
+      $mail->isSMTP();
+      $mail->Host = $mailConfig['host'] ?? 'localhost';
+      $mail->SMTPAuth = $mailConfig['SMTPAuth'] ?? false;
+      $mail->Username = $mailConfig['username'] ?? '';
+      $mail->Password = $mailConfig['password'] ?? '';
+      $mail->SMTPSecure = $mailConfig['SMTPSecure'] ?? '';
+      $mail->Port = $mailConfig['port'] ?? 1025;
 
-    // Recipients
-    $mail->setFrom('support@alexcreationweb.fr', 'MoneyBowl Admin');
-    $mail->addAddress($user->getUserEmail(), $user->getUserFirstName());
+      // Options SMTP
+      $mail->SMTPOptions = [
+        'ssl' => [
+          'verify_peer' => false,
+          'verify_peer_name' => false,
+          'allow_self_signed' => true,
+        ],
+      ];
 
-    // Content
-    $mail->isHTML(true);  // Set email format to HTML
-    $mail->Subject = 'Votre inscription sur le site MoneyBowl';
-    $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="' . constant('URL_SUBFOLDER') . '/check?id=' . $user->getUserId() . '&token=' . $user->getUserToken() . '">Valider mon inscription</a>';
+      // Débogage SMTP - A COMMENTER en PRODUCTION
+      $mail->SMTPDebug = 2; // 2 for verbose debug output
+      $mail->Debugoutput = 'html';
 
-    $mail->AltBody = 'Bonjour, Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant reçu par email.';
+      // Configuration des caractères
+      $mail->CharSet = 'UTF-8';
+      $mail->Encoding = 'base64';
 
-    if ($mail->send()) {
-      return true;
-    } else {
-      return false;
+      // Destinataires
+      $mail->setFrom('support@alexcreationweb.fr', 'MoneyBowl Admin');
+      $mail->addAddress($user->getUserEmail(), $user->getUserFirstName());
+
+      // Content
+      $mail->isHTML(true);  // Set email format to HTML
+      $mail->Subject = 'Votre inscription sur le site MoneyBowl';
+      $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="' . 'http://sc4foal9574.universe.wf/money-bowl/public/check?id=' . $user->getUserId() . '&token=' . $user->getUserToken() . '">Valider mon inscription</a>';
+      $mail->AltBody = 'Bonjour, Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant reçu par email.';
+
+      // Envoi de l'email
+      if (!$mail->send()) {
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+      } else {
+        //echo 'Message sent!';
+        return true;
+      }
+    } catch (Exception $e) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
   }
+
 
   /**
    * Envoi d'un email de nouveau mot de passe
