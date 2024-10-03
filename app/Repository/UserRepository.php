@@ -7,6 +7,7 @@ use App\Tools\SecurityTools;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+
 class UserRepository extends Repository
 {
 
@@ -81,39 +82,14 @@ class UserRepository extends Repository
     return false;
   }
 
-  /**
-   * Envoi d'un email de validation d'inscription
-   */
-<<<<<<< HEAD
-=======
 
->>>>>>> dev
+  // ENVOI EMAIL DE VALIDATION
   public function sendValidationEmail(User $user): bool
   {
     $mail = new PHPMailer(true); //(true-> pour activer les exceptions)
 
-<<<<<<< HEAD
-    /** Import du fichier de configuration des paramètres de mail
-     * A décommenter ci-dessous en PRODUCTION
-     */
-    //$mailConfig = require_once APP_ROOT . '/config/mail_config.php';
-
-    // Server settings (valeurs par défaut : en LOCAL avec MailHog (http://localhost:8025/)
-    $mail->isSMTP();
-    $mail->Host = $mailConfig['host'] ?? 'localhost';
-    $mail->SMTPAuth = $mailConfig['SMTPAuth'] ?? false;
-    $mail->SMTPDebug = $mailConfig['SMTPDebug'] ?? 2; // 2 for verbose debug output
-    $mail->Username = $mailConfig['username'] ?? '';
-    $mail->Password = $mailConfig['password'] ?? '';
-    $mail->SMTPSecure = $mailConfig['SMTPSecure'] ?? PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = $mailConfig['port'] ?? 1025;
-
-    // Recipients
-    $mail->setFrom('support@alexcreationweb.fr', 'MoneyBowl Admin');
-    $mail->addAddress($user->getUserEmail(), $user->getUserFirstName());
-=======
     // Ligne à décommenter en PRODUCTION
-    //$mailConfig = require_once APP_ROOT . '/config/mail_config.php';
+    $mailConfig = require_once APP_ROOT . '/config/mail_config.php';
 
     // Server settings (valeurs par défaut : en LOCAL avec MailHog (http://localhost:8025/)
     try {
@@ -134,11 +110,10 @@ class UserRepository extends Repository
           'allow_self_signed' => true,
         ],
       ];
->>>>>>> dev
 
       // Débogage SMTP - A COMMENTER en PRODUCTION
-      $mail->SMTPDebug = 2; // 2 for verbose debug output
-      $mail->Debugoutput = 'html';
+      //$mail->SMTPDebug = 2; // 2 for verbose debug output
+      //$mail->Debugoutput = 'html';
 
       // Configuration des caractères
       $mail->CharSet = 'UTF-8';
@@ -151,7 +126,7 @@ class UserRepository extends Repository
       // Content
       $mail->isHTML(true);  // Set email format to HTML
       $mail->Subject = 'Votre inscription sur le site MoneyBowl';
-      $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="' . 'http://sc4foal9574.universe.wf/money-bowl/public/check?id=' . $user->getUserId() . '&token=' . $user->getUserToken() . '">Valider mon inscription</a>';
+      $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br> Merci de vous être inscrit sur notre site MoneyBowl. <br> Pour valider votre inscription, veuillez cliquer sur le lien suivant : <a href="' . 'https://sc4foal9574.universe.wf/money-bowl/public/check?id=' . $user->getUserId() . '&token=' . $user->getUserToken() . '">Valider mon inscription</a>';
       $mail->AltBody = 'Bonjour, Merci de vous être inscrit sur notre site MoneyBowl. Pour valider votre inscription, veuillez cliquer sur le lien suivant reçu par email.';
 
       // Envoi de l'email
@@ -166,75 +141,14 @@ class UserRepository extends Repository
     }
   }
 
-
-  /**
-   * Envoi d'un email de nouveau mot de passe
-   */
+  // ENVOI EMAIL DE CHANGEMENT DE PASSWORD
   public function sendNewPassword(User $user, string $newPassword): bool
   {
     $mail = new PHPMailer(true); //(true-> pour activer les exceptions)
 
     // Ligne à décommenter en PRODUCTION
-    //$mailConfig = require_once APP_ROOT . '/config/mail_config.php';
-    // Server settings (valeurs par défaut : en LOCAL avec MailHog (http://localhost:8025/)
-    try {
-      // Configuration SMTP
-      $mail->isSMTP();
-      $mail->Host = $mailConfig['host'] ?? 'localhost';
-      $mail->SMTPAuth = $mailConfig['SMTPAuth'] ?? false;
-      $mail->Username = $mailConfig['username'] ?? '';
-      $mail->Password = $mailConfig['password'] ?? '';
-      $mail->SMTPSecure = $mailConfig['SMTPSecure'] ?? '';
-      $mail->Port = $mailConfig['port'] ?? 1025;
+    $mailConfig = require_once APP_ROOT . '/config/mail_config.php';
 
-      // Options SMTP
-      $mail->SMTPOptions = [
-        'ssl' => [
-          'verify_peer' => false,
-          'verify_peer_name' => false,
-          'allow_self_signed' => true,
-        ],
-      ];
-
-      // Débogage SMTP - A COMMENTER en PRODUCTION
-      $mail->SMTPDebug = 2; // 2 for verbose debug output
-      $mail->Debugoutput = 'html';
-
-      // Configuration des caractères
-      $mail->CharSet = 'UTF-8';
-      $mail->Encoding = 'base64';
-
-      // Destinataires
-      $mail->setFrom('support@alexcreationweb.fr', 'MoneyBowl Admin');
-      $mail->addAddress($user->getUserEmail(), $user->getUserFirstName());
-
-      // Contenu de l'email
-      $mail->isHTML(true);
-      $mail->Subject = 'Votre compte MoneyBowl : nouveau mot de passe';
-      $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br>Voici votre nouveau mot de passe : ' . $newPassword . '<br><br>Vous pouvez le modifier dans votre espace personnel.<br><br>Cordialement,<br><br>L\'équipe SuperBowl';
-      $mail->AltBody = 'Bonjour,Voici votre nouveau mot de passe : ' . $newPassword . 'Vous pouvez le modifier dans votre espace personnel.Cordialement,L\'équipe SuperBowl';
-
-      // Envoi de l'email
-      if (!$mail->send()) {
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
-      } else {
-        //echo 'Message sent!';
-        return true;
-      }
-    } catch (Exception $e) {
-      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
-  }
-
-  /**
-   * Envoi d'un email de nouveau mot de passe
-   */
-  public function sendNewPassword(User $user, string $newPassword): bool
-  {
-    $mail = new PHPMailer(true); //(true-> pour activer les exceptions)
-
-    // Ligne à décommenter en PRODUCTION
-    //$mailConfig = require_once APP_ROOT . '/config/mail_config.php';
     // Server settings (valeurs par défaut : en LOCAL avec MailHog (http://localhost:8025/)
     try {
       // Configuration SMTP
@@ -256,8 +170,8 @@ class UserRepository extends Repository
       ];
 
       // Débogage SMTP
-      $mail->SMTPDebug = $mailConfig['SMTPDebug'] ?? 2; // 2 for verbose debug output
-      $mail->Debugoutput = 'html';
+      //$mail->SMTPDebug = 2; // 2 for verbose debug output
+      //$mail->Debugoutput = 'html';
 
       // Configuration des caractères
       $mail->CharSet = 'UTF-8';
@@ -284,65 +198,4 @@ class UserRepository extends Repository
       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
   }
-
-  // public function sendNewPassword(User $user, string $newPassword): bool
-  // {
-  //   // J'instancie un nouvel objet PHPMailer (true-> pour activer les exceptions)
-  //   $mail = new PHPMailer(true);
-
-  //   /** Import du fichier de configuration des paramètres de mail
-  //    * A décommenter ci-dessous en PRODUCTION
-  //    */
-  //   //$mailConfig = require_once APP_ROOT . '/config/mail_config.php';
-
-  //   // Utilisation en LOCAL avec MailHog (http://localhost:8025/)
-
-  //   try {
-  //     // Configuration SMTP
-  //     $mail->isSMTP();
-  //     $mail->Host = 'alexcreationweb.fr';
-  //     $mail->SMTPAuth = true;
-  //     $mail->Username = 'support@alexcreationweb.fr';
-  //     $mail->Password = '4ezTKJE#aEdDC4y4&G';
-  //     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-  //     $mail->Port = 465;
-
-  //     // Options SMTP
-  //     $mail->SMTPOptions = [
-  //       'ssl' => [
-  //         'verify_peer' => false,
-  //         'verify_peer_name' => false,
-  //         'allow_self_signed' => true,
-  //       ],
-  //     ];
-
-  //     // Débogage SMTP
-  //     //$mail->SMTPDebug = 2;
-  //     //$mail->Debugoutput = 'html';
-
-  //     // Configuration des caractères
-  //     $mail->CharSet = 'UTF-8';
-  //     $mail->Encoding = 'base64';
-
-  //     // Destinataires
-  //     $mail->setFrom('support@alexcreationweb.fr', 'MoneyBowl Admin');
-  //     $mail->addAddress($user->getUserEmail(), $user->getUserFirstName());
-
-  //     // Contenu de l'email
-  //     $mail->isHTML(true);
-  //     $mail->Subject = 'Votre compte MoneyBowl : nouveau mot de passe';
-  //     $mail->Body    = 'Bonjour ' . $user->getUserFirstName() . ',<br><br>Voici votre nouveau mot de passe : ' . $newPassword . '<br><br>Vous pouvez le modifier dans votre espace personnel.<br><br>Cordialement,<br><br>L\'équipe SuperBowl';
-  //     $mail->AltBody = 'Bonjour,Voici votre nouveau mot de passe : ' . $newPassword . 'Vous pouvez le modifier dans votre espace personnel.Cordialement,L\'équipe SuperBowl';
-
-  //     // Envoi de l'email
-  //     if (!$mail->send()) {
-  //       echo 'Mailer Error: ' . $mail->ErrorInfo;
-  //     } else {
-  //       //echo 'Message sent!';
-  //       return true;
-  //     }
-  //   } catch (Exception $e) {
-  //     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-  //   }
-  // }
 }

@@ -5,13 +5,8 @@ return [
   //'host' => 'georgie.o2switch.net',
   'SMTPAuth' => true,
   'SMTPSecure' => 'ssl', // 'ssl' for `PHPMailer::ENCRYPTION_SMTPS`
-<<<<<<< HEAD
-  'SMPTDebug' => 0,
-=======
->>>>>>> dev
   'port' => 465,
   'username' => 'support@alexcreationweb.fr',
   'password' => '4ezTKJE#aEdDC4y4&G',
   'encryption' => 'PHPMailer::ENCRYPTION_SMTPS',
-
 ];
